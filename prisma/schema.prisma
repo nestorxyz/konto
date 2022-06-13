@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Accounts {
+model Account {
   id                 String  @id @default(cuid())
   userId             String  @map("user_id")
   type               String
@@ -23,18 +23,18 @@ model Accounts {
   oauth_token_secret String?
   oauth_token        String?
 
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
-model Sessions {
+model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
-  user         Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
@@ -48,75 +48,77 @@ model VerificationToken {
   @@map("verificationtokens")
 }
 
-model Users {
-  id              String        @id @default(cuid())
+model User {
+  id              String      @id @default(cuid())
   name            String?
-  email           String?       @unique
-  phone           String?       @unique
-  walletAvailable Float?        @default(0)
-  walletSecured   Float?        @default(0)
-  createdAt       DateTime      @default(now()) @map("created_at")
-  updatedAt       DateTime      @updatedAt @map("updated_at")
-  groups          Groups[]
-  usersGroups     UsersGroups[]
-  accounts        Accounts[]
-  sessions        Sessions[]
+  email           String?     @unique
+  emailVerified   DateTime?   @map("email_verified")
+  image           String?
+  phone           String?     @unique
+  walletAvailable Float?      @default(0)
+  walletSecured   Float?      @default(0)
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+  groups          Group[]
+  usersGroups     UserGroup[]
+  accounts        Account[]
+  sessions        Session[]
 
   @@map(name: "users")
 }
 
-model Services {
+model Service {
   id        String   @id @default(cuid())
   name      String
   price     Float
   value     String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  plans     Plans[]
+  plan      Plan[]
 
   @@map(name: "services")
 }
 
-model Plans {
+model Plan {
   id        String   @id @default(cuid())
   adminGet  Float
   joinerPay Float
   maxUsers  Int
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  service   Services @relation(fields: [serviceId], references: [id])
+  service   Service  @relation(fields: [serviceId], references: [id])
   serviceId String
-  groups    Groups[]
+  groups    Group[]
 
   @@map(name: "plans")
 }
 
-model Groups {
-  id                 String        @id @default(cuid())
-  verified           Boolean       @default(false)
+model Group {
+  id                 String      @id @default(cuid())
+  verified           Boolean     @default(false)
   credentialEmail    String
   credentialPassword String
-  createdAt          DateTime      @default(now()) @map("created_at")
-  updatedAt          DateTime      @updatedAt @map("updated_at")
-  admin              Users         @relation(fields: [adminId], references: [id])
+  createdAt          DateTime    @default(now()) @map("created_at")
+  updatedAt          DateTime    @updatedAt @map("updated_at")
+  admin              User        @relation(fields: [adminId], references: [id])
   adminId            String
-  plan               Plans         @relation(fields: [planId], references: [id])
+  plan               Plan        @relation(fields: [planId], references: [id])
   planId             String
-  usersGroups        UsersGroups[]
+  userGroups         UserGroup[]
 
   @@map(name: "groups")
 }
 
-model UsersGroups {
+model UserGroup {
   id          String   @id @default(cuid())
   joinedAt    DateTime @default(now())
   periodStart DateTime
   periodEnd   DateTime
   securityEnd DateTime
-  user        Users    @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
   userId      String
-  group       Groups   @relation(fields: [groupId], references: [id])
+  group       Group    @relation(fields: [groupId], references: [id])
   groupId     String
 
-  @@map(name: "usersGroups")
+  @@map(name: "userGroups")
 }
