@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 
-import Header from 'components/Header';
+import Header from 'screens/landing/Header';
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div>
       <Header />
     </div>
   );
