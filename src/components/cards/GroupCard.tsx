@@ -4,9 +4,6 @@ import { GroupCardInfo } from 'request/groups/getAllGroups';
 // Libraries
 import Image from 'next/image';
 
-import disneyCardImg from '@images/disney-card.png';
-import verifiedImg from '@icons/verified.png';
-
 type GroupCardProps = {
   group: GroupCardInfo;
 };
@@ -15,7 +12,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   return (
     <article className="flex flex-col shadow-xl rounded-xl mb-6">
       <div className="w-auto">
-        <Image src={disneyCardImg} layout="responsive" />
+        <Image src="/img/services/disney-logo.png" layout="responsive" />
       </div>
       <ul className="grid mx-4 my-3 grid-cols-2 gap-y-4 lg:flex lg:flex-col lg:items-center lg:text-center">
         <li>
@@ -57,7 +54,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
       {group.verified ? (
         <h3 className="flex justify-center">
           <div>
-            <Image src={verifiedImg} width="15" height="15" />
+            <Image src="/icons/verified.png" width="15" height="15" />
           </div>
           <p className="text-sm text-green-400 ml-1">
             Credenciales Verificadas

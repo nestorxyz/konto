@@ -15,13 +15,9 @@ const LandingGroups: React.FC<LandingGroupsProps> = ({ groups }) => {
         Grupos disponibles
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 lg:grid-cols-3">
-        {groups ? (
-          groups.map((group) => {
-            return <GroupCard key={group.id} group={group} />;
-          })
-        ) : (
-          <h2>Loading...</h2>
-        )}
+        {groups.map((group) => {
+          return <GroupCard key={group.id} group={group} />;
+        })}
       </div>
     </div>
   );

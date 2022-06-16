@@ -6,7 +6,7 @@ import { GroupCardInfo } from 'request/groups/getAllGroups';
 import { useSession } from 'next-auth/react';
 
 // Components
-import Landing from 'screens/Landing';
+import Landing from 'screens/landing';
 
 // Request
 import getAllGroups from 'request/groups/getAllGroups';
