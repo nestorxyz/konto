@@ -41,26 +41,27 @@ const LandingFAQ = () => {
         <h3 className="text-primary font-bold">¿Es seguro?</h3>
         <p className="text-dark-sub">
           Tu seguridad es lo más importante para nosotros. Por ello:
-          <ul>
-            <li>
-              • En la plataforma podrás ver si las credenciales del grupo han
-              sido verificadas
-            </li>
-            <li>
-              • Hay un periodo de validación para proteger a los joiner en caso
-              de problemas. Por el momento es de 14 días.
-            </li>
-            <li>
-              • Como admin cuando alguien se una a tu grupo, recibirás el monto
-              automáticamente en tu wallet y podrás retirarlo después del
-              periodo de validación.
-            </li>
-            <li>
-              • Como Joiner tendrás 14 días para presentar un reclamo y
-              solicitar reembolso.
-            </li>
-          </ul>
         </p>
+
+        <ul>
+          <li>
+            • En la plataforma podrás ver si las credenciales del grupo han sido
+            verificadas
+          </li>
+          <li>
+            • Hay un periodo de validación para proteger a los joiner en caso de
+            problemas. Por el momento es de 14 días.
+          </li>
+          <li>
+            • Como admin cuando alguien se una a tu grupo, recibirás el monto
+            automáticamente en tu wallet y podrás retirarlo después del periodo
+            de validación.
+          </li>
+          <li>
+            • Como Joiner tendrás 14 días para presentar un reclamo y solicitar
+            reembolso.
+          </li>
+        </ul>
       </article>
     </section>
   );
