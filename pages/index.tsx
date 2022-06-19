@@ -2,11 +2,12 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import { GroupCardInfo } from 'request/groups/getAllGroups';
 
-// Libraries
+// Hooks
 import { useSession } from 'next-auth/react';
 
 // Components
 import Landing from 'screens/landing';
+import Dashboard from 'screens/dashboard';
 
 // Request
 import getAllGroups from 'request/groups/getAllGroups';
@@ -16,16 +17,10 @@ type HomeProps = {
 };
 
 const Home: NextPage<HomeProps> = ({ groups }) => {
-  const { data: session } = useSession();
+  const { status } = useSession();
 
-  console.log(groups);
-
-  if (session) {
-    return (
-      <>
-        Signed in as {session?.user?.email} <br />
-      </>
-    );
+  if (status === 'authenticated') {
+    return <Dashboard />;
   }
   return <Landing groups={groups} />;
 };
