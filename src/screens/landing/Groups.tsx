@@ -1,5 +1,5 @@
 // Types
-import { GroupCardInfo } from 'request/groups/getAllGroups';
+import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
 // Components
 import GroupCard from 'components/cards/GroupCard';

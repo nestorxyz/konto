@@ -1,5 +1,5 @@
 // Types
-import { GroupCardInfo } from 'request/groups/getAllGroups';
+import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
 // Libraries
 import Image from 'next/image';

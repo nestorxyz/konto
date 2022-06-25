@@ -2,7 +2,7 @@
 import { Fragment } from 'react';
 
 // Types
-import { GroupCardInfo } from 'request/groups/getAllGroups';
+import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
 // Components
 import Header from 'screens/landing/Header';

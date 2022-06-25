@@ -1,6 +1,6 @@
 // Types
 import type { NextPage, GetServerSideProps } from 'next';
-import { GroupCardInfo } from 'request/groups/getAllGroups';
+import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
 // Hooks
 import { useSession } from 'next-auth/react';
@@ -10,7 +10,7 @@ import Landing from 'screens/landing';
 import Dashboard from 'screens/dashboard';
 
 // Request
-import getAllGroups from 'request/groups/getAllGroups';
+import getAllGroups from 'request/prisma/groups/getAllGroups';
 
 type HomeProps = {
   groups: GroupCardInfo[];
