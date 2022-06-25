@@ -4,4 +4,5 @@ export interface IconProps {
   size?: number;
   width?: number;
   height?: number;
+  set?: 'bold' | 'broken' | 'bulk' | 'curved' | 'light';
 }

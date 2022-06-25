@@ -12,9 +12,15 @@ import {
   Spacer,
 } from '@nextui-org/react';
 
+// Types
+import { Plan } from 'request/prisma/plans/getAllPlans';
+
+// Hooks
+import { useSession } from 'next-auth/react';
+
 // Request
 import AxiosGetAllPlans from 'request/local_next/plans/AxiosGetAllPlans';
-import { Plan } from 'request/prisma/plans/getAllPlans';
+import AxiosCreateGroup from 'request/local_next/groups/AxiosCreateGroup';
 
 interface ICreateGroupModalProps {
   open?: boolean;
@@ -26,16 +32,31 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
   setOpen,
 }) => {
   const { data, error } = useSwr<Plan[]>('plans', AxiosGetAllPlans);
+  const { data: session } = useSession();
 
   const formik = useFormik({
     initialValues: {
       plan: data ? data[0].id : '',
+      credentialEmail: '',
+      credentialPassword: '',
     },
     validationSchema: Yup.object({
       plan: Yup.string().required('El plan es requerido'),
+      credentialEmail: Yup.string()
+        .email('El correo es inválido')
+        .required('El correo es requerido'),
+      credentialPassword: Yup.string().required('La contraseña es requerida'),
     }),
     onSubmit: async (values) => {
-      console.log('values:', values);
+      const { plan, credentialEmail, credentialPassword } = values;
+
+      const result = await AxiosCreateGroup({
+        adminId: session!.user!.id,
+        planId: plan,
+        credentialEmail,
+        credentialPassword,
+      });
+      console.log('result:', result);
       setOpen(false);
     },
   });
@@ -103,13 +124,58 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
                 clearable
                 size="xl"
                 color="primary"
+                name="credentialEmail"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.credentialEmail}
+                status={
+                  formik.errors.credentialEmail &&
+                  formik.touched.credentialEmail
+                    ? 'error'
+                    : 'default'
+                }
+                helperColor="error"
+                helperText={
+                  formik.errors.credentialEmail &&
+                  formik.touched.credentialEmail
+                    ? formik.errors.credentialEmail
+                    : ''
+                }
               />
-              <Input.Password label="Contraseña" size="xl" color="primary" />
+              <Spacer y={0.1} />
+
+              <Input.Password
+                label="Contraseña"
+                size="xl"
+                color="primary"
+                name="credentialPassword"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.credentialPassword}
+                status={
+                  formik.errors.credentialPassword &&
+                  formik.touched.credentialPassword
+                    ? 'error'
+                    : 'default'
+                }
+                helperColor="error"
+                helperText={
+                  formik.errors.credentialPassword &&
+                  formik.touched.credentialPassword
+                    ? formik.errors.credentialPassword
+                    : ''
+                }
+              />
             </>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" color="primary">
+          <Button
+            size="lg"
+            type="submit"
+            color="primary"
+            disabled={!formik.isValid}
+          >
             Crear
           </Button>
         </Modal.Footer>

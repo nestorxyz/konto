@@ -1,6 +1,6 @@
 // Libraries
 import { NextApiHandler } from 'next';
-import NextAuth from 'next-auth';
+import NextAuth, { SessionStrategy } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
@@ -27,5 +27,22 @@ const options = {
   pages: {
     signIn: '/login',
     signUp: '/signup',
+  },
+  callbacks: {
+    session: async ({ session, token }: any) => {
+      if (session?.user) {
+        session.user.id = token.uid;
+      }
+      return session;
+    },
+    jwt: async ({ user, token }: any) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: 'jwt',
   },
 };
