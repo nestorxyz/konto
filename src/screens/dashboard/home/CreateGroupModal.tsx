@@ -1,7 +1,9 @@
 // Libraries
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useSwr from 'swr';
+import toast from 'react-hot-toast';
 import {
   Modal,
   Text,
@@ -10,6 +12,7 @@ import {
   Button,
   Input,
   Spacer,
+  Loading,
 } from '@nextui-org/react';
 
 // Types
@@ -34,6 +37,8 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
   const { data, error } = useSwr<Plan[]>('plans', AxiosGetAllPlans);
   const { data: session } = useSession();
 
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       plan: data ? data[0].id : '',
@@ -48,6 +53,7 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
       credentialPassword: Yup.string().required('La contraseña es requerida'),
     }),
     onSubmit: async (values) => {
+      setLoading(true);
       const { plan, credentialEmail, credentialPassword } = values;
 
       const result = await AxiosCreateGroup({
@@ -56,8 +62,15 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
         credentialEmail,
         credentialPassword,
       });
-      console.log('result:', result);
-      setOpen(false);
+
+      if (result.error) {
+        setOpen(false);
+        toast.error(result.error);
+      } else {
+        setOpen(false);
+        toast.success('Grupo creado correctamente');
+      }
+      setLoading(false);
     },
   });
 
@@ -174,9 +187,9 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
             size="lg"
             type="submit"
             color="primary"
-            disabled={!formik.isValid}
+            disabled={!formik.isValid || loading}
           >
-            Crear
+            {loading ? <Loading size="sm" color="primary" /> : 'Crear grupo'}
           </Button>
         </Modal.Footer>
       </form>

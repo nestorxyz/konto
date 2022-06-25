@@ -1,6 +1,7 @@
 // Libraries
 import { SessionProvider } from 'next-auth/react';
 import { NextUIProvider, createTheme } from '@nextui-org/react';
+import { Toaster } from 'react-hot-toast';
 
 // Types
 import type { AppProps } from 'next/app';
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <NextUIProvider theme={theme}>
+        <Toaster />
         <Component {...pageProps} />
       </NextUIProvider>
     </SessionProvider>
