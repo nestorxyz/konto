@@ -1,8 +1,9 @@
-// Types
-import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
-
 // Libraries
 import Image from 'next/image';
+import { Button, Card } from '@nextui-org/react';
+
+// Types
+import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
 type GroupCardProps = {
   group: GroupCardInfo;
@@ -10,17 +11,18 @@ type GroupCardProps = {
 
 const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   return (
-    <article className="flex flex-col shadow-xl rounded-xl mb-6">
-      <div className="w-auto relative">
-        <Image src="/img/services/disney-logo.png" layout="fill" />
-      </div>
-      <ul className="grid mx-4 my-3 grid-cols-2 gap-y-4 lg:flex lg:flex-col lg:items-center lg:text-center">
+    <Card isHoverable variant="bordered" css={{ w: '320px' }}>
+      <img
+        src="/img/services/disney-logo.png"
+        className="object-cover h-20 rounded-t-xl"
+      />
+      <ul className="grid mx-4 my-3 grid-cols-2 lg:flex lg:flex-col lg:items-center lg:text-center">
         <li>
           <h3 className="text-xs text-dark-sub lg:text-xl lg:font-semibold">
-            Comparte Disney + con
+            Comparte {group.plan.service.name} con
           </h3>
           <h4 className="text-sm text-primary font-bold lg:text-2xl">
-            {group.admin.name}
+            {group.admin.name?.split(' ')[0]}
           </h4>
         </li>
         <li className="flex flex-col items-center">
@@ -28,8 +30,8 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
             Precio Mensual de
           </h3>
           <h4 className="text-sm text-primary font-bold ">
-            <s className="font-bold text-sm text-dark-form lg:text-2xl">
-              S/ {group.plan.service.price}
+            <s className="font-bold text-sm text-gray-400 lg:text-2xl">
+              S/ {group.plan.joinerPay}
             </s>
             <span className="font-bold text-sm text-primary ml-5 lg:text-2xl">
               S/ {group.plan.service.price}
@@ -41,15 +43,12 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
             Número de Integrantes
           </h3>
           <h4 className="text-sm text-primary font-bold lg:text-2xl">
-            {group.userGroups.length}/{group.plan.maxUsers}
+            {group.userGroups.length + 1}/{group.plan.maxUsers}
           </h4>
         </li>
-        <button
-          className="py-3 px-2 bg-secondary rounded-md lg:w-52 lg:font-semibold lg:text-xl"
-          type="submit"
-        >
+        <Button type="submit" color="secondary" auto size="lg">
           Unirse al Grupo
-        </button>
+        </Button>
       </ul>
       {group.verified ? (
         <h3 className="flex justify-center">
@@ -65,7 +64,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
           Credenciales en verificación
         </h3>
       )}
-    </article>
+    </Card>
   );
 };
 

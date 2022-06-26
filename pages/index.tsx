@@ -27,7 +27,6 @@ const Home: NextPage<HomeProps> = ({ groups }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const groups: GroupCardInfo[] = await getAllGroups();
-  console.log('groups:', groups);
 
   return {
     props: {

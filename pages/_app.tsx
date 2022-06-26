@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <NextUIProvider theme={theme}>
-        <Toaster />
+        <Toaster position="bottom-center" reverseOrder={false} />
         <Component {...pageProps} />
       </NextUIProvider>
     </SessionProvider>

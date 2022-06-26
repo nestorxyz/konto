@@ -26,6 +26,7 @@ const getAllGroups = async () => {
               price: true,
             },
           },
+          joinerPay: true,
           maxUsers: true,
         },
       },
@@ -52,6 +53,7 @@ export type GroupCardInfo = {
   };
   plan: {
     maxUsers: number;
+    joinerPay: number;
     service: {
       id: string;
       name: string;
