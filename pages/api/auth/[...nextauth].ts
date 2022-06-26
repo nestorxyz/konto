@@ -1,6 +1,6 @@
 // Libraries
 import { NextApiHandler } from 'next';
-import NextAuth, { SessionStrategy } from 'next-auth';
+import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
@@ -43,6 +43,6 @@ const options = {
     },
   },
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt' as any,
   },
 };
