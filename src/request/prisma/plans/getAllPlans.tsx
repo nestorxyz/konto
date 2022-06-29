@@ -1,6 +1,3 @@
-// Libraries
-import { Prisma } from '@prisma/client';
-
 // Libs
 import prisma from 'lib/prisma';
 
