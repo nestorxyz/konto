@@ -5,9 +5,6 @@ import { Button } from '@nextui-org/react';
 import { Dispatch, SetStateAction } from 'react';
 import { DashboardPages } from 'screens/dashboard';
 
-// Hooks
-import { useSession } from 'next-auth/react';
-
 // Components
 import UserDropdown from 'screens/dashboard/nav/UserDropdown';
 
@@ -36,8 +33,6 @@ const pages: TPage[] = [
 ];
 
 const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
-  const { data: session } = useSession();
-
   return (
     <>
       <header className="flex p-6 items-center lg:mx-12 xl:mx-24">
