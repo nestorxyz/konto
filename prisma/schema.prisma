@@ -49,20 +49,22 @@ model VerificationToken {
 }
 
 model User {
-  id              String      @id @default(cuid())
-  name            String?
-  email           String?     @unique
-  emailVerified   DateTime?   @map("email_verified")
-  image           String?
-  phone           String?     @unique
-  walletAvailable Float?      @default(0)
-  walletSecured   Float?      @default(0)
-  createdAt       DateTime    @default(now()) @map("created_at")
-  updatedAt       DateTime    @updatedAt @map("updated_at")
-  groups          Group[]
-  usersGroups     UserGroup[]
-  accounts        Account[]
-  sessions        Session[]
+  id               String      @id @default(cuid())
+  name             String?
+  email            String?     @unique
+  emailVerified    DateTime?   @map("email_verified")
+  image            String?
+  phone            String?     @unique
+  phoneVerified    Boolean?
+  verificationCode String?
+  walletAvailable  Float?      @default(0)
+  walletSecured    Float?      @default(0)
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+  groups           Group[]
+  usersGroups      UserGroup[]
+  accounts         Account[]
+  sessions         Session[]
 
   @@map(name: "users")
 }
