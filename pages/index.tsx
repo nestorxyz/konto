@@ -22,6 +22,7 @@ const Home: NextPage<HomeProps> = ({ groups }) => {
   if (status === 'authenticated') {
     return <Dashboard />;
   }
+
   return <Landing groups={groups} />;
 };
 

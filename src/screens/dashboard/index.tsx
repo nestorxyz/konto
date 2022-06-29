@@ -1,9 +1,13 @@
 // Libraries
 import React, { useState } from 'react';
 
+// Hooks
+import useUser from 'hooks/useUser';
+
 // Components
 import Header from './Header';
 import Home from './home';
+import AddPhone from './onboarding/AddPhone';
 
 export enum DashboardPages {
   home = 'home',
@@ -14,6 +18,17 @@ export enum DashboardPages {
 
 const Dashboard: React.FC = () => {
   const [screen, setScreen] = useState<keyof typeof DashboardPages>('home');
+  const { loading, user } = useUser();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Not logged in</div>;
+  }
+
+  if (!user.phone) return <AddPhone />;
 
   return (
     <div>
