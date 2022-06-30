@@ -4,11 +4,18 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Input, Button, Loading } from '@nextui-org/react';
 
+// Hooks
+import useUser from 'hooks/useUser';
+
+// Request
+import AxiosAddPhone from 'request/local_next/users/AxiosAddPhone';
+
 // Components
 import OnboardingContainer from './OnboardingContainer';
 
 const AddPhoneOnboarding: React.FC<{}> = () => {
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   const formik = useFormik({
     initialValues: {
@@ -16,6 +23,26 @@ const AddPhoneOnboarding: React.FC<{}> = () => {
     },
     validationSchema: Yup.object({
       phone: Yup.string().required('El teléfono es requerido'),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        await AxiosAddPhone(user!.id, values.phone);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    },
+  });
+
+  const formikVerifyPhone = useFormik({
+    initialValues: {
+      verificationCode: '',
+    },
+    validationSchema: Yup.object({
+      verificationCode: Yup.string().required(
+        'El código de verificación es requerido'
+      ),
     }),
     onSubmit: async (values) => {
       console.log(values);
@@ -57,9 +84,58 @@ const AddPhoneOnboarding: React.FC<{}> = () => {
     );
   };
 
+  const VerifyPhone: React.FC = () => {
+    return (
+      <>
+        <h2 className="text-gray-800 mx-auto mb-10 text-center">
+          Ingresa el código que enviamos a tu WhatsApp
+        </h2>
+        <form
+          onSubmit={formikVerifyPhone.handleSubmit}
+          className="w-full flex flex-col"
+        >
+          <Input
+            underlined
+            placeholder="Ej. 989009435"
+            color="primary"
+            size="xl"
+            type="tel"
+            className="mb-6"
+            name="phone"
+            aria-label="Número de teléfono"
+            value={formikVerifyPhone.values.verificationCode}
+            onChange={formikVerifyPhone.handleChange}
+            onBlur={formikVerifyPhone.handleBlur}
+            status={
+              formikVerifyPhone.errors.verificationCode &&
+              formikVerifyPhone.touched.verificationCode
+                ? 'error'
+                : 'default'
+            }
+            helperColor="error"
+            helperText={
+              formikVerifyPhone.errors.verificationCode &&
+              formikVerifyPhone.touched.verificationCode
+                ? formikVerifyPhone.errors.verificationCode
+                : ''
+            }
+          />
+          <Button
+            size="lg"
+            type="submit"
+            disabled={!formikVerifyPhone.isValid || loading}
+          >
+            {loading ? <Loading size="sm" color="primary" /> : 'Agregar número'}
+          </Button>
+        </form>
+      </>
+    );
+  };
+
   return (
-    <OnboardingContainer className="min-w-[320px] md:w-lg mt-8 mx-auto">
-      <AddPhone />
+    <OnboardingContainer className="min-w-[320px] md:w-96 mt-8 mx-auto">
+      {user && !user.phone && <AddPhone />}
+      {user && !user.phoneVerified && <VerifyPhone />}
     </OnboardingContainer>
   );
 };
