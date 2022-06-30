@@ -19,18 +19,18 @@ const sendVerificationCode = async (
     const response = await generatePhoneVerification({ userId });
 
     const message = await axios.post(
-      'https://graph.facebook.com/v13.0/me/messages',
+      'https://graph.facebook.com/v13.0/112374838181660/messages',
       {
         messaging_product: 'whatsapp',
         to: user?.phone,
         text: {
-          body: `Your verification code is: ${response}`,
+          body: `Bienvenido a Konto 🥳!!! Aquí tienes tu código de verificación: ${response}`,
         },
       },
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Beare' + token,
+          Authorization: 'Bearer ' + token,
         },
       }
     );
@@ -39,6 +39,8 @@ const sendVerificationCode = async (
 
     res.status(200).json('message');
   } catch (error) {
+    console.error('sendVerificationCode Error:', error);
+
     res.status(500).json({ error });
   }
 };
