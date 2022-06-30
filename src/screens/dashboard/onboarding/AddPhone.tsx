@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 import { Input, Button, Loading } from '@nextui-org/react';
 
 // Hooks
@@ -9,13 +10,26 @@ import useUser from 'hooks/useUser';
 
 // Request
 import AxiosAddPhone from 'request/local_next/users/AxiosAddPhone';
+import AxiosSendVerificationCode from 'request/local_next/verificationCode/AxiosSendVerificationCode';
 
 // Components
 import OnboardingContainer from './OnboardingContainer';
 
 const AddPhoneOnboarding: React.FC<{}> = () => {
   const [loading, setLoading] = useState(false);
+  const [sendingCode, setSendingCode] = useState(false);
   const { user } = useUser();
+
+  const handleSendCode = async () => {
+    setSendingCode(true);
+    try {
+      await AxiosSendVerificationCode(user!.id as string);
+      toast.success('Verification code sent');
+    } catch (error) {
+      toast.error('Error enviando el código de verificación');
+    }
+    setSendingCode(false);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -120,12 +134,28 @@ const AddPhoneOnboarding: React.FC<{}> = () => {
                 : ''
             }
           />
+          <div className="flex mb-6 justify-end">
+            <Button
+              color="success"
+              auto
+              size="sm"
+              className="w-fit"
+              onClick={handleSendCode}
+            >
+              {sendingCode ? 'Enviando...' : 'Enviar código'}
+            </Button>
+          </div>
+
           <Button
             size="lg"
             type="submit"
             disabled={!formikVerifyPhone.isValid || loading}
           >
-            {loading ? <Loading size="sm" color="primary" /> : 'Agregar número'}
+            {loading ? (
+              <Loading size="sm" color="primary" />
+            ) : (
+              'Verificar número'
+            )}
           </Button>
         </form>
       </>
