@@ -35,8 +35,6 @@ const sendVerificationCode = async (
       }
     );
 
-    console.log(message);
-
     res.status(200).json('message');
   } catch (error) {
     console.error('sendVerificationCode Error:', error);

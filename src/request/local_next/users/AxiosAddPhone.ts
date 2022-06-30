@@ -11,8 +11,6 @@ const AxiosAddPhone = async (userId: string, phone: string) => {
 
     return result.data;
   } catch (error) {
-    console.error('AxiosAddPhone Error:', error);
-
     if (error instanceof Error) return error;
 
     return new Error(`Error al ejecutar AxiosAddPhone: ${error}`);
