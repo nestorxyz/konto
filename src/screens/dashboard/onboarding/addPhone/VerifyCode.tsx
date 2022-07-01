@@ -15,7 +15,7 @@ import AxiosValidatePhoneCode from 'request/local_next/verification/AxiosValidat
 const VerifyPhone: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
-  const { user, setUser } = useUser();
+  const { user, refreshUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
@@ -34,13 +34,13 @@ const VerifyPhone: React.FC = () => {
         code: values.verificationCode,
       });
 
-      console.log(response);
-
       if (response) {
+        refreshUser();
         toast.success('El número de teléfono ha sido verificado');
       } else {
         toast.error('El código de verificación es incorrecto');
       }
+      setLoading(false);
     },
   });
 

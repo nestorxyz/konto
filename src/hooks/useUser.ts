@@ -20,7 +20,7 @@ const useUser = () => {
   const [loading, setLoading] = useState(false);
   const { status, data: session } = useSession();
 
-  const getUser = async () => {
+  const refreshUser = async () => {
     setLoading(true);
     const user = await AxiosGetUserInfo(session!.user!.id);
     setUser(user);
@@ -35,11 +35,11 @@ const useUser = () => {
     if (status === 'unauthenticated') {
       setUser(initialState);
     } else if (status === 'authenticated') {
-      getUser();
+      refreshUser();
     }
   }, [status]);
 
-  return { user, loading, setUser };
+  return { user, loading, refreshUser };
 };
 
 export default useUser;
