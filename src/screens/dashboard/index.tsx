@@ -7,7 +7,7 @@ import useUser from 'hooks/useUser';
 // Components
 import Header from './Header';
 import Home from './home';
-import AddPhone from './onboarding/AddPhone';
+import AddPhone from './onboarding/addPhone';
 
 export enum DashboardPages {
   home = 'home',
