@@ -23,7 +23,7 @@ const pages: TPage[] = [
     page: 'home',
   },
   {
-    name: 'Grupos',
+    name: 'Mis Grupos',
     page: 'groups',
   },
   {
@@ -40,17 +40,17 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
           <img src="/logo.svg" width="58" height="61.5" />
           <p className="font-bold text-4xl text-primary ml-4">Konto</p>
         </button>
-        <div className="hidden md:inline-flex">
+        <div className="hidden md:inline-flex md:gap-10 lg:gap-15 ml-auto mr-5">
           {pages.map((page) => {
             return (
-              <Button light onClick={() => setScreen(page.page)}>
+              <Button size="xl" auto light onClick={() => setScreen(page.page)}>
                 {page.name}
               </Button>
             );
           })}
         </div>
 
-        <div className="ml-auto">
+        <div>
           <UserDropdown setScreen={setScreen} />
         </div>
       </header>

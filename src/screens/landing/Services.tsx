@@ -26,7 +26,7 @@ const LandingServices: React.FC = () => {
             </h4>
           </div>
           <h5 className="text-xs lg:text-2xl">Ahorras S/214 al año</h5>
-          <Link href="/registro">
+          <Link href="/login">
             <a className="py-3 px-5 bg-secondary rounded-md m-6 text-center lg:w-52 lg:text-2xl">
               Registrarse
             </a>
