@@ -1,8 +1,9 @@
+import { User } from '@prisma/client';
 import { AxiosApi } from 'request/AxiosBase';
 
 const AxiosAddPhone = async (userId: string, phone: string) => {
   try {
-    const result = await AxiosApi.post(`/users/addPhone`, {
+    const result = await AxiosApi.post<User>(`/users/addPhone`, {
       userId,
       phone,
     });

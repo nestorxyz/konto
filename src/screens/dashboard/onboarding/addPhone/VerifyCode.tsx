@@ -9,12 +9,13 @@ import { Input, Button, Loading } from '@nextui-org/react';
 import useUser from 'hooks/useUser';
 
 // Request
-import AxiosSendVerificationCode from 'request/local_next/verificationCode/AxiosSendVerificationCode';
+import AxiosSendVerificationCode from 'request/local_next/verification/AxiosSendVerificationCode';
+import AxiosValidatePhoneCode from 'request/local_next/verification/AxiosValidatePhoneCode';
 
 const VerifyPhone: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
@@ -26,7 +27,20 @@ const VerifyPhone: React.FC = () => {
       ),
     }),
     onSubmit: async (values) => {
-      console.log(values);
+      setLoading(true);
+
+      const response = await AxiosValidatePhoneCode({
+        userId: user!.id,
+        code: values.verificationCode,
+      });
+
+      console.log(response);
+
+      if (response) {
+        toast.success('El número de teléfono ha sido verificado');
+      } else {
+        toast.error('El código de verificación es incorrecto');
+      }
     },
   });
 

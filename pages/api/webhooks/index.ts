@@ -8,7 +8,7 @@ const handleWhatsappWebhook = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  if (req.method === 'POST') {
+  /* if (req.method === 'POST') {
     let body = req.body;
 
     // Check the Incoming webhook message
@@ -47,7 +47,7 @@ const handleWhatsappWebhook = async (
       // Return a '404 Not Found' if event is not from a WhatsApp API
       res.status(404);
     }
-  }
+  } */
 
   if (req.method === 'GET') {
     const verify_token = process.env.VERIFY_TOKEN;

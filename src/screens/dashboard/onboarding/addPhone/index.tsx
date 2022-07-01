@@ -12,7 +12,7 @@ const AddPhoneOnboarding: React.FC<{}> = () => {
   return (
     <OnboardingContainer className="min-w-[320px] md:w-96 mt-8 mx-auto">
       {user && !user.phone && <AddPhone />}
-      {user && !user.phoneVerified && <VerifyPhone />}
+      {user && user.phone && !user.phoneVerified && <VerifyPhone />}
     </OnboardingContainer>
   );
 };

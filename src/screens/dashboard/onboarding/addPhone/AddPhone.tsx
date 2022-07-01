@@ -4,6 +4,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Input, Button, Loading } from '@nextui-org/react';
 
+// Types
+import { User } from '@prisma/client';
+
 // Hooks
 import useUser from 'hooks/useUser';
 
@@ -12,19 +15,22 @@ import AxiosAddPhone from 'request/local_next/users/AxiosAddPhone';
 
 const AddPhone: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
       phone: '',
     },
     validationSchema: Yup.object({
-      phone: Yup.string().required('El teléfono es requerido'),
+      phone: Yup.string()
+        .required('El teléfono es requerido')
+        .max(9, 'El teléfono debe tener 9 dígitos'),
     }),
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        await AxiosAddPhone(user!.id, values.phone);
+        const response = await AxiosAddPhone(user!.id, values.phone);
+        setUser(response as User);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -38,11 +44,12 @@ const AddPhone: React.FC = () => {
       <form onSubmit={formik.handleSubmit} className="w-full flex flex-col">
         <Input
           underlined
+          labelLeft="+51"
           placeholder="Ej. 989009435"
           color="primary"
           size="xl"
           type="tel"
-          className="mb-6"
+          className="mb-1"
           name="phone"
           aria-label="Número de teléfono"
           value={formik.values.phone}
@@ -58,7 +65,13 @@ const AddPhone: React.FC = () => {
               : ''
           }
         />
-        <Button size="lg" type="submit" disabled={!formik.isValid || loading}>
+
+        <Button
+          size="lg"
+          className="mt-10"
+          type="submit"
+          disabled={!formik.isValid || loading}
+        >
           {loading ? <Loading size="sm" color="primary" /> : 'Agregar número'}
         </Button>
       </form>

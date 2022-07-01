@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
 // Request
-import generatePhoneVerification from 'request/prisma/verification/GeneratePhoneVerification';
+import generatePhoneVerification from 'request/prisma/verification/generatePhoneVerification';
 import getUserInfo from 'request/prisma/users/getUserInfo';
 
 const token = process.env.WHATSAPP_TOKEN;
@@ -35,7 +35,9 @@ const sendVerificationCode = async (
       }
     );
 
-    res.status(200).json('message');
+    console.log(message.data);
+
+    res.status(200).json(message.data);
   } catch (error) {
     console.error('sendVerificationCode Error:', error);
 
