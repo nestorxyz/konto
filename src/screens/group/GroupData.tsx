@@ -1,12 +1,14 @@
 // Libraries
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { ShareIcon } from '@heroicons/react/outline';
 import { Button, Text } from '@nextui-org/react';
 
 // Types
 import { GroupInfo } from 'request/prisma/groups/getGroup';
+import { Dispatch, SetStateAction } from 'react';
+import { GroupScreens } from '../../../pages/grupo/[groupId]';
 
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
@@ -16,10 +18,20 @@ import PayModal from 'screens/group/PayModal';
 
 interface IGroupInfoProps {
   group: GroupInfo;
+  setScreen: Dispatch<SetStateAction<keyof typeof GroupScreens>>;
 }
 
-const GroupData: React.FC<IGroupInfoProps> = ({ group }) => {
+const GroupData: React.FC<IGroupInfoProps> = ({ group, setScreen }) => {
   const [showPayModal, setShowPayModal] = useState(false);
+  const { status } = useSession();
+
+  const handleJoinGroup = () => {
+    if (status === 'unauthenticated') {
+      setScreen(GroupScreens.login);
+    } else {
+      setShowPayModal(true);
+    }
+  };
 
   const handleShare = async () => {
     const shareData = {
@@ -59,7 +71,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group }) => {
               auto
               size="xl"
               style={{ width: '150px' }}
-              onClick={() => setShowPayModal(true)}
+              onClick={handleJoinGroup}
             >
               Unirme al grupo 💰
             </Button>
@@ -114,7 +126,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group }) => {
           auto
           size="xl"
           style={{ width: '150px' }}
-          onClick={() => setShowPayModal(true)}
+          onClick={handleJoinGroup}
         >
           Unirme
         </Button>

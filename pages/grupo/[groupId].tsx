@@ -34,7 +34,9 @@ const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
   return (
     <div className="w-full min-h-screen relative flex flex-col">
       <Header className="hidden lg:inline-flex" setScreen={setScreen} />
-      {screen === GroupScreens.group && <GroupData group={group} />}
+      {screen === GroupScreens.group && (
+        <GroupData group={group} setScreen={setScreen} />
+      )}
       {screen === GroupScreens.login && (
         <LoginReusable
           providers={providers}
