@@ -1,5 +1,6 @@
 // Libraries
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { Button, Card } from '@nextui-org/react';
 
 // Types
@@ -10,6 +11,8 @@ type GroupCardProps = {
 };
 
 const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
+  const router = useRouter();
+
   return (
     <Card isHoverable variant="bordered" css={{ w: '320px' }}>
       <img
@@ -46,7 +49,13 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
             {group.userGroups.length + 1}/{group.plan.maxUsers}
           </h4>
         </li>
-        <Button type="submit" color="secondary" auto size="lg">
+        <Button
+          type="submit"
+          color="secondary"
+          auto
+          size="lg"
+          onClick={() => router.push(`group/${group.id}`)}
+        >
           Unirse al Grupo
         </Button>
       </ul>

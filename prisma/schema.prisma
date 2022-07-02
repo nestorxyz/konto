@@ -111,15 +111,22 @@ model Group {
   @@map(name: "groups")
 }
 
+enum UserGroupState {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
 model UserGroup {
-  id          String   @id @default(cuid())
-  joinedAt    DateTime @default(now())
+  id          String         @id @default(cuid())
+  joinedAt    DateTime       @default(now())
   periodStart DateTime
   periodEnd   DateTime
   securityEnd DateTime
-  user        User     @relation(fields: [userId], references: [id])
+  state       UserGroupState
+  user        User           @relation(fields: [userId], references: [id])
   userId      String
-  group       Group    @relation(fields: [groupId], references: [id])
+  group       Group          @relation(fields: [groupId], references: [id])
   groupId     String
 
   @@map(name: "userGroups")

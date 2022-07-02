@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
     return <div>Not logged in</div>;
   }
 
-  if (!user.phone || !user.phoneVerified) return <AddPhone />;
+  if (!user.phone) return <AddPhone />;
 
   return (
     <div>
