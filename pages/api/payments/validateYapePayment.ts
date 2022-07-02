@@ -4,34 +4,35 @@ import sgMail from '@sendgrid/mail';
 
 // Request
 import getUserInfo from 'request/prisma/users/getUserInfo';
-import getPlan from 'request/prisma/plans/getPlan';
+import getGroup from 'request/prisma/groups/getGroup';
 
 const validateYapePayment = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { userId, planId } = req.body;
+  const { userId, groupId } = req.body;
 
   try {
     const user = await getUserInfo(userId);
-    const plan = await getPlan(planId);
+    const group = await getGroup({ groupId });
 
     const msg = {
-      to: 'nmamanipantoja@gmail.com', // Change to your recipient
+      to: 'nestor.mamani@unmsm.edu.pe', // Change to your recipient
       from: 'nmamanipantoja@gmail.com', // Change to your verified sender
       subject: 'VALIDA EL PAGO CON YAPE MI KING',
       text: 'and easy to do anywhere, even with Node.js',
       html: `<strong>Usuario: </strong> ${user!.name}<br>
       <strong>Id del usuario: </strong> ${user!.id}<br>
       <strong>Número del usuario: </strong> ${user!.phone}<br>
-      <strong>Plan: </strong> ${plan!.service.name}<br>
-      <strong>Precio: </strong> ${plan!.joinerPay}<br>
+      <strong>Plan: </strong> ${group!.plan.service.name}<br>
+      <strong>Precio: </strong> ${group!.plan.joinerPay}<br>
       `,
     };
 
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
     await sgMail.send(msg);
 
-    res.status(200);
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error('validateYapePayment Error:', error);
 

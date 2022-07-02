@@ -1,9 +1,15 @@
 // Libraries
+import toast from 'react-hot-toast';
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { Button, Modal, Text } from '@nextui-org/react';
 
 // Types
 import { GroupInfo } from 'request/prisma/groups/getGroup';
+
+// Requests
+import AxiosValidateYapePayments from 'request/local_next/payments/AxiosValidateYapePayment';
 
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
@@ -19,6 +25,21 @@ const PayModal: React.FC<IPayModalProps> = ({
   setShowPayModal,
   group,
 }) => {
+  const { data: session } = useSession();
+  const [loading, setLoading] = useState(false);
+
+  const handlePay = async () => {
+    setLoading(true);
+    const response = await AxiosValidateYapePayments({
+      groupId: group!.id,
+      userId: session?.user?.id as string,
+    });
+    setLoading(false);
+    if (response) {
+      toast.success('Estamos validando tu pago');
+    }
+  };
+
   return (
     <Modal
       closeButton
@@ -75,11 +96,17 @@ const PayModal: React.FC<IPayModalProps> = ({
         <p className="text-gray-600 font-medium">
           Cuando validemos tu pago, te notificaremos
         </p>
-        <Button size="lg" className="mt-6">
-          <LockClosedIcon className="h-6 w-6 text-white" />{' '}
-          <span className="ml-2 text-xl">
-            Validar pago de S/ {group!.plan.joinerPay}
-          </span>
+        <Button size="lg" className="mt-6" onClick={handlePay}>
+          {loading ? (
+            'Enviando información...'
+          ) : (
+            <>
+              <LockClosedIcon className="h-6 w-6 text-white" />{' '}
+              <span className="ml-2 text-xl">
+                Validar pago de S/ {group!.plan.joinerPay}
+              </span>
+            </>
+          )}
         </Button>
       </Modal.Body>
     </Modal>
