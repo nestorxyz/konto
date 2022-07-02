@@ -1,5 +1,6 @@
 // Libraries
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ShareIcon } from '@heroicons/react/outline';
 import { Button, Text } from '@nextui-org/react';
@@ -10,12 +11,15 @@ import { GroupInfo } from 'request/prisma/groups/getGroup';
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
 
+// Components
+import PayModal from 'screens/group/PayModal';
+
 interface IGroupInfoProps {
   group: GroupInfo;
 }
 
 const GroupData: React.FC<IGroupInfoProps> = ({ group }) => {
-  const router = useRouter();
+  const [showPayModal, setShowPayModal] = useState(false);
 
   const handleShare = async () => {
     const shareData = {
@@ -40,50 +44,69 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group }) => {
   };
 
   return (
-    <>
-      <img
-        src={mapServiceToImage(group!.plan.service.value)}
-        className="object-cover w-full h-60"
-      />
-      <div className="py-2 px-4 flex flex-col items-center text-center pb-[126px]">
-        <div className="mb-4">
-          <h4 className="text-gray-800">Grupo compartido de </h4>
-          <h2 className="text-primary">{group!.plan.service.name}</h2>
-          <p>Ofrecido por {group!.admin.name?.split(' ')[0]}</p>
-        </div>
-        <div className="mb-4">
-          <h4 className="text-gray-800">Precio Mensual de</h4>
-          <div className="flex gap-4 justify-center">
-            <h3 className="text-gray-400">
-              <s>S/ {group!.plan.service.price}</s>{' '}
-            </h3>
-
-            <h3 className="text-primary">S/ {group!.plan.joinerPay}</h3>
+    <div className="lg:flex lg:flex-col">
+      <div className="lg:flex lg:mx-20 lg:items-center lg:gap-10 lg:justify-center lg:flex-row-reverse lg:mt-10">
+        <div>
+          <img
+            src={mapServiceToImage(group!.plan.service.value)}
+            className="object-cover w-full h-60 lg:w-96 lg:rounded-lg lg:gap-4"
+          />
+          <div className="hidden lg:inline-flex lg:flex-col lg:items-center mt-6 lg:w-full">
+            <p className="text-gray-600 mb-4 text-2xl font-bold">
+              S/ {group!.plan.joinerPay} cada mes
+            </p>
+            <Button
+              auto
+              size="xl"
+              style={{ width: '150px' }}
+              onClick={() => setShowPayModal(true)}
+            >
+              Unirme al grupo 💰
+            </Button>
           </div>
         </div>
-        <div className="flex gap-4 items-center mb-4">
-          <h4 className="text-gray-600 mb-0">
-            {group!.plan.maxUsers - (group!.userGroups.length + 1)}/
-            {group!.plan.maxUsers} Sitios disponibles
-          </h4>
-          <Button
-            auto
-            light
-            rounded
-            style={{ minWidth: '50px', width: '50px' }}
-            onClick={handleShare}
-          >
-            <ShareIcon className="h-5 w-5 text-gray-500" />
-          </Button>
-        </div>
 
-        <Text blockquote>
-          <p className="text-lg font-semibold">🔑 Credenciales Verificadas</p>
-          Al unirte, se te dará accesso a las credenciales compartidas para que
-          puedas disfrutar de {group!.plan.service.name}.
-        </Text>
+        <div className="py-2 lg:shadow-md lg:rounded-lg lg:p-6 px-4 flex flex-col items-center text-center pb-[126px] lg:max-w-md">
+          <div className="mb-4">
+            <h4 className="text-gray-800">Grupo compartido de </h4>
+            <h2 className="text-primary">{group!.plan.service.name}</h2>
+            <p>Ofrecido por {group!.admin.name?.split(' ')[0]}</p>
+          </div>
+          <div className="mb-4">
+            <h4 className="text-gray-800">Precio Mensual de</h4>
+            <div className="flex gap-4 justify-center">
+              <h3 className="text-gray-400">
+                <s>S/ {group!.plan.service.price}</s>{' '}
+              </h3>
+
+              <h3 className="text-primary">S/ {group!.plan.joinerPay}</h3>
+            </div>
+          </div>
+          <div className="flex gap-4 items-center mb-4">
+            <h4 className="text-gray-600 mb-0">
+              {group!.plan.maxUsers - (group!.userGroups.length + 1)}/
+              {group!.plan.maxUsers} Sitios disponibles
+            </h4>
+            <Button
+              auto
+              light
+              style={{ minWidth: '100px', width: '100px' }}
+              onClick={handleShare}
+            >
+              <ShareIcon className="h-5 w-5 text-gray-500" />{' '}
+              <span className="ml-1 text-gray-500">Compartir</span>
+            </Button>
+          </div>
+
+          <Text blockquote>
+            <p className="text-lg font-semibold">🔑 Credenciales Verificadas</p>
+            Al unirte, se te dará accesso a las credenciales compartidas para
+            que puedas disfrutar de {group!.plan.service.name}.
+          </Text>
+        </div>
       </div>
-      <div className="fixed z-10 py-6 shadow-lg border-t-2 rounded-t-xl bg-gray-50 px-6 justify-between w-full items-center flex bottom-0">
+
+      <div className="fixed z-10 py-6 lg:hidden shadow-lg border-t-2 rounded-t-xl bg-gray-50 px-6 justify-between w-full items-center flex bottom-0">
         <p className="text-gray-700 text-2xl font-bold">
           S/ {group!.plan.joinerPay} cada mes
         </p>
@@ -91,12 +114,18 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group }) => {
           auto
           size="xl"
           style={{ width: '150px' }}
-          onClick={() => router.push(`/unirse/${group!.id}`)}
+          onClick={() => setShowPayModal(true)}
         >
           Unirme
         </Button>
       </div>
-    </>
+
+      <PayModal
+        showPayModal={showPayModal}
+        setShowPayModal={setShowPayModal}
+        group={group}
+      />
+    </div>
   );
 };
 

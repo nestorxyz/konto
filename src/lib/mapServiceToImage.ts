@@ -12,6 +12,8 @@ const mapServiceToImage = (service: string) => {
       return '/icons/google.svg';
     case 'Facebook':
       return '/icons/facebook.svg';
+    case 'yape':
+      return '/img/payment/yape.png';
     default:
       return '/img/services/disney.png';
   }

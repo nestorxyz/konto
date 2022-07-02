@@ -30,7 +30,7 @@ const Login: React.FC<ILoginProps> = ({ providers, callbackUrl }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 px-4">
+    <div className="flex flex-col items-center justify-center lg:justify-start flex-1 px-4">
       <img src="/logo.svg" className="mb-6" />
       <p className="text-gray-800 text-center text-4xl font-bold mb-4">
         Hola! Bienvenido a Konto
