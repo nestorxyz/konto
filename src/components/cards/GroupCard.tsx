@@ -3,6 +3,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Button, Card } from '@nextui-org/react';
 
+// Helpers
+import mapServiceToImage from 'lib/mapServiceToImage';
+
 // Types
 import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
@@ -16,7 +19,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   return (
     <Card isHoverable variant="bordered" css={{ w: '320px' }}>
       <img
-        src="/img/services/disney-logo.png"
+        src={mapServiceToImage(group.plan.service.value)}
         className="object-cover h-20 rounded-t-xl"
       />
       <ul className="grid mx-4 my-3 grid-cols-2 lg:flex lg:flex-col lg:items-center lg:text-center">
@@ -54,7 +57,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
           color="secondary"
           auto
           size="lg"
-          onClick={() => router.push(`group/${group.id}`)}
+          onClick={() => router.push(`grupo/${group.id}`)}
         >
           Unirse al Grupo
         </Button>
