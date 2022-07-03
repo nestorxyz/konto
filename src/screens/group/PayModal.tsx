@@ -1,6 +1,7 @@
 // Libraries
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { Button, Modal, Text } from '@nextui-org/react';
@@ -10,6 +11,9 @@ import { GroupInfo } from 'request/prisma/groups/getGroup';
 
 // Requests
 import AxiosValidateYapePayments from 'request/local_next/payments/AxiosValidateYapePayment';
+
+// Hooks
+import useApp from 'hooks/useApp';
 
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
@@ -25,7 +29,9 @@ const PayModal: React.FC<IPayModalProps> = ({
   setShowPayModal,
   group,
 }) => {
+  const router = useRouter();
   const { data: session } = useSession();
+  const { updateAppRedux, app } = useApp();
   const [loading, setLoading] = useState(false);
 
   const handlePay = async () => {
@@ -35,7 +41,13 @@ const PayModal: React.FC<IPayModalProps> = ({
       userId: session?.user?.id as string,
     });
     setLoading(false);
-    if (response) {
+    if (response.success) {
+      setShowPayModal(false);
+      updateAppRedux({
+        ...app,
+        paymentIntent: true,
+      });
+      router.push('/');
       toast.success('Estamos validando tu pago');
     }
   };
