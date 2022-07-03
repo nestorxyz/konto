@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 
 // Types
 import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
+import { Plan } from 'request/prisma/plans/getAllPlans';
 
 // Components
 import Header from 'screens/landing/Header';
@@ -14,14 +15,15 @@ import Footer from 'screens/landing/Footer';
 
 type LandingProps = {
   groups: GroupCardInfo[];
+  plans: Plan[];
 };
 
-const Landing: React.FC<LandingProps> = ({ groups }) => {
+const Landing: React.FC<LandingProps> = ({ groups, plans }) => {
   return (
     <Fragment>
       <Header />
       <Groups groups={groups} />
-      <Services />
+      <Services plans={plans} />
       <HowWorks />
       <FAQ />
       <Footer />

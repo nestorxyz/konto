@@ -1,9 +1,13 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-import disneyLogo from '@images/disney-logo.png';
+// Types
+import { Plan } from 'request/prisma/plans/getAllPlans';
 
-const LandingServices: React.FC = () => {
+interface ILandingServicesProps {
+  plans: Plan[];
+}
+
+const LandingServices: React.FC<ILandingServicesProps> = ({ plans }) => {
   return (
     <section className="flex flex-col items-center py-6 lg:mt-10">
       <h2 className="text-2xl font-bold mb-6 lg:text-5xl lg:mb-10">

@@ -1,13 +1,7 @@
 import { useState } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
-
-import mobilePayments from '@img/landing/Mobile_payments.svg';
-import newEntries from '@img/landing/New_entries.svg';
-import onlineMedia from '@img/landing/online_media.svg';
-import onlinePayments from '@img/landing/Online_payments.svg';
-import referral from '@img/landing/referral.svg';
-import teamPage from '@img/landing/Team_page.svg';
 
 const LandingHowWorks: React.FC = () => {
   const selectedStyles =
@@ -103,9 +97,9 @@ const LandingHowWorks: React.FC = () => {
           </li>
         </ul>
       )}
-      <Link href="/registro">
+      <Link href="/login">
         <a className="py-3 px-5 bg-secondary rounded-md m-2 font-bold lg:text-2xl ">
-          EZPZ, Quiero registrarme
+          Quiero participar
         </a>
       </Link>
     </section>
