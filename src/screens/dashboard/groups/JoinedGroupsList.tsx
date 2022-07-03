@@ -36,13 +36,13 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                 {joinedGroup.group.plan.service.name}
               </p>
               <Button
-                bordered
+                light
                 size="sm"
                 auto
                 color={joinedGroup.state === 'PENDING' ? 'warning' : 'success'}
                 className="ml-auto"
               >
-                {joinedGroup.state === 'PENDING' ? 'Validando' : 'Activo'}
+                {joinedGroup.state === 'PENDING' ? 'Validando pago' : 'Activo'}
               </Button>
             </div>
 
@@ -52,7 +52,7 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                 alt="Service"
                 className="w-20 h-20 object-cover rounded-lg"
               />
-              <Text blockquote>
+              <Text blockquote className="w-full">
                 {joinedGroup.state === 'PENDING' ? (
                   <p className="text-center">
                     Validando tu pago de S/ {joinedGroup.group.plan.joinerPay}

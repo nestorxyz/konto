@@ -11,10 +11,10 @@ interface IMyGroupsProps {
 
 const MyGroups: React.FC<IMyGroupsProps> = ({ setScreen }) => {
   return (
-    <main className="mx-6 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 justify-center">
-      <AdminGroups />
+    <main className="mx-6 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
+      <AdminGroups className="md:w-80 lg:w-96" />
 
-      <JoinedGroups setScreen={setScreen} />
+      <JoinedGroups className="md:w-80 lg:w-96" setScreen={setScreen} />
     </main>
   );
 };

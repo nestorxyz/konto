@@ -9,6 +9,9 @@ import useUser from 'hooks/useUser';
 import { Dispatch, SetStateAction } from 'react';
 import { DashboardPages } from 'screens/dashboard';
 
+// Helpers
+import classNames from 'lib/classNames';
+
 // Request
 import AxiosGetJoinedGroups from 'request/local_next/userGroups/AxiosGetJoinedGroups';
 
@@ -18,9 +21,13 @@ import JoinedGroupsList from './JoinedGroupsList';
 
 interface IJoinedGroupsProps {
   setScreen: Dispatch<SetStateAction<keyof typeof DashboardPages>>;
+  className?: string;
 }
 
-const JoinedGroups: React.FC<IJoinedGroupsProps> = ({ setScreen }) => {
+const JoinedGroups: React.FC<IJoinedGroupsProps> = ({
+  setScreen,
+  className,
+}) => {
   const { user } = useUser();
 
   const { data: response, error } = useSWR(
@@ -29,7 +36,7 @@ const JoinedGroups: React.FC<IJoinedGroupsProps> = ({ setScreen }) => {
   );
 
   return (
-    <div className="flex flex-col md:w-80">
+    <div className={classNames(className, 'flex flex-col')}>
       <p className="text-2xl text-center font-semibold mb-4">
         Grupos donde participas
       </p>

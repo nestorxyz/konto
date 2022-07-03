@@ -13,6 +13,7 @@ const getAdminGroup = async (userId: string) => {
       credentialPassword: true,
       plan: {
         select: {
+          joinerPay: true,
           adminGet: true,
           maxUsers: true,
           service: {
@@ -30,6 +31,7 @@ const getAdminGroup = async (userId: string) => {
             select: {
               id: true,
               name: true,
+              image: true,
             },
           },
           periodStart: true,

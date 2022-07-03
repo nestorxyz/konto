@@ -5,6 +5,9 @@ import { Loading } from '@nextui-org/react';
 // Hooks
 import useUser from 'hooks/useUser';
 
+// Helpers
+import classNames from 'lib/classNames';
+
 // Request
 import AxiosGetAdminGroups from 'request/local_next/userGroups/AxiosGetAdminGroups';
 
@@ -12,7 +15,11 @@ import AxiosGetAdminGroups from 'request/local_next/userGroups/AxiosGetAdminGrou
 import AdminGroupsList from './AdminGroupsList';
 import EmptyAdminGroups from './EmptyAdminGroups';
 
-const AdminGroups: React.FC = () => {
+interface IAdminGroups {
+  className?: string;
+}
+
+const AdminGroups: React.FC<IAdminGroups> = ({ className }) => {
   const { user } = useUser();
 
   const { data: response, error } = useSWR(
@@ -21,7 +28,7 @@ const AdminGroups: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col md:w-80">
+    <div className={classNames(className, 'flex flex-col')}>
       <p className="text-2xl text-center font-semibold mb-4">
         Grupos que compartes
       </p>
