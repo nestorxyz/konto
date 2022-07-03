@@ -14,6 +14,7 @@ import AxiosGetJoinedGroups from 'request/local_next/userGroups/AxiosGetJoinedGr
 
 // Components
 import EmptyJoinedGroups from './EmptyJoinedGroups';
+import JoinedGroupsList from './JoinedGroupsList';
 
 interface IJoinedGroupsProps {
   setScreen: Dispatch<SetStateAction<keyof typeof DashboardPages>>;
@@ -22,19 +23,23 @@ interface IJoinedGroupsProps {
 const JoinedGroups: React.FC<IJoinedGroupsProps> = ({ setScreen }) => {
   const { user } = useUser();
 
-  const { data, error } = useSWR(
+  const { data: response, error } = useSWR(
     ['/userGroups/getJoinedGroups', user.id],
     AxiosGetJoinedGroups
   );
 
   return (
-    <div className="">
+    <div className="flex flex-col md:w-80">
       <p className="text-2xl text-center font-semibold mb-4">
         Grupos donde participas
       </p>
-      {error === undefined && data === undefined && <Loading />}
-      {data.data && data.data.length > 0 && <div>Joined</div>}
-      {data.data && data.data.length === 0 && (
+      {error === undefined && response === undefined && (
+        <Loading className="mx-auto" />
+      )}
+      {response && response.data.length > 0 && (
+        <JoinedGroupsList joinedGroups={response.data} />
+      )}
+      {response && response.data.length === 0 && (
         <EmptyJoinedGroups setScreen={setScreen} />
       )}
     </div>
