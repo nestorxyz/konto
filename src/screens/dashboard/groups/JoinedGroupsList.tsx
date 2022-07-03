@@ -1,6 +1,6 @@
 // Libraries
 import toast from 'react-hot-toast';
-import { Button, Text, Collapse } from '@nextui-org/react';
+import { Button, Text, Collapse, Card } from '@nextui-org/react';
 
 // Types
 import { JoinedGroup } from 'request/prisma/userGroups/getJoinedGroups';
@@ -65,28 +65,28 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                 )}
               </Text>
             </div>
-            <div className="flex">
-              <Collapse.Group>
-                <Collapse
-                  disabled={joinedGroup.state === 'PENDING' && true}
-                  title={
-                    <p
-                      className={
-                        joinedGroup.state === 'PENDING'
-                          ? 'text-gray-500'
-                          : 'text-gray-800'
-                      }
-                    >
-                      {joinedGroup.state === 'PENDING'
-                        ? 'Cuando validemos el pago tendrás acceso a la cuenta 🥳'
-                        : 'Ver credenciales 😎'}
-                    </p>
-                  }
-                >
-                  <div className="flex flex-col gap-2">
-                    <Text color="primary">
-                      Presiona en las credenciales para copiarlas
-                    </Text>
+            <Collapse.Group>
+              <Collapse
+                disabled={joinedGroup.state === 'PENDING' && true}
+                title={
+                  <p
+                    className={
+                      joinedGroup.state === 'PENDING'
+                        ? 'text-gray-500'
+                        : 'text-gray-800'
+                    }
+                  >
+                    {joinedGroup.state === 'PENDING'
+                      ? 'Cuando validemos el pago tendrás acceso a la cuenta 🥳'
+                      : 'Ver credenciales 😎'}
+                  </p>
+                }
+              >
+                <div className="flex flex-col gap-2">
+                  <Text color="primary">
+                    Presiona en las credenciales para copiarlas
+                  </Text>
+                  <Card variant="flat" isPressable>
                     <Text
                       blockquote
                       onClick={() =>
@@ -95,6 +95,9 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                     >
                       {joinedGroup.group.credentialEmail}
                     </Text>
+                  </Card>
+
+                  <Card variant="flat" isPressable>
                     <Text
                       blockquote
                       onClick={() =>
@@ -103,10 +106,10 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                     >
                       {joinedGroup.group.credentialPassword}
                     </Text>
-                  </div>
-                </Collapse>
-              </Collapse.Group>
-            </div>
+                  </Card>
+                </div>
+              </Collapse>
+            </Collapse.Group>
           </div>
         );
       })}
