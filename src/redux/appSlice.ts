@@ -6,9 +6,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'redux/rootReducer';
 import { AppRedux } from 'types/AppRedux';
 
-export const initialState: AppRedux = {
-  paymentIntent: false,
-};
+export const initialState: AppRedux = {};
 
 export const appSlice = createSlice({
   name: 'app',

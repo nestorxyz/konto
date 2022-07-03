@@ -29,8 +29,8 @@ const validateYapePayment = async (
       `,
     };
 
-    /* sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
-    await sgMail.send(msg); */
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+    await sgMail.send(msg);
 
     res.status(200).json({ success: true });
   } catch (error) {

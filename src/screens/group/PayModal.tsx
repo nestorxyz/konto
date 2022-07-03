@@ -43,12 +43,9 @@ const PayModal: React.FC<IPayModalProps> = ({
     setLoading(false);
     if (response.success) {
       setShowPayModal(false);
-      updateAppRedux({
-        ...app,
-        paymentIntent: true,
-      });
-      router.push('/');
+      localStorage.setItem('paymentIntent', 'true');
       toast.success('Estamos validando tu pago');
+      router.push('/');
     }
   };
 
