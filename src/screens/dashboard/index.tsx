@@ -29,6 +29,9 @@ const Dashboard: React.FC = () => {
 
   if (!user.phone) return <AddPhone />;
 
+  if (localStorage.getItem('paymentIntent') == 'true')
+    localStorage.removeItem('paymentIntent');
+
   return (
     <div>
       <Header setScreen={setScreen} />

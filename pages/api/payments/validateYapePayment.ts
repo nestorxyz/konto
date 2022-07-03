@@ -5,7 +5,7 @@ import sgMail from '@sendgrid/mail';
 // Request
 import getUserInfo from 'request/prisma/users/getUserInfo';
 import getGroup from 'request/prisma/groups/getGroup';
-import userJoinValidating from 'request/prisma/userGroup/userJoinValidating';
+import userJoinValidating from 'request/prisma/userGroups/userJoinValidating';
 
 const validateYapePayment = async (
   req: NextApiRequest,
