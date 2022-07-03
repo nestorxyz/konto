@@ -1,10 +1,8 @@
 // Libraries
-import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { Link, Input, Loading, Button } from '@nextui-org/react';
+import { Link, Input, Button } from '@nextui-org/react';
 
 // Types
 import { Dispatch, SetStateAction } from 'react';
@@ -12,7 +10,6 @@ import { DashboardPages } from 'screens/dashboard';
 
 // Helpers
 import classNames from 'lib/classNames';
-import { kontoGroup_RegExp } from 'lib/customRegEx';
 
 interface IEmptyJoinedGroupsProps {
   setScreen: Dispatch<SetStateAction<keyof typeof DashboardPages>>;
