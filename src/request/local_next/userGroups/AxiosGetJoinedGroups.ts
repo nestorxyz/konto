@@ -2,11 +2,11 @@ import { AxiosApi } from 'request/AxiosBase';
 
 interface IAxiosGetJoinedGroups {
   url: string;
-  userId: string;
+  id: string;
 }
 
 const AxiosGetJoinedGroups = async (params: IAxiosGetJoinedGroups) => {
-  const { userId } = params;
+  const { id: userId } = params;
 
   try {
     const result = await AxiosApi.post('/userGroups/getJoinedGroups', {

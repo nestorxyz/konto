@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
     <div>
       <Header setScreen={setScreen} />
       {screen === DashboardPages.home && <Home />}
-      {screen === DashboardPages.groups && <Groups />}
+      {screen === DashboardPages.groups && <Groups setScreen={setScreen} />}
     </div>
   );
 };
