@@ -5,12 +5,10 @@ interface IAxiosGetAdminGroups {
   id: string;
 }
 
-const AxiosGetAdminGroups = async (params: IAxiosGetAdminGroups) => {
-  const { id: userId } = params;
-
+const AxiosGetAdminGroups = async (url: string, id: string) => {
   try {
     const result = await AxiosApi.post('/userGroups/getAdminGroups', {
-      userId,
+      userId: id,
     });
 
     return result.data;

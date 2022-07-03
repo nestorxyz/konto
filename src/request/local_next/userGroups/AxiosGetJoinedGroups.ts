@@ -5,12 +5,10 @@ interface IAxiosGetJoinedGroups {
   id: string;
 }
 
-const AxiosGetJoinedGroups = async (params: IAxiosGetJoinedGroups) => {
-  const { id: userId } = params;
-
+const AxiosGetJoinedGroups = async (url: string, id: string) => {
   try {
     const result = await AxiosApi.post('/userGroups/getJoinedGroups', {
-      userId,
+      userId: id,
     });
 
     return result.data;

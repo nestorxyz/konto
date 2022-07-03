@@ -7,6 +7,14 @@ import getAdminGroupsRequest from 'request/prisma/userGroups/getAdminGroups';
 const getAdminGroups = async (req: NextApiRequest, res: NextApiResponse) => {
   const { userId } = req.body;
 
+  if (!userId) {
+    res.status(400).json({
+      status: 'error',
+      message: 'No se ha recibido el id del usuario',
+    });
+    return;
+  }
+
   try {
     const response = await getAdminGroupsRequest(userId);
 
