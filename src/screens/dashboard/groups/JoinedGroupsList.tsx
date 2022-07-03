@@ -16,8 +16,6 @@ interface IJoinedGroupsListProps {
 const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
   joinedGroups,
 }) => {
-  console.log(joinedGroups);
-
   const handleCopyEmail = (email: string) => {
     navigator.clipboard.writeText(email);
     toast.success('Email copiado al portapapeles');
