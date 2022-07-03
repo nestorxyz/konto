@@ -15,7 +15,7 @@ import AxiosAddPhone from 'request/local_next/users/AxiosAddPhone';
 
 const AddPhone: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const { user, setUser } = useUser();
+  const { user, refreshUser } = useUser();
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +30,7 @@ const AddPhone: React.FC = () => {
       setLoading(true);
       try {
         const response = await AxiosAddPhone(user!.id, values.phone);
-        setUser(response as User);
+        await refreshUser();
         setLoading(false);
       } catch (error) {
         setLoading(false);
