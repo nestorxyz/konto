@@ -37,10 +37,10 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
           </h3>
           <h4 className="text-sm text-primary font-bold ">
             <s className="font-bold text-sm text-gray-400 lg:text-2xl">
-              S/ {group.plan.joinerPay}
+              S/ {group.plan.service.price}
             </s>
             <span className="font-bold text-sm text-primary ml-5 lg:text-2xl">
-              S/ {group.plan.service.price}
+              S/ {group.plan.joinerPay}
             </span>
           </h4>
         </li>

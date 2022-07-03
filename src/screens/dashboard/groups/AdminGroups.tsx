@@ -1,32 +1,27 @@
 // Libraries
-import useSWR from 'swr';
 import { Loading } from '@nextui-org/react';
-
-// Hooks
-import useUser from 'hooks/useUser';
 
 // Helpers
 import classNames from 'lib/classNames';
-
-// Request
-import AxiosGetAdminGroups from 'request/local_next/userGroups/AxiosGetAdminGroups';
 
 // Components
 import AdminGroupsList from './AdminGroupsList';
 import EmptyAdminGroups from './EmptyAdminGroups';
 
+// Types
+import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+
 interface IAdminGroups {
   className?: string;
+  response: any;
+  error: any;
 }
 
-const AdminGroups: React.FC<IAdminGroups> = ({ className }) => {
-  const { user } = useUser();
-
-  const { data: response, error } = useSWR(
-    ['/userGroups/getAdminGroups', user.id],
-    AxiosGetAdminGroups
-  );
-
+const AdminGroups: React.FC<IAdminGroups> = ({
+  className,
+  response,
+  error,
+}) => {
   return (
     <div className={classNames(className, 'flex flex-col')}>
       <p className="text-2xl text-center font-semibold mb-4">
