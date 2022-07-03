@@ -50,7 +50,7 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
           })}
         </div>
 
-        <div>
+        <div className="ml-auto md:ml-0">
           <UserDropdown setScreen={setScreen} />
         </div>
       </header>

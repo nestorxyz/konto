@@ -122,7 +122,6 @@ model UserGroup {
   joinedAt    DateTime       @default(now())
   periodStart DateTime
   periodEnd   DateTime
-  securityEnd DateTime
   state       UserGroupState
   user        User           @relation(fields: [userId], references: [id])
   userId      String
