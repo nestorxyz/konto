@@ -23,7 +23,7 @@ const Landing: React.FC<LandingProps> = ({ groups, plans }) => {
     <Fragment>
       <Header />
       <Groups groups={groups} />
-      <Services plans={plans} />
+      {/* <Services plans={plans} /> */}
       <HowWorks />
       <FAQ />
       <Footer />

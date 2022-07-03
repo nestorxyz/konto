@@ -8,6 +8,7 @@ import { BuiltInProviderType } from 'next-auth/providers';
 
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
+import classNames from 'lib/classNames';
 
 // Hooks
 import { useSession } from 'next-auth/react';
@@ -19,9 +20,16 @@ interface ILoginProps {
     ClientSafeProvider
   > | null;
   callbackUrl?: string;
+  showLogo?: boolean;
+  className?: string;
 }
 
-const Login: React.FC<ILoginProps> = ({ providers, callbackUrl }) => {
+const Login: React.FC<ILoginProps> = ({
+  providers,
+  callbackUrl,
+  showLogo = true,
+  className,
+}) => {
   const { status } = useSession();
   const router = useRouter();
 
@@ -30,8 +38,13 @@ const Login: React.FC<ILoginProps> = ({ providers, callbackUrl }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center lg:justify-start flex-1 px-4">
-      <img src="/logo.svg" className="mb-6" />
+    <div
+      className={classNames(
+        className,
+        'flex flex-col items-center justify-center lg:justify-start flex-1 px-4'
+      )}
+    >
+      {showLogo && <img src="/logo.svg" className="mb-6" />}
       <p className="text-gray-800 text-center text-4xl font-bold mb-4">
         Hola! Bienvenido a Konto
       </p>
