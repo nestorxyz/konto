@@ -41,6 +41,10 @@ const PayModal: React.FC<IPayModalProps> = ({
       userId: session?.user?.id as string,
     });
     setLoading(false);
+    if (response.error) {
+      setShowPayModal(false);
+      toast.error(response.error);
+    }
     if (response.success) {
       setShowPayModal(false);
       localStorage.setItem('paymentIntent', 'true');
