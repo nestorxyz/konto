@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 // Components
 import Landing from 'screens/landing';
 import Dashboard from 'screens/dashboard';
+import MetaDefault from 'components/seo/MetaDefault';
 
 // Request
 import getAllGroups from 'request/prisma/groups/getAllGroups';
@@ -23,10 +24,20 @@ const Home: NextPage<HomeProps> = ({ groups, plans }) => {
   const { status } = useSession();
 
   if (status === 'authenticated') {
-    return <Dashboard />;
+    return (
+      <>
+        <MetaDefault />
+        <Dashboard />
+      </>
+    );
   }
 
-  return <Landing groups={groups} plans={plans} />;
+  return (
+    <>
+      <MetaDefault />
+      <Landing groups={groups} plans={plans} />
+    </>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {

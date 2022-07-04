@@ -14,6 +14,7 @@ import getGroup, { GroupInfo } from 'request/prisma/groups/getGroup';
 import Header from 'screens/group/Header';
 import GroupData from 'screens/group/GroupData';
 import LoginReusable from 'screens/login/LoginReusable';
+import MetaCustom from 'components/seo/MetaCustom';
 
 interface IGroupPageProps {
   group: GroupInfo;
@@ -33,6 +34,15 @@ const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
 
   return (
     <div className="w-full min-h-screen relative flex flex-col">
+      <MetaCustom
+        title={`Comparte ${group!.plan.service.name} en Konto`}
+        description={`Ahorra hasta un 70% en ${
+          group!.plan.service.name
+        } comprando en grupo en Konto`}
+        imageUrl="/landing.jpg"
+        imageAlt={`Konto`}
+        url={`/${group!.id}`}
+      />
       <Header className="hidden lg:inline-flex" setScreen={setScreen} />
       {screen === GroupScreens.group && (
         <GroupData group={group} setScreen={setScreen} />

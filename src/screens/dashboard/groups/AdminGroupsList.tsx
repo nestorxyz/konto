@@ -15,25 +15,9 @@ interface IJoinedGroupsListProps {
 
 const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
   const handleShare = async (group: AdminGroup) => {
-    const shareData = {
-      title: `${group.plan.service.name} en Konto`,
-      text: `Compra en grupo ${group!.plan.service.name} en Konto a solo S/ ${
-        group!.plan.joinerPay
-      }`,
-      url: window.location.pathname,
-    };
-    try {
-      await navigator.share(shareData);
-      return console.log('Copied');
-    } catch (err) {
-      if (
-        !navigator.appVersion.includes('Android') &&
-        !navigator.appVersion.includes('iPhone')
-      ) {
-        toast('Copiado', { icon: '🥳' });
-      }
-      navigator.clipboard.writeText(window.location.href);
-    }
+    toast('Link Copiado', { icon: '🥳' });
+
+    navigator.clipboard.writeText(`https://www.kontope.com/grupo/${group.id}`);
   };
 
   return (

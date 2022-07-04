@@ -35,7 +35,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group, setScreen }) => {
 
   const handleShare = async () => {
     const shareData = {
-      title: 'Compartir',
+      title: `Compra ${group!.plan.service.name} en grupo`,
       text: `Compra en grupo ${group!.plan.service.name} en Konto a solo S/ ${
         group!.plan.joinerPay
       }`,
@@ -49,7 +49,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group, setScreen }) => {
         !navigator.appVersion.includes('Android') &&
         !navigator.appVersion.includes('iPhone')
       ) {
-        toast('Copiado', { icon: '🥳' });
+        toast('Link Copiado', { icon: '🥳' });
       }
       navigator.clipboard.writeText(window.location.href);
     }

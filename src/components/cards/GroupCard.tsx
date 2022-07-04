@@ -63,7 +63,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
         </Button>
       </ul>
       {group.verified ? (
-        <h3 className="flex justify-center">
+        <h3 className="flex justify-center items-center">
           <div>
             <Image src="/icons/verified.png" width="15" height="15" />
           </div>
