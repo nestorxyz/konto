@@ -22,16 +22,16 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
         src={mapServiceToImage(group.plan.service.value)}
         className="object-cover h-20 rounded-t-xl"
       />
-      <ul className="grid mx-4 my-3 grid-cols-2">
-        <li>
+      <div className="grid mx-4 mt-3 grid-cols-2">
+        <p>
           <h3 className="text-xs text-dark-sub lg:text-sm">
             Comparte {group.plan.service.name} con
           </h3>
           <h4 className="text-sm text-primary font-bold lg:text-base">
             {group.admin.name?.split(' ')[0]}
           </h4>
-        </li>
-        <li className="flex flex-col items-center">
+        </p>
+        <p className="flex flex-col items-center">
           <h3 className="text-xs text-dark-sub lg:text-sm">
             Precio Mensual de
           </h3>
@@ -43,15 +43,15 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
               S/ {group.plan.joinerPay}
             </span>
           </h4>
-        </li>
-        <li>
+        </p>
+        <p>
           <h3 className="text-xs text-dark-sub lg:text-sm">
             Número de Integrantes
           </h3>
           <h4 className="text-sm text-primary font-bold lg:text-base">
             {group.userGroups.length + 1}/{group.plan.maxUsers}
           </h4>
-        </li>
+        </p>
         <Button
           type="submit"
           color="secondary"
@@ -60,9 +60,9 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
         >
           Unirse al Grupo
         </Button>
-      </ul>
+      </div>
       {group.verified ? (
-        <h3 className="flex justify-center">
+        <h3 className="flex justify-center items-center">
           <div>
             <Image src="/icons/verified.png" width="15" height="15" />
           </div>

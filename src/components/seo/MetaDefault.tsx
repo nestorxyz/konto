@@ -12,7 +12,7 @@ const MetaDefault = ({ title, description, img }: IMetaDefaultProps) => {
     title: title ? `${title} - Konto` : 'Konto',
     description:
       description || 'Hacemos fácil la compra en grupo de cuentas de streaming',
-    img: img || '/landing.jpg',
+    img: img || process.env.NEXT_PUBLIC_URL + '/landing.jpg',
   };
 
   return (

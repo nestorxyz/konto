@@ -39,7 +39,7 @@ const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
         description={`Ahorra hasta un 70% en ${
           group!.plan.service.name
         } comprando en grupo en Konto`}
-        imageUrl="/landing.jpg"
+        imageUrl="https://kontope.com/landing.jpg"
         imageAlt={`Konto`}
         url={`/${group!.id}`}
       />
