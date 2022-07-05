@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useSwr from 'swr';
 import toast from 'react-hot-toast';
+import { InformationCircleIcon } from '@heroicons/react/outline';
 import {
   Modal,
   Text,
@@ -13,6 +14,7 @@ import {
   Input,
   Spacer,
   Loading,
+  Tooltip,
 } from '@nextui-org/react';
 
 // Types
@@ -132,8 +134,14 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
               )}
               <Spacer y={0.1} />
 
+              <div className="flex items-center gap-1">
+                <h5 className="mb-0">
+                  Ingresa los datos de la cuenta que compartirás
+                </h5>
+              </div>
+
               <Input
-                label="Correo de la cuenta"
+                label="Correo"
                 clearable
                 size="xl"
                 color="primary"
