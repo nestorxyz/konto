@@ -1,3 +1,6 @@
+// Libraries
+import { Grid } from '@nextui-org/react';
+
 // Types
 import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 
@@ -10,18 +13,22 @@ type LandingGroupsProps = {
 
 const LandingGroups: React.FC<LandingGroupsProps> = ({ groups }) => {
   return (
-    <div className="py-6 lg:mt-10 mx-auto w-80 md:mx-14 md:w-auto lg:w-3/4 lg:mx-auto">
+    <div className="py-6 lg:mt-10 mx-auto w-80 sm:w-auto lg:mx-auto xl:w-10/12">
       <h2
         className="text-2xl text-center font-bold mb-6 lg:text-5xl lg:mb-10"
         id="groups"
       >
         Grupos disponibles
       </h2>
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 gap-x-5 xl:grid-cols-3">
+      <Grid.Container justify="center" gap={2}>
         {groups.map((group) => {
-          return <LandingGroupCard key={group.id} group={group} />;
+          return (
+            <Grid key={group.id}>
+              <LandingGroupCard key={group.id} group={group} />
+            </Grid>
+          );
         })}
-      </div>
+      </Grid.Container>
     </div>
   );
 };
