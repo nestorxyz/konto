@@ -1,11 +1,15 @@
 // Libraries
 import { useRouter } from 'next/router';
 
+// Hooks
+import useWindowDimensions from 'hooks/useWindowDimensions';
+
 // Components
 import { Button } from '@nextui-org/react';
 
 const LandingHeader: React.FC = () => {
   const router = useRouter();
+  const { width } = useWindowDimensions();
 
   return (
     <header className="flex flex-col items-center py-4 bg-primary pb-12">
@@ -19,6 +23,7 @@ const LandingHeader: React.FC = () => {
 
         <div className="ml-auto border border-white rounded-xl bg-white">
           <Button
+            auto={width && width < 768 ? true : false}
             size="lg"
             light
             color="primary"
