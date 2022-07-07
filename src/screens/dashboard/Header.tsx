@@ -35,7 +35,7 @@ const pages: TPage[] = [
 const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
   return (
     <>
-      <header className="flex p-6 items-center lg:mx-12 xl:mx-24">
+      <header className="flex py-6 mx-6 items-center lg:mx-20 xl:mx-28">
         <button onClick={() => setScreen('home')} className="flex items-center">
           <img src="/logo.svg" width="58" height="61.5" />
           <p className="font-bold text-4xl text-primary ml-4">Konto</p>

@@ -23,7 +23,7 @@ const Home: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <main className="mx-6 mb-28 lg:mx-12 xl:mx-56 flex flex-col">
+    <main className="mx-6 mb-28 lg:mx-20 xl:mx-28 flex flex-col">
       <div className="flex items-center mb-6 justify-between">
         <h2 className="text-2xl">Únete a un grupo</h2>
 

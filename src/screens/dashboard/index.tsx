@@ -1,6 +1,6 @@
 // Libraries
 import useSWR from 'swr';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // Hooks
 import useUser from 'hooks/useUser';
@@ -13,7 +13,6 @@ import Header from './Header';
 import Home from './home';
 import Groups from './groups';
 import Wallet from './wallet';
-import AddPhone from './onboarding/addPhone';
 
 export enum DashboardPages {
   home = 'home',
@@ -23,9 +22,7 @@ export enum DashboardPages {
 }
 
 const Dashboard: React.FC = () => {
-  const [screen, setScreen] = useState<keyof typeof DashboardPages>(
-    localStorage.getItem('paymentIntent') == 'true' ? 'groups' : 'home'
-  );
+  const [screen, setScreen] = useState<keyof typeof DashboardPages>('home');
   const { loading, user } = useUser();
 
   const { data: response, error } = useSWR(
@@ -36,11 +33,6 @@ const Dashboard: React.FC = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  if (!user.phone) return <AddPhone />;
-
-  if (localStorage.getItem('paymentIntent') == 'true')
-    localStorage.removeItem('paymentIntent');
 
   return (
     <div>
