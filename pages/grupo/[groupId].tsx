@@ -41,7 +41,7 @@ const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
         } comprando en grupo en Konto`}
         imageUrl="https://kontope.com/landing.jpg"
         imageAlt={`Konto`}
-        url={`/${group!.id}`}
+        url={`/grupo/${group!.id}`}
       />
       <Header className="hidden lg:inline-flex" setScreen={setScreen} />
       {screen === GroupScreens.group && (

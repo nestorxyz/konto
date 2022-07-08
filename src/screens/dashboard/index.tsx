@@ -1,6 +1,7 @@
 // Libraries
 import useSWR from 'swr';
 import React, { useState } from 'react';
+import { Loading } from '@nextui-org/react';
 
 // Hooks
 import useUser from 'hooks/useUser';
@@ -31,7 +32,11 @@ const Dashboard: React.FC = () => {
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loading size="xl" />
+      </div>
+    );
   }
 
   return (
