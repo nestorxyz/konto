@@ -1,6 +1,6 @@
 // Libraries
 import { NextApiHandler } from 'next';
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
@@ -8,10 +8,13 @@ import GoogleProvider from 'next-auth/providers/google';
 // Libs
 import prisma from 'lib/prisma';
 
+// Request
+import sendWelcomeEmail from 'request/prisma/emails/sendWelcomeEmail';
+
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
 
-const options = {
+const options: NextAuthOptions = {
   providers: [
     /* FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID as string,
@@ -26,7 +29,6 @@ const options = {
   secret: process.env.SECRET,
   pages: {
     signIn: '/login',
-    signUp: '/signup',
   },
   callbacks: {
     session: async ({ session, token }: any) => {
@@ -44,5 +46,10 @@ const options = {
   },
   session: {
     strategy: 'jwt' as any,
+  },
+  events: {
+    createUser: async (userObject: any) => {
+      await sendWelcomeEmail(userObject.user.id);
+    },
   },
 };
