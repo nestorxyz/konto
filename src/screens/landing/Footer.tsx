@@ -22,7 +22,7 @@ const LandingFooter: React.FC = () => {
       <h3 className="text-white text-sm lg:text-2xl">
         Hecho con 💚 y ☕ por{' '}
         <a
-          href="https://www.nestoredduardo.me/"
+          href="https://www.nestormamani.com/"
           target="_blank"
           className="css-e657no"
         >
