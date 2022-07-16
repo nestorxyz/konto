@@ -15,7 +15,7 @@ const validateYapePayment = async (
 
   try {
     const user = await getUserInfo(userId);
-    const group = await getGroup({ groupId });
+    const group = await getGroup(groupId);
 
     if (!user || !group) {
       res.status(200).json({ error: 'No existe este grupo' });

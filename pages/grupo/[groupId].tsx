@@ -63,7 +63,7 @@ export const getServerSideProps = async ({
   const { groupId } = query;
   const providers = await getProviders();
 
-  const group = await getGroup({ groupId: groupId as string });
+  const group = await getGroup(groupId as string);
 
   return {
     props: {
