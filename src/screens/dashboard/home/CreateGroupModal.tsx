@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useSwr from 'swr';
 import toast from 'react-hot-toast';
-import { InformationCircleIcon } from '@heroicons/react/outline';
 import {
   Modal,
   Text,
@@ -14,7 +13,6 @@ import {
   Input,
   Spacer,
   Loading,
-  Tooltip,
 } from '@nextui-org/react';
 
 // Types

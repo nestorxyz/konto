@@ -74,6 +74,9 @@ export const emailFormat = (params: IEmailFormatParams) => {
         <tr>
           <td colspan="3" height="30">&nbsp;</td>
         </tr>
+        <tr>
+          <td colspan="3" height="30">&nbsp;</td>
+        </tr>
 
         ${
           ctaType === 'button'
@@ -106,9 +109,7 @@ export const emailFormat = (params: IEmailFormatParams) => {
             <td colspan="3" align="center">
               <a
                 style="
-                  background-color: white;
                   color: #185abd;
-                  padding: 32px 24px;
                   border-radius: 20px;
                   margin-top: 42px;
                   text-decoration: none;

@@ -1,11 +1,7 @@
 // Libs
 import prisma from 'lib/prisma';
 
-interface getGroupRequest {
-  groupId: string;
-}
-
-const getGroup = async ({ groupId }: getGroupRequest) => {
+const getGroup = async (groupId: string) => {
   const groups = await prisma.group.findUnique({
     where: {
       id: groupId,

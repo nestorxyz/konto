@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 // Request
 import createGroupRequest from 'request/prisma/groups/createGroup';
 import getGroupsWhereUserIsAdmin from 'request/prisma/groups/getGroupsWhereUserIsAdmin';
+import sendGroupCreatedEmail from 'request/prisma/emails/sendGroupCreatedEmail';
 
 const createGroup = async (req: NextApiRequest, res: NextApiResponse) => {
   const { adminId, planId, credentialEmail, credentialPassword } = req.body;
@@ -25,6 +26,11 @@ const createGroup = async (req: NextApiRequest, res: NextApiResponse) => {
       planId,
       credentialEmail,
       credentialPassword,
+    });
+
+    await sendGroupCreatedEmail({
+      userId: adminId,
+      groupId: group.id,
     });
 
     res.status(200).json(group);

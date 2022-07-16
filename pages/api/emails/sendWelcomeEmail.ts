@@ -22,9 +22,9 @@ const sendWelcomeEmail = async (req: NextApiRequest, res: NextApiResponse) => {
     const msg = {
       to: user.email as string, // Change to your recipient
       from: 'nmamanipantoja@gmail.com', // Change to your verified sender
-      subject: 'Bienvenido a Konto !!! Qué compartirás hoy?',
+      subject: 'Bienvenido a Konto!!! Qué compartirás hoy?',
       html: emailFormat({
-        title: 'Bienvenido a Konto !!! Qué compartirás hoy?',
+        title: 'Bienvenido a Konto!!! Qué compartirás hoy?',
         body: 'Ya puedes comprar en grupo tus suscripciones favoritas. En el siguiente enlace podrás encontrar grupos para tí ✨.',
         ctaText: 'Ver grupos',
         ctaLink: 'https://kontope.com/login',
