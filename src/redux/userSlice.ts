@@ -12,6 +12,7 @@ export const initialState: User = {
   email: '',
   emailVerified: null,
   image: '',
+  isAdmin: false,
   phone: '',
   phoneVerified: null,
   verificationCode: '',
