@@ -18,6 +18,8 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
         select: {
           id: true,
           name: true,
+          image: true,
+          email: true,
         },
       },
       state: true,
@@ -61,5 +63,7 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
 
   return userGroups;
 };
+
+export type AdminUserGroup = Awaited<ReturnType<typeof getAllUserGroups>>[0];
 
 export default getAllUserGroups;
