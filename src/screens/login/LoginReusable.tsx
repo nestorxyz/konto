@@ -30,13 +30,6 @@ const Login: React.FC<ILoginProps> = ({
   showLogo = true,
   className,
 }) => {
-  const { status } = useSession();
-  const router = useRouter();
-
-  if (status === 'authenticated') {
-    router.push('/');
-  }
-
   return (
     <div
       className={classNames(

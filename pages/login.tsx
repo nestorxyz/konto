@@ -1,7 +1,6 @@
 // Libraries
 import Link from 'next/link';
-import Image from 'next/image';
-import { signIn, getProviders } from 'next-auth/react';
+import { getProviders } from 'next-auth/react';
 
 // Types
 import { LiteralUnion, ClientSafeProvider } from 'next-auth/react';
