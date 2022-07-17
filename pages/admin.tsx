@@ -14,6 +14,7 @@ import useUser from 'hooks/useUser';
 // Components
 import PageLoading from 'components/loaders/PageLoading';
 import LoginReusable from 'screens/login/LoginReusable';
+import AdminScreen from 'screens/admin';
 
 interface IAdminProps {
   providers: Record<
@@ -40,7 +41,7 @@ const AdminPage: NextPage<IAdminProps> = ({ providers }) => {
   }
 
   if (status === 'authenticated' && user.isAdmin) {
-    return <>Some admin content</>;
+    return <AdminScreen />;
   }
 
   return (
