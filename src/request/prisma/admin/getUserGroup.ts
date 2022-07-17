@@ -1,17 +1,9 @@
 // Libs
 import prisma from 'lib/prisma';
 
-interface IGetAllUserGroupsParams {
-  skip?: number;
-  take?: number;
-}
-
-const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
-  const { skip = 0, take = 10 } = params;
-
-  const userGroups = await prisma.userGroup.findMany({
-    skip: skip,
-    take: take,
+const getUserGroup = async (getUserGroup: string) => {
+  const userGroups = await prisma.userGroup.findUnique({
+    where: { id: getUserGroup },
     select: {
       id: true,
       user: {
@@ -45,6 +37,7 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
                 },
               },
               joinerPay: true,
+              adminGet: true,
               maxUsers: true,
             },
           },
@@ -65,6 +58,6 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
   return userGroups;
 };
 
-export type AdminUserGroup = Awaited<ReturnType<typeof getAllUserGroups>>[0];
+export type AdminUserGroup = Awaited<ReturnType<typeof getUserGroup>>;
 
-export default getAllUserGroups;
+export default getUserGroup;

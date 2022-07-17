@@ -1,5 +1,6 @@
 // Libraries
 import useSWR from 'swr';
+import toast from 'react-hot-toast';
 import {
   Table,
   Loading,
@@ -12,6 +13,7 @@ import {
 
 // Request
 import AxiosGetAllUserGroups from 'request/local_next/admin/AxiosGetAllUserGroups';
+import AxiosVerifyPayment from 'request/local_next/admin/AxiosVerifyPayment';
 
 // Types
 import { AdminUserGroup } from 'request/prisma/admin/getAllUserGroups';
@@ -36,8 +38,12 @@ const Pending: React.FC = () => {
     AxiosGetAllUserGroups
   );
 
-  const handleVerifyPayment = (userGroup: AdminUserGroup) => {
-    console.log(userGroup);
+  const handleVerifyPayment = async (userGroup: AdminUserGroup) => {
+    toast.promise(AxiosVerifyPayment(userGroup.id), {
+      loading: 'Validando pago...',
+      success: 'Pago validado',
+      error: 'Error validando pago',
+    });
   };
 
   if (error === undefined && response === undefined)
