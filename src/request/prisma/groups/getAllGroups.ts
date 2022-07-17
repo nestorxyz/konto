@@ -1,6 +1,3 @@
-// Types
-import { Group, Service } from '@prisma/client';
-
 // Libs
 import prisma from 'lib/prisma';
 
