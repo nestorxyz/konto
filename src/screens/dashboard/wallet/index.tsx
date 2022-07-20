@@ -58,7 +58,7 @@ const WalletScreen: React.FC<IWalletScreen> = ({ response, error }) => {
               return adminGroup.userGroups.map((userGroup) => {
                 if (userGroup.state !== 'ACTIVE') return null;
                 return (
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <User
                       {...(userGroup.user.image !== null
                         ? {
@@ -75,7 +75,7 @@ const WalletScreen: React.FC<IWalletScreen> = ({ response, error }) => {
                         </p>
                       }
                       description={
-                        'Fecha de pago: ' + formatDate(userGroup.periodEnd)
+                        'Recibirás el pago: ' + formatDate(userGroup.periodEnd)
                       }
                     />
                     <Text color="success" className="font-medium text-xl">
