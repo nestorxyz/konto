@@ -59,8 +59,11 @@ const WalletScreen: React.FC<IWalletScreen> = ({ response, error }) => {
                 return (
                   <div className="flex justify-between">
                     <User
-                      color="primary"
-                      src={userGroup.user.image as string}
+                      {...(userGroup.user.image !== null
+                        ? {
+                            src: userGroup.user.image,
+                          }
+                        : { text: userGroup.user.name! })}
                       name={
                         <p className="text-primary-800 font-semibold">
                           {userGroup.user.name?.split(' ')[0] +

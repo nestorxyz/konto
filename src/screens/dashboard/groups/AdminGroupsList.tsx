@@ -24,7 +24,10 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
     <div className="flex flex-col gap-4">
       {adminGroups.map((adminGroup) => {
         return (
-          <div className="flex flex-col px-4 py-6 border rounded-md shadow-sm">
+          <div
+            key={adminGroup.id}
+            className="flex flex-col px-4 py-6 border rounded-md shadow-sm"
+          >
             <div className="flex mb-4">
               <p className="text-center text-2xl text-primary font-semibold">
                 {adminGroup.plan.service.name}
@@ -50,9 +53,11 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
                 {adminGroup.userGroups.map((userGroup) => {
                   return (
                     <User
-                      bordered
-                      color="primary"
-                      src={userGroup.user.image as string}
+                      {...(userGroup.user.image !== null
+                        ? {
+                            src: userGroup.user.image,
+                          }
+                        : { text: userGroup.user.name! })}
                       name={userGroup.user.name?.split(' ')[0]}
                       description={
                         'Inicio: ' +
