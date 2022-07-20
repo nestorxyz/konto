@@ -1,6 +1,7 @@
 // Libraries
 import toast from 'react-hot-toast';
 import { ShareIcon } from '@heroicons/react/outline';
+import { PencilAltIcon } from '@heroicons/react/solid';
 import { Button, User } from '@nextui-org/react';
 
 // Helpers
@@ -28,7 +29,7 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
             key={adminGroup.id}
             className="flex flex-col px-4 py-6 border rounded-md shadow-sm"
           >
-            <div className="flex mb-4">
+            <div className="flex mb-4 items-center">
               <p className="text-center text-2xl text-primary font-semibold">
                 {adminGroup.plan.service.name}
               </p>
@@ -44,8 +45,22 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
                   : 'Cuenta activa'}
               </Button>
             </div>
+
             <div>
-              <p className="font-semibold text-lg ">Integrantes</p>
+              <div className="flex items-center">
+                <p className="font-semibold text-lg ">Integrantes</p>
+
+                <Button
+                  light
+                  auto
+                  color="primary"
+                  css={{ width: '25px', height: '35px', padding: '$4' }}
+                  className="ml-auto"
+                >
+                  <PencilAltIcon className="h-5 w-5 text-gray-500 mr-1" />
+                  <span className="text-gray-500">Editar</span>
+                </Button>
+              </div>
               <p className="mb-3 text-gray-500">
                 Recibirás S/ {adminGroup.plan.adminGet} por cada integrante
               </p>
