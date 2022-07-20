@@ -56,6 +56,7 @@ const WalletScreen: React.FC<IWalletScreen> = ({ response, error }) => {
           <div className="flex flex-col gap-5">
             {response.data.map((adminGroup: AdminGroup) => {
               return adminGroup.userGroups.map((userGroup) => {
+                if (userGroup.state !== 'ACTIVE') return null;
                 return (
                   <div className="flex justify-between">
                     <User

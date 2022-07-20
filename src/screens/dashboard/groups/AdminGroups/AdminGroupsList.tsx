@@ -51,6 +51,8 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
               </p>
               <div className="flex flex-col gap-2">
                 {adminGroup.userGroups.map((userGroup) => {
+                  if (userGroup.state !== 'ACTIVE') return null;
+
                   return (
                     <User
                       {...(userGroup.user.image !== null

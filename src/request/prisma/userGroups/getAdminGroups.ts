@@ -8,9 +8,9 @@ const getAdminGroup = async (userId: string) => {
     },
     select: {
       id: true,
-      verified: true,
       credentialEmail: true,
       credentialPassword: true,
+      verified: true,
       plan: {
         select: {
           joinerPay: true,
