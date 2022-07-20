@@ -8,6 +8,7 @@ import { JoinedGroup } from 'request/prisma/userGroups/getJoinedGroups';
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
 import { formatDate } from 'lib/formatData';
+import classNames from 'lib/classNames';
 
 interface IJoinedGroupsListProps {
   joinedGroups: JoinedGroup[];
@@ -70,11 +71,12 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                 disabled={joinedGroup.state === 'PENDING' && true}
                 title={
                   <p
-                    className={
+                    className={classNames(
                       joinedGroup.state === 'PENDING'
                         ? 'text-gray-500'
-                        : 'text-gray-800'
-                    }
+                        : 'text-gray-800',
+                      'font-semibold text-lg'
+                    )}
                   >
                     {joinedGroup.state === 'PENDING'
                       ? 'Cuando validemos el pago tendrás acceso a la cuenta 🥳'

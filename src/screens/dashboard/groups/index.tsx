@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { DashboardPages } from 'screens/dashboard';
 
 // Components
-import JoinedGroups from './Joinedgroups';
+import JoinedGroups from './JoinedGroups';
 import AdminGroups from './AdminGroups';
 interface IMyGroupsProps {
   response: any;
