@@ -1,4 +1,5 @@
 // Libraries
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ShareIcon } from '@heroicons/react/outline';
 import { PencilAltIcon } from '@heroicons/react/solid';
@@ -10,15 +11,27 @@ import { formatDate } from 'lib/formatData';
 // Types
 import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
 
+// Components
+import EditCredentialsModal from './EditCredentialsModal';
+
 interface IJoinedGroupsListProps {
   adminGroups: AdminGroup[];
 }
 
 const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedAdminGroup, setSelectedAdminGroup] =
+    useState<AdminGroup | null>(null);
+
   const handleShare = async (group: AdminGroup) => {
     toast('Link Copiado', { icon: '🥳' });
 
     navigator.clipboard.writeText(`https://www.kontope.com/grupo/${group.id}`);
+  };
+
+  const handleEditGroupCredentials = (group: AdminGroup) => {
+    setSelectedAdminGroup(group);
+    setOpenModal(true);
   };
 
   return (
@@ -56,6 +69,7 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
                   color="primary"
                   css={{ width: '25px', height: '35px', padding: '$4' }}
                   className="ml-auto"
+                  onClick={() => handleEditGroupCredentials(adminGroup)}
                 >
                   <PencilAltIcon className="h-5 w-5 text-gray-500 mr-1" />
                   <span className="text-gray-500">Editar</span>
@@ -104,6 +118,15 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
           </div>
         );
       })}
+      <EditCredentialsModal
+        adminGroup={selectedAdminGroup}
+        initialValues={{
+          credentialEmail: selectedAdminGroup?.credentialEmail as string,
+          credentialPassword: selectedAdminGroup?.credentialPassword as string,
+        }}
+        open={openModal}
+        setOpen={setOpenModal}
+      />
     </div>
   );
 };
