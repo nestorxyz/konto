@@ -34,6 +34,7 @@ const getGroup = async (groupId: string) => {
           user: {
             select: {
               id: true,
+              email: true,
             },
           },
         },

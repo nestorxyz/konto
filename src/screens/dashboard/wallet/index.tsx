@@ -13,7 +13,7 @@ import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
 
 const WalletScreen: React.FC = () => {
   const { user } = useUser();
-  const { adminGroups, loading, error } = useAdminGroups();
+  const { adminGroups, loading } = useAdminGroups();
 
   return (
     <main className="mx-6 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">

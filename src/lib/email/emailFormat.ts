@@ -24,10 +24,9 @@ export const emailFormat = (params: IEmailFormatParams) => {
         font-family: Arial;
         background-color: #f9fafb;
         width: 100%;
-        max-width: 600px;
       "
     >
-      <table style="display: flex; flex-direction: column; align-items: center">
+      <table style="display: flex; flex-direction: column; align-items: center; max-width: 600px; margin: auto;">
         <tr>
           <td align="center">
             <img
@@ -90,8 +89,8 @@ export const emailFormat = (params: IEmailFormatParams) => {
                   color: white;
                   padding: 16px 32px;
                   text-decoration: none;
-                  font-weight: 700;
-                  font-size: 32px;
+                  font-weight: 600;
+                  font-size: 24px;
                   cursor: pointer;
                   margin-top: 42px;
                   margin: 0 32px;

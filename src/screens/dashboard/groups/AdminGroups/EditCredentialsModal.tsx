@@ -14,6 +14,9 @@ import useAdminGroups from 'hooks/useAdminGroups';
 // Request
 import AxiosEditGroupCredentials from 'request/local_next/groups/AxiosEditGroupCredentials';
 
+// Components
+import ButtonLoadingContent from 'components/loaders/ButtonLoadingContent';
+
 interface IEditCredentialsModalProps {
   adminGroup: AdminGroup | null;
   initialValues: {
@@ -83,12 +86,6 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
         </Text>
       </Modal.Header>
       <form onSubmit={editCredentialFormik.handleSubmit} autoComplete="off">
-        <input
-          autoComplete="false"
-          name="hidden"
-          type="text"
-          style={{ display: 'none' }}
-        />
         <Modal.Body>
           <Input
             label="Correo"
@@ -160,7 +157,7 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
             }
           >
             {loading ? (
-              <Loading size="sm" color="primary" />
+              <ButtonLoadingContent>Guardando</ButtonLoadingContent>
             ) : (
               'Guardar cambios'
             )}
