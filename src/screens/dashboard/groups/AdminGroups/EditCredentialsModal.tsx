@@ -1,20 +1,18 @@
 // Libraries
 import { useState } from 'react';
-import {
-  Modal,
-  Text,
-  Radio,
-  Progress,
-  Button,
-  Input,
-  Spacer,
-  Loading,
-} from '@nextui-org/react';
+import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Modal, Text, Button, Input, Spacer, Loading } from '@nextui-org/react';
 
 // Types
 import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+
+// Hooks
+import useAdminGroups from 'hooks/useAdminGroups';
+
+// Request
+import AxiosEditGroupCredentials from 'request/local_next/groups/AxiosEditGroupCredentials';
 
 interface IEditCredentialsModalProps {
   adminGroup: AdminGroup | null;
@@ -33,6 +31,7 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
   setOpen,
 }) => {
   const [loading, setLoading] = useState(false);
+  const { refreshAdminGroups } = useAdminGroups();
 
   const editCredentialFormik = useFormik({
     initialValues: {
@@ -46,7 +45,23 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
     }),
     enableReinitialize: true,
     onSubmit: async (values) => {
-      console.log(values);
+      setLoading(true);
+
+      const response = await AxiosEditGroupCredentials({
+        groupId: adminGroup!.id,
+        credentialEmail: values.credentialEmail,
+        credentialPassword: values.credentialPassword,
+      });
+
+      if (response.success) {
+        toast.success('Credenciales editadas correctamente');
+        refreshAdminGroups();
+        setLoading(false);
+        handleClose();
+      } else {
+        toast.error('Error al editar las credenciales');
+        setLoading(false);
+      }
     },
   });
 
@@ -123,7 +138,14 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat size="lg" color="error" onPress={handleClose}>
+          <Button
+            auto
+            flat
+            size="lg"
+            color="error"
+            onPress={handleClose}
+            disabled={loading}
+          >
             Cancelar
           </Button>
           <Button
