@@ -8,7 +8,6 @@ import { Plan } from 'request/prisma/plans/getAllPlans';
 // Components
 import Header from 'screens/landing/Header';
 import Groups from 'screens/landing/Groups';
-import Services from 'screens/landing/Services';
 import HowWorks from 'screens/landing/HowWorks';
 import FAQ from 'screens/landing/FAQ';
 import Footer from 'screens/landing/Footer';

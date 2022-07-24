@@ -6,14 +6,19 @@ import { Plan } from 'request/prisma/plans/getAllPlans';
 // Hooks
 import { useSession } from 'next-auth/react';
 
-// Components
-import Landing from 'screens/landing';
-import Dashboard from 'screens/dashboard';
-import MetaDefault from 'components/seo/MetaDefault';
+// Helpers
+import mixpanel from 'lib/mixpanel';
 
 // Request
 import getAllGroups from 'request/prisma/groups/getAllGroups';
 import getAllPlans from 'request/prisma/plans/getAllPlans';
+
+// Components
+import Landing from 'screens/landing';
+import Dashboard from 'screens/dashboard';
+import MetaDefault from 'components/seo/MetaDefault';
+import PageLoading from 'components/loaders/PageLoading';
+import { useEffect } from 'react';
 
 type HomeProps = {
   groups: GroupCardInfo[];
@@ -22,6 +27,11 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ groups, plans }) => {
   const { status } = useSession();
+
+  useEffect(() => {
+    if (status === 'unauthenticated') mixpanel.track('Landing Hit');
+    if (status === 'authenticated') mixpanel.track('Dashboard Hit');
+  }, []);
 
   if (status === 'authenticated') {
     return (
@@ -32,12 +42,16 @@ const Home: NextPage<HomeProps> = ({ groups, plans }) => {
     );
   }
 
-  return (
-    <>
-      <MetaDefault />
-      <Landing groups={groups} plans={plans} />
-    </>
-  );
+  if (status === 'unauthenticated') {
+    return (
+      <>
+        <MetaDefault />
+        <Landing groups={groups} plans={plans} />
+      </>
+    );
+  }
+
+  return <PageLoading />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
