@@ -6,14 +6,15 @@ import { Plan } from 'request/prisma/plans/getAllPlans';
 // Hooks
 import { useSession } from 'next-auth/react';
 
+// Request
+import getAllGroups from 'request/prisma/groups/getAllGroups';
+import getAllPlans from 'request/prisma/plans/getAllPlans';
+
 // Components
 import Landing from 'screens/landing';
 import Dashboard from 'screens/dashboard';
 import MetaDefault from 'components/seo/MetaDefault';
-
-// Request
-import getAllGroups from 'request/prisma/groups/getAllGroups';
-import getAllPlans from 'request/prisma/plans/getAllPlans';
+import PageLoading from 'components/loaders/PageLoading';
 
 type HomeProps = {
   groups: GroupCardInfo[];
@@ -32,12 +33,16 @@ const Home: NextPage<HomeProps> = ({ groups, plans }) => {
     );
   }
 
-  return (
-    <>
-      <MetaDefault />
-      <Landing groups={groups} plans={plans} />
-    </>
-  );
+  if (status === 'unauthenticated') {
+    return (
+      <>
+        <MetaDefault />
+        <Landing groups={groups} plans={plans} />
+      </>
+    );
+  }
+
+  return <PageLoading />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
