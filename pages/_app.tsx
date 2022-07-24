@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <NextUIProvider theme={theme}>
         <Provider store={store}>
           <NextNProgress color="#185ADB" options={{ showSpinner: false }} />
-          <Toaster position="bottom-center" reverseOrder={false} />
+          <Toaster position="top-center" reverseOrder={false} />
           <Component {...pageProps} />
         </Provider>
       </NextUIProvider>

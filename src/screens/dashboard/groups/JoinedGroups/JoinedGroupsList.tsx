@@ -31,7 +31,10 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
     <div className="flex flex-col gap-4">
       {joinedGroups.map((joinedGroup) => {
         return (
-          <div className="flex flex-col px-4 py-6 border rounded-md shadow-sm">
+          <div
+            key={joinedGroup.id}
+            className="flex flex-col px-4 py-6 border rounded-md shadow-sm"
+          >
             <div className="flex mb-4">
               <p className="text-center text-2xl text-primary font-semibold">
                 {joinedGroup.group.plan.service.name}
