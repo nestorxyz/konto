@@ -1,6 +1,8 @@
 // Libraries
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ShareIcon } from '@heroicons/react/outline';
+import { PencilAltIcon } from '@heroicons/react/solid';
 import { Button, User } from '@nextui-org/react';
 
 // Helpers
@@ -9,23 +11,38 @@ import { formatDate } from 'lib/formatData';
 // Types
 import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
 
+// Components
+import EditCredentialsModal from './EditCredentialsModal';
+
 interface IJoinedGroupsListProps {
   adminGroups: AdminGroup[];
 }
 
 const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedAdminGroup, setSelectedAdminGroup] =
+    useState<AdminGroup | null>(null);
+
   const handleShare = async (group: AdminGroup) => {
     toast('Link Copiado', { icon: '🥳' });
 
     navigator.clipboard.writeText(`https://www.kontope.com/grupo/${group.id}`);
   };
 
+  const handleEditGroupCredentials = (group: AdminGroup) => {
+    setSelectedAdminGroup(group);
+    setOpenModal(true);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {adminGroups.map((adminGroup) => {
         return (
-          <div className="flex flex-col px-4 py-6 border rounded-md shadow-sm">
-            <div className="flex mb-4">
+          <div
+            key={adminGroup.id}
+            className="flex flex-col px-4 py-6 border rounded-md shadow-sm"
+          >
+            <div className="flex mb-4 items-center">
               <p className="text-center text-2xl text-primary font-semibold">
                 {adminGroup.plan.service.name}
               </p>
@@ -41,18 +58,37 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
                   : 'Cuenta activa'}
               </Button>
             </div>
+
             <div>
-              <p className="font-semibold text-lg ">Integrantes</p>
+              <div className="flex items-center">
+                <p className="font-semibold text-lg ">Integrantes</p>
+
+                <Button
+                  light
+                  auto
+                  color="primary"
+                  css={{ width: '25px', height: '35px', padding: '$4' }}
+                  className="ml-auto"
+                  onClick={() => handleEditGroupCredentials(adminGroup)}
+                >
+                  <PencilAltIcon className="h-5 w-5 text-gray-500 mr-1" />
+                  <span className="text-gray-500">Editar</span>
+                </Button>
+              </div>
               <p className="mb-3 text-gray-500">
                 Recibirás S/ {adminGroup.plan.adminGet} por cada integrante
               </p>
               <div className="flex flex-col gap-2">
                 {adminGroup.userGroups.map((userGroup) => {
+                  if (userGroup.state !== 'ACTIVE') return null;
+
                   return (
                     <User
-                      bordered
-                      color="primary"
-                      src={userGroup.user.image as string}
+                      {...(userGroup.user.image !== null
+                        ? {
+                            src: userGroup.user.image,
+                          }
+                        : { text: userGroup.user.name! })}
                       name={userGroup.user.name?.split(' ')[0]}
                       description={
                         'Inicio: ' +
@@ -82,6 +118,15 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
           </div>
         );
       })}
+      <EditCredentialsModal
+        adminGroup={selectedAdminGroup}
+        initialValues={{
+          credentialEmail: selectedAdminGroup?.credentialEmail as string,
+          credentialPassword: selectedAdminGroup?.credentialPassword as string,
+        }}
+        open={openModal}
+        setOpen={setOpenModal}
+      />
     </div>
   );
 };

@@ -74,16 +74,20 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
     },
   });
 
+  const handleClose = () => {
+    formik.resetForm();
+    setOpen(false);
+  };
+
   return (
     <Modal
       closeButton
       aria-labelledby="create-group"
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={handleClose}
     >
       <Modal.Header>
         <Text size={20} color="primary" weight="bold">
-          {' '}
           Crea un grupo de tu suscripción favorita
         </Text>
       </Modal.Header>

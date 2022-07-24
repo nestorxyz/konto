@@ -12,9 +12,6 @@ import { GroupInfo } from 'request/prisma/groups/getGroup';
 // Requests
 import AxiosValidateYapePayments from 'request/local_next/payments/AxiosValidateYapePayment';
 
-// Hooks
-import useApp from 'hooks/useApp';
-
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
 
@@ -31,7 +28,6 @@ const PayModal: React.FC<IPayModalProps> = ({
 }) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { updateAppRedux, app } = useApp();
   const [loading, setLoading] = useState(false);
 
   const handlePay = async () => {
@@ -49,7 +45,7 @@ const PayModal: React.FC<IPayModalProps> = ({
       setShowPayModal(false);
       localStorage.setItem('paymentIntent', 'true');
       toast.success('Estamos validando tu pago');
-      router.push('/');
+      router.push('/?redirect=groups');
     }
   };
 

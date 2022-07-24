@@ -54,7 +54,7 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
           <UserDropdown setScreen={setScreen} />
         </div>
       </header>
-      <div className="fixed backdrop-blur-sm z-10 pb-6 w-full flex justify-center bottom-0 md:hidden">
+      <div className="fixed backdrop-blur-sm z-[100] w-full flex justify-center bottom-0 md:hidden">
         <Button.Group size="xl">
           {pages.map((page) => {
             return (

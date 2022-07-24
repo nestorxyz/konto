@@ -8,6 +8,7 @@ import { JoinedGroup } from 'request/prisma/userGroups/getJoinedGroups';
 // Helpers
 import mapServiceToImage from 'lib/mapServiceToImage';
 import { formatDate } from 'lib/formatData';
+import classNames from 'lib/classNames';
 
 interface IJoinedGroupsListProps {
   joinedGroups: JoinedGroup[];
@@ -30,7 +31,10 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
     <div className="flex flex-col gap-4">
       {joinedGroups.map((joinedGroup) => {
         return (
-          <div className="flex flex-col px-4 py-6 border rounded-md shadow-sm">
+          <div
+            key={joinedGroup.id}
+            className="flex flex-col px-4 py-6 border rounded-md shadow-sm"
+          >
             <div className="flex mb-4">
               <p className="text-center text-2xl text-primary font-semibold">
                 {joinedGroup.group.plan.service.name}
@@ -70,11 +74,12 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
                 disabled={joinedGroup.state === 'PENDING' && true}
                 title={
                   <p
-                    className={
+                    className={classNames(
                       joinedGroup.state === 'PENDING'
                         ? 'text-gray-500'
-                        : 'text-gray-800'
-                    }
+                        : 'text-gray-800',
+                      'font-semibold text-lg'
+                    )}
                   >
                     {joinedGroup.state === 'PENDING'
                       ? 'Cuando validemos el pago tendrás acceso a la cuenta 🥳'
