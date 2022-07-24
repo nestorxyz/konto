@@ -21,7 +21,7 @@ const useAdminGroups = () => {
     mutate(['/userGroups/getAdminGroups', user.id]);
 
   return {
-    adminGroups: (response as IGetAdminGroupsResponse).data,
+    adminGroups: response && (response as IGetAdminGroupsResponse).data,
     loading: !error && !response,
     error: error,
     refreshAdminGroups,

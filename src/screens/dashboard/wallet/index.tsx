@@ -53,7 +53,10 @@ const WalletScreen: React.FC = () => {
               return adminGroup.userGroups.map((userGroup) => {
                 if (userGroup.state !== 'ACTIVE') return null;
                 return (
-                  <div className="flex justify-between items-center">
+                  <div
+                    id={userGroup.id}
+                    className="flex justify-between items-center"
+                  >
                     <User
                       {...(userGroup.user.image !== null
                         ? {

@@ -27,6 +27,7 @@ const getAdminGroup = async (userId: string) => {
       },
       userGroups: {
         select: {
+          id: true,
           user: {
             select: {
               id: true,

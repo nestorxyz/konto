@@ -1,7 +1,6 @@
 // Libraries
-import useSWR from 'swr';
-import React, { useState } from 'react';
-import { Loading } from '@nextui-org/react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 // Hooks
 import useUser from 'hooks/useUser';
@@ -23,6 +22,13 @@ export enum DashboardPages {
 const Dashboard: React.FC = () => {
   const [screen, setScreen] = useState<keyof typeof DashboardPages>('home');
   const { loading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.redirect) {
+      setScreen(router.query.redirect as keyof typeof DashboardPages);
+    }
+  }, [router.query.redirect]);
 
   if (loading) return <PageLoading />;
 
