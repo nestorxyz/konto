@@ -5,6 +5,9 @@ import { useRouter } from 'next/router';
 // Hooks
 import useUser from 'hooks/useUser';
 
+// Helpers
+import mixpanel from 'lib/mixpanel';
+
 // Components
 import Header from './Header';
 import Home from './home';
@@ -23,6 +26,10 @@ const Dashboard: React.FC = () => {
   const [screen, setScreen] = useState<keyof typeof DashboardPages>('home');
   const { loading } = useUser();
   const router = useRouter();
+
+  useEffect(() => {
+    mixpanel.track('Dashboard Hit');
+  }, []);
 
   useEffect(() => {
     if (router.query.redirect) {
