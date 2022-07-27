@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Button, Card } from '@nextui-org/react';
 
 // Helpers
-import mapServiceToImage from 'lib/mapServiceToImage';
+import { mapServiceToImage } from 'lib/logicFunctions';
 
 // Types
 import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';

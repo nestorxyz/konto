@@ -1,5 +1,5 @@
 // Helpers
-import classNames from 'lib/classNames';
+import { classNames } from 'lib/logicFunctions';
 
 interface IStatusProps {
   status: 'success' | 'error' | 'warning';

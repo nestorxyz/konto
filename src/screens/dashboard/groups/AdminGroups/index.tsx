@@ -2,7 +2,7 @@
 import { Loading } from '@nextui-org/react';
 
 // Helpers
-import classNames from 'lib/classNames';
+import { classNames } from 'lib/logicFunctions';
 
 // Hooks
 import useAdminGroups from 'hooks/useAdminGroups';

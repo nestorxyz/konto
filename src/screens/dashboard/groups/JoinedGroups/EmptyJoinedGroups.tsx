@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { DashboardPages } from 'screens/dashboard';
 
 // Helpers
-import classNames from 'lib/classNames';
+import { classNames } from 'lib/logicFunctions';
 
 interface IEmptyJoinedGroupsProps {
   setScreen: Dispatch<SetStateAction<keyof typeof DashboardPages>>;

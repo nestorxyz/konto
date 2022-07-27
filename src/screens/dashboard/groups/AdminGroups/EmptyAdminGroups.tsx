@@ -4,7 +4,7 @@ import { PlusIcon } from '@heroicons/react/solid';
 import { Button, Card } from '@nextui-org/react';
 
 // Helpers
-import classNames from 'lib/classNames';
+import { classNames } from 'lib/logicFunctions';
 
 // Components
 import CreateGroupModal from 'screens/dashboard/home/CreateGroupModal';

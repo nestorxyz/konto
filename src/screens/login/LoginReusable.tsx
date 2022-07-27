@@ -7,12 +7,7 @@ import { LiteralUnion, ClientSafeProvider } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
 
 // Helpers
-import mapServiceToImage from 'lib/mapServiceToImage';
-import classNames from 'lib/classNames';
-
-// Hooks
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { classNames, mapServiceToImage } from 'lib/logicFunctions';
 
 interface ILoginProps {
   providers: Record<

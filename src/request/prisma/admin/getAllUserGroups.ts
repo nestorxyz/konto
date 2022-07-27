@@ -14,15 +14,6 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
     take: take,
     select: {
       id: true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-          email: true,
-        },
-      },
-      state: true,
       group: {
         select: {
           id: true,
@@ -59,6 +50,18 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
           },
         },
       },
+      joinedAt: true,
+      periodStart: true,
+      periodEnd: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          email: true,
+        },
+      },
+      state: true,
     },
   });
 
