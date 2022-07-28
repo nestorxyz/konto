@@ -1,9 +1,8 @@
 // Libraries
 import { useRouter } from 'next/router';
-import { Button } from '@nextui-org/react';
 
 // Helpers
-import classNames from 'lib/classNames';
+import { classNames } from 'lib/logicFunctions';
 
 // Types
 import { Dispatch, SetStateAction } from 'react';

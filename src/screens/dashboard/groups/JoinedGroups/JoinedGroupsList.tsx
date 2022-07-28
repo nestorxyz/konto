@@ -6,9 +6,9 @@ import { Button, Text, Collapse, Card } from '@nextui-org/react';
 import { JoinedGroup } from 'request/prisma/userGroups/getJoinedGroups';
 
 // Helpers
-import mapServiceToImage from 'lib/mapServiceToImage';
+import { mapServiceToImage } from 'lib/logicFunctions';
 import { formatDate } from 'lib/formatData';
-import classNames from 'lib/classNames';
+import { classNames } from 'lib/logicFunctions';
 
 interface IJoinedGroupsListProps {
   joinedGroups: JoinedGroup[];

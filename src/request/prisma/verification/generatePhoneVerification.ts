@@ -2,7 +2,7 @@
 import prisma from 'lib/prisma';
 
 // Helpers
-import { randomString_v2 } from 'lib/verificationCode';
+import { randomString_v2 } from 'lib/logicFunctions';
 
 type GeneratePhoneVerificationRequest = {
   userId: string;

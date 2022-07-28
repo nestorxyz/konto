@@ -13,7 +13,7 @@ import { GroupInfo } from 'request/prisma/groups/getGroup';
 import AxiosValidateYapePayments from 'request/local_next/payments/AxiosValidateYapePayment';
 
 // Helpers
-import mapServiceToImage from 'lib/mapServiceToImage';
+import { mapServiceToImage } from 'lib/logicFunctions';
 
 interface IPayModalProps {
   showPayModal: boolean;

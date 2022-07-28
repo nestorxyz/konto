@@ -11,7 +11,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { GroupScreens } from '../../../pages/grupo/[groupId]';
 
 // Helpers
-import mapServiceToImage from 'lib/mapServiceToImage';
+import { mapServiceToImage } from 'lib/logicFunctions';
 
 // Components
 import PayModal from 'screens/group/PayModal';
