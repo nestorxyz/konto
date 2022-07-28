@@ -18,10 +18,15 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
 
   return (
     <Card isHoverable variant="bordered">
-      <img
-        src={mapServiceToImage(group.plan.service.value)}
-        className="object-cover h-20 rounded-t-xl"
-      />
+      <div className="h-20 w-full rounded-t-xl relative">
+        <Image
+          src={mapServiceToImage(group.plan.service.value)}
+          className="object-cover"
+          placeholder="blur"
+          layout="fill"
+        />
+      </div>
+
       <div className="grid mx-4 mt-3 grid-cols-2">
         <p>
           <h3 className="text-xs text-dark-sub lg:text-sm">
