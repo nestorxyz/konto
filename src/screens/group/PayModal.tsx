@@ -1,5 +1,6 @@
 // Libraries
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
@@ -62,10 +63,14 @@ const PayModal: React.FC<IPayModalProps> = ({
           Unirse al grupo
         </p>
         <div className="flex md:shadow-sm md:gap-6 gap-2 py-6 md:px-2 rounded-lg">
-          <img
-            src={mapServiceToImage(group!.plan.service.value)}
-            className="w-40 rounded-lg h-40 object-cover"
-          />
+          <div className="w-40 rounded-lg overflow-hidden h-40 relative">
+            <Image
+              src={mapServiceToImage(group!.plan.service.value)}
+              className="object-cover"
+              placeholder="blur"
+              layout="fill"
+            />
+          </div>
           <div>
             <p className="font-semibold text-gray-900 text-xl">
               Cuenta de {group!.plan.service.name}
@@ -88,10 +93,14 @@ const PayModal: React.FC<IPayModalProps> = ({
         </div>
         <Text blockquote>
           <div className="flex items-center gap-6">
-            <img
-              src={mapServiceToImage('yape')}
-              className="rounded-lg h-10 w-10 md:h-12 md:w-12"
-            />{' '}
+            <div className="rounded-lg overflow-hidden h-10 w-10 md:h-12 md:w-12 relative">
+              <Image
+                src={mapServiceToImage('yape')}
+                className="object-cover"
+                placeholder="blur"
+                layout="fill"
+              />
+            </div>
             <div className="flex justify-center w-full flex-col items-center">
               <p className="font-semibold text-xl">
                 Yapea al siguiente número{' '}

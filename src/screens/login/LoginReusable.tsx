@@ -1,4 +1,5 @@
 // Libraries
+import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { Button } from '@nextui-org/react';
 
@@ -50,8 +51,16 @@ const Login: React.FC<ILoginProps> = ({
               size="xl"
               onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
             >
-              <img src={mapServiceToImage(provider.name)} className="mr-2" />
-              Ingresar con {provider.name}
+              <span className="flex gap-2 items-center">
+                <div className="w-5 h-5 relative">
+                  <Image
+                    src={mapServiceToImage(provider.name)}
+                    className="object-cover"
+                    layout="fill"
+                  />
+                </div>
+                Ingresar con {provider.name}
+              </span>
             </Button>
           ))}
       </div>

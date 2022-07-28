@@ -1,5 +1,6 @@
 // Libraries
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 import { Button, Text, Collapse, Card } from '@nextui-org/react';
 
 // Types
@@ -51,11 +52,14 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({
             </div>
 
             <div className="flex gap-4">
-              <img
-                src={mapServiceToImage(joinedGroup.group.plan.service.value)}
-                alt="Service"
-                className="w-20 h-20 object-cover rounded-lg"
-              />
+              <div className="w-20 h-20 rounded-lg relative">
+                <Image
+                  src={mapServiceToImage(joinedGroup.group.plan.service.value)}
+                  className="object-cover"
+                  placeholder="blur"
+                  layout="fill"
+                />
+              </div>
               <Text blockquote className="w-full">
                 {joinedGroup.state === 'PENDING' ? (
                   <p className="text-center">

@@ -1,5 +1,6 @@
 // Libraries
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { ShareIcon } from '@heroicons/react/outline';
@@ -59,10 +60,14 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group, setScreen }) => {
     <div className="lg:flex lg:flex-col">
       <div className="lg:flex lg:mx-20 lg:items-center lg:gap-10 lg:justify-center lg:flex-row-reverse lg:mt-10">
         <div>
-          <img
-            src={mapServiceToImage(group!.plan.service.value)}
-            className="object-cover w-full h-60 lg:w-96 lg:rounded-lg lg:gap-4"
-          />
+          <div className="w-full h-60 lg:w-96 lg:gap-4 overflow-hidden lg:rounded-lg relative">
+            <Image
+              src={mapServiceToImage(group!.plan.service.value)}
+              className="object-cover"
+              placeholder="blur"
+              layout="fill"
+            />
+          </div>
           <div className="hidden lg:inline-flex lg:flex-col lg:items-center mt-6 lg:w-full">
             <p className="text-gray-600 mb-4 text-2xl font-bold">
               S/ {group!.plan.joinerPay} cada mes
