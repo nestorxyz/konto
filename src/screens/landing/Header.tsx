@@ -6,6 +6,10 @@ import useWindowDimensions from 'hooks/useWindowDimensions';
 
 // Components
 import { Button } from '@nextui-org/react';
+import Image from 'next/image';
+
+// Images
+import LandingPreview from '@public/img/landing/landing-preview.png';
 
 const LandingHeader: React.FC = () => {
   const router = useRouter();
@@ -41,10 +45,11 @@ const LandingHeader: React.FC = () => {
         </h2>
 
         <div className="hidden md:block">
-          <img
-            src="/img/landing/landing-preview.png"
+          <Image
+            src={LandingPreview}
             width="814"
             height="591"
+            placeholder="blur"
           />
         </div>
       </div>

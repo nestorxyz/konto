@@ -1,3 +1,11 @@
+import disneyImage from '@public/img/services/disney.png';
+import hboImage from '@public/img/services/hbo.jpg';
+import netflixImage from '@public/img/services/netflix.png';
+import crunchyrollImage from '@public/img/services/crunchyroll.jpg';
+import googleIcon from '@public/icons/google.svg';
+import facebookIcon from '@public/icons/facebook.svg';
+import yapeIcon from '@public/img/payment/yape.png';
+
 export const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(' ');
 };
@@ -5,21 +13,21 @@ export const classNames = (...classes: any) => {
 export const mapServiceToImage = (service: string) => {
   switch (service) {
     case 'disney':
-      return '/img/services/disney.png';
+      return disneyImage;
     case 'hbo':
-      return '/img/services/hbo.jpg';
+      return hboImage;
     case 'netflix':
-      return '/img/services/netflix.png';
+      return netflixImage;
     case 'crunchyroll':
-      return '/img/services/crunchyroll.jpg';
+      return crunchyrollImage;
     case 'Google':
-      return '/icons/google.svg';
+      return googleIcon;
     case 'Facebook':
-      return '/icons/facebook.svg';
+      return facebookIcon;
     case 'yape':
-      return '/img/payment/yape.png';
+      return yapeIcon;
     default:
-      return '/img/services/disney.png';
+      return disneyImage;
   }
 };
 
