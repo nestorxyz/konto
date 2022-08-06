@@ -17,7 +17,6 @@ export const initialState: User = {
   phoneVerified: null,
   verificationCode: '',
   walletAvailable: null,
-  walletSecured: null,
   createdAt: new Date(),
   updatedAt: new Date(),
 };
