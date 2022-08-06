@@ -22,8 +22,7 @@ model Account {
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -52,21 +51,21 @@ model User {
   id               String      @id @default(cuid())
   name             String?
   email            String?     @unique
-  emailVerified    DateTime?   @map("email_verified")
-  image            String?
-  isAdmin          Boolean     @default(false)
   phone            String?     @unique
-  phoneVerified    Boolean?
-  verificationCode String?
   walletAvailable  Float?      @default(0)
   createdAt        DateTime    @default(now()) @map("created_at")
   updatedAt        DateTime    @updatedAt @map("updated_at")
-  groups           Group[]
-  usersGroups      UserGroup[]
+  emailVerified    DateTime?   @map("email_verified")
+  image            String?
+  phoneVerified    Boolean?
+  verificationCode String?
+  isAdmin          Boolean     @default(false)
   accounts         Account[]
+  groups           Group[]
   sessions         Session[]
+  usersGroups      UserGroup[]
 
-  @@map(name: "users")
+  @@map("users")
 }
 
 model Service {
@@ -78,7 +77,7 @@ model Service {
   updatedAt DateTime @updatedAt @map("updated_at")
   plan      Plan[]
 
-  @@map(name: "services")
+  @@map("services")
 }
 
 model Plan {
@@ -88,11 +87,11 @@ model Plan {
   maxUsers  Int
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  service   Service  @relation(fields: [serviceId], references: [id])
   serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
   groups    Group[]
 
-  @@map(name: "plans")
+  @@map("plans")
 }
 
 model Group {
@@ -102,19 +101,13 @@ model Group {
   credentialPassword String
   createdAt          DateTime    @default(now()) @map("created_at")
   updatedAt          DateTime    @updatedAt @map("updated_at")
-  admin              User        @relation(fields: [adminId], references: [id])
   adminId            String
-  plan               Plan        @relation(fields: [planId], references: [id])
   planId             String
+  admin              User        @relation(fields: [adminId], references: [id])
+  plan               Plan        @relation(fields: [planId], references: [id])
   userGroups         UserGroup[]
 
-  @@map(name: "groups")
-}
-
-enum UserGroupState {
-  PENDING
-  ACTIVE
-  INACTIVE
+  @@map("groups")
 }
 
 model UserGroup {
@@ -122,15 +115,21 @@ model UserGroup {
   joinedAt          DateTime       @default(now())
   periodStart       DateTime
   periodEnd         DateTime
+  userId            String
+  groupId           String
   state             UserGroupState
-  cancelAtPeriodEnd Boolean        @default(false)
   cancelAt          DateTime?
+  cancelAtPeriodEnd Boolean        @default(false)
   canceledAt        DateTime?
   endedAt           DateTime?
-  user              User           @relation(fields: [userId], references: [id])
-  userId            String
   group             Group          @relation(fields: [groupId], references: [id])
-  groupId           String
+  user              User           @relation(fields: [userId], references: [id])
 
-  @@map(name: "userGroups")
+  @@map("userGroups")
+}
+
+enum UserGroupState {
+  PENDING
+  ACTIVE
+  INACTIVE
 }
