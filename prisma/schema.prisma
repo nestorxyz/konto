@@ -48,22 +48,26 @@ model VerificationToken {
 }
 
 model User {
-  id               String      @id @default(cuid())
+  id               String       @id @default(cuid())
   name             String?
-  email            String?     @unique
-  phone            String?     @unique
-  walletAvailable  Float?      @default(0)
-  createdAt        DateTime    @default(now()) @map("created_at")
-  updatedAt        DateTime    @updatedAt @map("updated_at")
-  emailVerified    DateTime?   @map("email_verified")
+  email            String?      @unique
+  phone            String?      @unique
+  walletAvailable  Float?       @default(0)
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+  emailVerified    DateTime?    @map("email_verified")
   image            String?
   phoneVerified    Boolean?
   verificationCode String?
-  isAdmin          Boolean     @default(false)
+  isAdmin          Boolean      @default(false)
   accounts         Account[]
   groups           Group[]
   sessions         Session[]
   usersGroups      UserGroup[]
+  senders          Transfer[]   @relation("sender")
+  receivers        Transfer[]   @relation("receiver")
+  deposits         Deposit[]
+  withdrawals      Withdrawal[]
 
   @@map("users")
 }
@@ -124,12 +128,72 @@ model UserGroup {
   endedAt           DateTime?
   group             Group          @relation(fields: [groupId], references: [id])
   user              User           @relation(fields: [userId], references: [id])
+  invoices          Invoice[]
 
   @@map("userGroups")
+}
+
+model Transfer {
+  id         String            @id @default(cuid())
+  amount     Float
+  senderId   String
+  receiverId String
+  status     TransactionStatus
+  createdAt  DateTime          @default(now()) @map("created_at")
+  updatedAt  DateTime          @updatedAt @map("updated_at")
+  sender     User              @relation("sender", fields: [senderId], references: [id])
+  receiver   User              @relation("receiver", fields: [receiverId], references: [id])
+  invoice    Invoice?
+
+  @@map("transfers")
+}
+
+model Deposit {
+  id        String            @id @default(cuid())
+  amount    Float
+  userId    String
+  status    TransactionStatus
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+  user      User              @relation(fields: [userId], references: [id])
+
+  @@map("deposits")
+}
+
+model Withdrawal {
+  id        String            @id @default(cuid())
+  amount    Float
+  userId    String
+  status    TransactionStatus
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+  user      User              @relation(fields: [userId], references: [id])
+
+  @@map("withdrawals")
+}
+
+model Invoice {
+  id                 String    @id @default(cuid())
+  userGroupId        String
+  transferId         String    @unique
+  invoicePeriodStart DateTime
+  invoicePeriodEnd   DateTime
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  userGroup          UserGroup @relation(fields: [userGroupId], references: [id])
+  transfer           Transfer  @relation(fields: [transferId], references: [id])
+
+  @@map("invoices")
 }
 
 enum UserGroupState {
   PENDING
   ACTIVE
   INACTIVE
+}
+
+enum TransactionStatus {
+  VALIDATING
+  VALID
+  INVALID
 }
