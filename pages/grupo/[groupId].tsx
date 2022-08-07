@@ -9,12 +9,16 @@ import { BuiltInProviderType } from 'next-auth/providers';
 
 // Request
 import getGroup, { GroupInfo } from 'request/prisma/groups/getGroup';
+import getAllPaymentMethods, {
+  PaymentMethod,
+} from 'request/prisma/paymentMethod/getAllPaymentMethods';
 
 // Components
 import Header from 'screens/group/Header';
 import GroupData from 'screens/group/GroupData';
 import LoginReusable from 'screens/login/LoginReusable';
 import MetaCustom from 'components/seo/MetaCustom';
+import PayModal from 'screens/group/PayModal';
 
 interface IGroupPageProps {
   group: GroupInfo;
@@ -22,6 +26,7 @@ interface IGroupPageProps {
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   >;
+  paymentMethods: PaymentMethod[];
 }
 
 export enum GroupScreens {
@@ -29,8 +34,13 @@ export enum GroupScreens {
   login = 'login',
 }
 
-const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
+const GroupPage: NextPage<IGroupPageProps> = ({
+  group,
+  providers,
+  paymentMethods,
+}) => {
   const [screen, setScreen] = useState<keyof typeof GroupScreens>('group');
+  const [showPayModal, setShowPayModal] = useState(false);
 
   return (
     <div className="w-full min-h-screen relative flex flex-col">
@@ -44,8 +54,13 @@ const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
         url={`/grupo/${group!.id}`}
       />
       <Header className="hidden lg:inline-flex" setScreen={setScreen} />
+
       {screen === GroupScreens.group && (
-        <GroupData group={group} setScreen={setScreen} />
+        <GroupData
+          group={group}
+          setScreen={setScreen}
+          setShowPayModal={setShowPayModal}
+        />
       )}
       {screen === GroupScreens.login && (
         <LoginReusable
@@ -53,6 +68,13 @@ const GroupPage: NextPage<IGroupPageProps> = ({ group, providers }) => {
           callbackUrl={`/grupo/${group!.id}`}
         />
       )}
+
+      <PayModal
+        group={group}
+        paymentMethods={paymentMethods}
+        showPayModal={showPayModal}
+        setShowPayModal={setShowPayModal}
+      />
     </div>
   );
 };
@@ -61,14 +83,18 @@ export const getServerSideProps = async ({
   query,
 }: GetServerSidePropsContext) => {
   const { groupId } = query;
-  const providers = await getProviders();
 
-  const group = await getGroup(groupId as string);
+  const [providers, group, paymentMethods] = await Promise.all([
+    getProviders(),
+    getGroup(groupId as string),
+    getAllPaymentMethods(),
+  ]);
 
   return {
     props: {
-      group: group,
+      group,
       providers,
+      paymentMethods,
     },
   };
 };

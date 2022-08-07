@@ -149,25 +149,31 @@ model Transfer {
 }
 
 model Deposit {
-  id        String            @id @default(cuid())
-  amount    Float
-  userId    String
-  status    TransactionStatus
-  createdAt DateTime          @default(now()) @map("created_at")
-  updatedAt DateTime          @updatedAt @map("updated_at")
-  user      User              @relation(fields: [userId], references: [id])
+  id              String            @id @default(cuid())
+  amount          Float
+  userId          String
+  status          TransactionStatus
+  paymentMethodId String
+  keyInfo         String
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  user            User              @relation(fields: [userId], references: [id])
+  paymentMethod   PaymentMethod     @relation(fields: [paymentMethodId], references: [id])
 
   @@map("deposits")
 }
 
 model Withdrawal {
-  id        String            @id @default(cuid())
-  amount    Float
-  userId    String
-  status    TransactionStatus
-  createdAt DateTime          @default(now()) @map("created_at")
-  updatedAt DateTime          @updatedAt @map("updated_at")
-  user      User              @relation(fields: [userId], references: [id])
+  id              String            @id @default(cuid())
+  amount          Float
+  userId          String
+  status          TransactionStatus
+  paymentMethodId String
+  keyInfo         String
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  user            User              @relation(fields: [userId], references: [id])
+  paymentMethod   PaymentMethod     @relation(fields: [paymentMethodId], references: [id])
 
   @@map("withdrawals")
 }
@@ -186,6 +192,17 @@ model Invoice {
   @@map("invoices")
 }
 
+model PaymentMethod {
+  id          String            @id @default(cuid())
+  name        String
+  type        PaymentMethodType
+  keyInfo     String
+  withdrawals Withdrawal[]
+  deposits    Deposit[]
+
+  @@map("paymentMethods")
+}
+
 enum UserGroupState {
   PENDING
   ACTIVE
@@ -196,4 +213,11 @@ enum TransactionStatus {
   VALIDATING
   VALID
   INVALID
+}
+
+enum PaymentMethodType {
+  BBVA
+  BCP
+  INTERBANK
+  YAPE
 }

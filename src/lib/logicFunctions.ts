@@ -4,7 +4,10 @@ import netflixImage from '@public/img/services/netflix.png';
 import crunchyrollImage from '@public/img/services/crunchyroll.jpg';
 import googleIcon from '@public/icons/google.svg';
 import facebookIcon from '@public/icons/facebook.svg';
-import yapeIcon from '@public/img/payment/yape.png';
+import bbvaImage from '@public/img/payment/bbva.png';
+import bcpImage from '@public/img/payment/bcp.jpg';
+import interbankImage from '@public/img/payment/interbank.png';
+import yapeImage from '@public/img/payment/yape.png';
 
 export const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(' ');
@@ -24,8 +27,14 @@ export const mapServiceToImage = (service: string) => {
       return googleIcon;
     case 'Facebook':
       return facebookIcon;
-    case 'yape':
-      return yapeIcon;
+    case 'BBVA':
+      return bbvaImage;
+    case 'BCP':
+      return bcpImage;
+    case 'INTERBANK':
+      return interbankImage;
+    case 'YAPE':
+      return yapeImage;
     default:
       return disneyImage;
   }

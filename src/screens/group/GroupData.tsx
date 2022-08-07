@@ -14,16 +14,17 @@ import { GroupScreens } from '../../../pages/grupo/[groupId]';
 // Helpers
 import { mapServiceToImage } from 'lib/logicFunctions';
 
-// Components
-import PayModal from 'screens/group/PayModal';
-
 interface IGroupInfoProps {
   group: GroupInfo;
   setScreen: Dispatch<SetStateAction<keyof typeof GroupScreens>>;
+  setShowPayModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const GroupData: React.FC<IGroupInfoProps> = ({ group, setScreen }) => {
-  const [showPayModal, setShowPayModal] = useState(false);
+const GroupData: React.FC<IGroupInfoProps> = ({
+  group,
+  setScreen,
+  setShowPayModal,
+}) => {
   const { status } = useSession();
 
   const handleJoinGroup = () => {
@@ -136,12 +137,6 @@ const GroupData: React.FC<IGroupInfoProps> = ({ group, setScreen }) => {
           Unirme
         </Button>
       </div>
-
-      <PayModal
-        showPayModal={showPayModal}
-        setShowPayModal={setShowPayModal}
-        group={group}
-      />
     </div>
   );
 };

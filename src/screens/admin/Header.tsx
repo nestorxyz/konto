@@ -33,7 +33,13 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
         <div className="hidden md:inline-flex md:gap-10 lg:gap-15 ml-auto mr-5">
           {pages.map((page) => {
             return (
-              <Button size="xl" auto light onClick={() => setScreen(page.page)}>
+              <Button
+                key={page.name}
+                size="xl"
+                auto
+                light
+                onClick={() => setScreen(page.page)}
+              >
                 {page.name}
               </Button>
             );
