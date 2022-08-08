@@ -11,10 +11,9 @@ import { Button, Modal, Popover } from '@nextui-org/react';
 // Types
 import { GroupInfo } from 'request/prisma/groups/getGroup';
 import { PaymentMethod } from 'request/prisma/paymentMethod/getAllPaymentMethods';
-import { PaymentMethodType } from '@prisma/client';
 
 // Requests
-import AxiosValidateYapePayments from 'request/local_next/payments/AxiosValidateYapePayment';
+import AxiosValidateJoinGroupPayment from 'request/local_next/payments/AxiosValidateJoinGroupPayment';
 
 // Helpers
 import { mapServiceToImage, classNames } from 'lib/logicFunctions';
@@ -40,9 +39,10 @@ const PayModal: React.FC<IPayModalProps> = ({
 
   const handlePay = async () => {
     setLoading(true);
-    const response = await AxiosValidateYapePayments({
+    const response = await AxiosValidateJoinGroupPayment({
       groupId: group!.id,
       userId: session?.user?.id as string,
+      paymentMethodId: selectedPaymentMethod.id,
     });
     setLoading(false);
     if (response.error) {
