@@ -29,7 +29,7 @@ const WalletScreen: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <p className="text-center text-4xl text-primary font-smibold">
-              S/ {user.walletAvailable}
+              S/ {user.balance}
             </p>
             <Collapse.Group>
               <Collapse

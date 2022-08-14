@@ -12,7 +12,7 @@ const verifyDeposit = async (depositId: string) => {
       id: deposit.userId,
     },
     data: {
-      walletAvailable: {
+      balance: {
         increment: deposit.amount,
       },
     },

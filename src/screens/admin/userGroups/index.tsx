@@ -41,13 +41,15 @@ const Pending: React.FC = () => {
     AxiosGetAllUserGroups
   );
 
-  const handleVerifyPayment = async (userGroup: AdminUserGroup) => {
+  const handleValidateUserJoinGroup = async (userGroup: AdminUserGroup) => {
     toast.promise(AxiosValidateUserJoinGroup(userGroup.id), {
       loading: 'Validando pago...',
       success: 'Pago validado',
       error: 'Error validando pago',
     });
   };
+
+  const handleRenewSubscription = async (userGroup: AdminUserGroup) => {};
 
   if (error === undefined && response === undefined)
     return <Loading className="mx-auto" />;
@@ -63,6 +65,7 @@ const Pending: React.FC = () => {
         <Table.Column>Días con el servicio</Table.Column>
         <Table.Column>Termina en</Table.Column>
         <Table.Column>Status</Table.Column>
+        <Table.Column>Balance</Table.Column>
         <Table.Column>Actions</Table.Column>
       </Table.Header>
       <Table.Body>
@@ -124,13 +127,23 @@ const Pending: React.FC = () => {
                   {userGroup.state}
                 </Status>
               </Table.Cell>
+              <Table.Cell>S/ {userGroup.user.balance}</Table.Cell>
               <Table.Cell>
-                <Button
-                  onPress={() => handleVerifyPayment(userGroup)}
-                  disabled={userGroup.state !== 'PENDING'}
-                >
-                  Aprobar pago
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    auto
+                    onPress={() => handleValidateUserJoinGroup(userGroup)}
+                    disabled={userGroup.state !== 'PENDING'}
+                  >
+                    Activar
+                  </Button>
+                  <Button
+                    auto
+                    onPress={() => handleRenewSubscription(userGroup)}
+                  >
+                    Renovar
+                  </Button>
+                </div>
               </Table.Cell>
             </Table.Row>
           );

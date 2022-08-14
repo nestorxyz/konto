@@ -59,6 +59,7 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
           name: true,
           image: true,
           email: true,
+          balance: true,
         },
       },
       state: true,

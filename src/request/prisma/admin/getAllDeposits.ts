@@ -26,7 +26,7 @@ const getAllDeposits = async (params: IGetAllDepositsParams) => {
           name: true,
           email: true,
           image: true,
-          walletAvailable: true,
+          balance: true,
         },
       },
     },

@@ -16,7 +16,7 @@ const transfer = async (params: ITransferParams) => {
   if (!sender || !receiver) {
     throw new Error('User not found');
   }
-  if (sender.walletAvailable < amount) {
+  if (sender.balance < amount) {
     throw new Error('Not enough balance');
   }
 
@@ -32,7 +32,7 @@ const transfer = async (params: ITransferParams) => {
   await prisma.user.update({
     where: { id: senderId },
     data: {
-      walletAvailable: {
+      balance: {
         decrement: amount,
       },
     },
@@ -40,7 +40,7 @@ const transfer = async (params: ITransferParams) => {
   await prisma.user.update({
     where: { id: receiverId },
     data: {
-      walletAvailable: {
+      balance: {
         increment: amount,
       },
     },
