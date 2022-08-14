@@ -13,9 +13,10 @@ import {
 
 // Request
 import AxiosGetAllDeposits from 'request/local_next/admin/AxiosGetAllDeposits';
+import AxiosVerifyDeposit from 'request/local_next/admin/AxiosVerifyDeposit';
 
 // Helpers
-import { formatDate, dateDiffInDays } from 'lib/formatData';
+import { formatDate } from 'lib/formatData';
 
 //Types
 import { AdminDeposit } from 'request/prisma/admin/getAllDeposits';
@@ -40,14 +41,12 @@ const Deposits: React.FC = () => {
     AxiosGetAllDeposits
   );
 
-  console.log(response);
-
-  const handleVerifyPayment = async (deposit: AdminDeposit) => {
-    /* toast.promise(AxiosVerifyPayment(deposit.id), {
-      loading: 'Validando pago...',
-      success: 'Pago validado',
-      error: 'Error validando pago',
-    }); */
+  const handleVerifyDeposit = async (deposit: AdminDeposit) => {
+    toast.promise(AxiosVerifyDeposit(deposit.id), {
+      loading: 'Validando depósito...',
+      success: 'Depósito validado',
+      error: 'Error validando depósito',
+    });
   };
 
   if (error === undefined && response === undefined)
@@ -91,7 +90,7 @@ const Deposits: React.FC = () => {
             </Table.Cell>
             <Table.Cell>
               <Button
-                onClick={() => handleVerifyPayment(deposit)}
+                onClick={() => handleVerifyDeposit(deposit)}
                 size="sm"
                 auto
               >
