@@ -52,7 +52,7 @@ model User {
   name             String?
   email            String?      @unique
   phone            String?      @unique
-  walletAvailable  Float?       @default(0)
+  walletAvailable  Float        @default(0)
   createdAt        DateTime     @default(now()) @map("created_at")
   updatedAt        DateTime     @updatedAt @map("updated_at")
   emailVerified    DateTime?    @map("email_verified")

@@ -13,7 +13,7 @@ import {
 
 // Request
 import AxiosGetAllUserGroups from 'request/local_next/admin/AxiosGetAllUserGroups';
-import AxiosVerifyPayment from 'request/local_next/admin/AxiosVerifyPayment';
+import AxiosValidateUserJoinGroup from 'request/local_next/admin/AxiosValidateUserJoinGroup';
 
 // Helpers
 import { formatDate, dateDiffInDays } from 'lib/formatData';
@@ -42,7 +42,7 @@ const Pending: React.FC = () => {
   );
 
   const handleVerifyPayment = async (userGroup: AdminUserGroup) => {
-    toast.promise(AxiosVerifyPayment(userGroup.id), {
+    toast.promise(AxiosValidateUserJoinGroup(userGroup.id), {
       loading: 'Validando pago...',
       success: 'Pago validado',
       error: 'Error validando pago',
