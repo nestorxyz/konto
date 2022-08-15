@@ -9,6 +9,8 @@ const getUserGroup = async (userGroupId: string) => {
     select: {
       id: true,
       state: true,
+      periodStart: true,
+      periodEnd: true,
       group: {
         select: {
           id: true,

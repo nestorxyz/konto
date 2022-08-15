@@ -14,6 +14,7 @@ import {
 // Request
 import AxiosGetAllUserGroups from 'request/local_next/admin/AxiosGetAllUserGroups';
 import AxiosValidateUserJoinGroup from 'request/local_next/admin/AxiosValidateUserJoinGroup';
+import AxiosRenewSubscription from 'request/local_next/admin/AxiosRenewSubscription';
 
 // Helpers
 import { formatDate, dateDiffInDays } from 'lib/formatData';
@@ -49,7 +50,15 @@ const Pending: React.FC = () => {
     });
   };
 
-  const handleRenewSubscription = async (userGroup: AdminUserGroup) => {};
+  const handleRenewSubscription = async (userGroup: AdminUserGroup) => {
+    const response = await AxiosRenewSubscription(userGroup.id);
+
+    if (response instanceof Error) {
+      return toast.error(response.message);
+    }
+
+    toast.success('Subscripción renovada');
+  };
 
   if (error === undefined && response === undefined)
     return <Loading className="mx-auto" />;
