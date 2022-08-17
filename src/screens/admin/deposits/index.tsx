@@ -1,4 +1,5 @@
 // Libraries
+import { useState } from 'react';
 import useSWR from 'swr';
 import toast from 'react-hot-toast';
 import { Button } from '@nextui-org/react';
@@ -7,13 +8,22 @@ import { Button } from '@nextui-org/react';
 import AxiosGetAllDeposits from 'request/local_next/admin/AxiosGetAllDeposits';
 import AxiosVerifyDeposit from 'request/local_next/admin/AxiosVerifyDeposit';
 
-//Types
+// Types
 import { AdminDeposit } from 'request/prisma/admin/getAllDeposits';
+import { PaymentMethod } from 'request/prisma/paymentMethod/getAllPaymentMethods';
 
 // Components
 import DepositList from './DepositsList';
+import CreateDepositModal from './CreateDepositModal';
 
-const Deposits: React.FC = () => {
+interface IDepositProps {
+  paymentMethods: Array<PaymentMethod>;
+}
+
+const Deposits: React.FC<IDepositProps> = (props) => {
+  const { paymentMethods } = props;
+  const [showDepositModal, setShowDepositModal] = useState(false);
+
   const { data: response, error } = useSWR<Array<AdminDeposit>>(
     '/admin/getAllDeposits',
     AxiosGetAllDeposits
@@ -29,13 +39,22 @@ const Deposits: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <Button auto className="ml-auto">
+      <Button
+        auto
+        className="ml-auto"
+        onClick={() => setShowDepositModal(true)}
+      >
         Nuevo depósito
       </Button>
       <DepositList
         deposits={response}
         error={error}
         handleVerifyDeposit={handleVerifyDeposit}
+      />
+      <CreateDepositModal
+        paymentMethods={paymentMethods}
+        showDepositModal={showDepositModal}
+        setShowDepositModal={setShowDepositModal}
       />
     </div>
   );
