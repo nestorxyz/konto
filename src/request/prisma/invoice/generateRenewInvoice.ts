@@ -12,8 +12,9 @@ interface IGenerateInvoiceParams {
 const generateRenewInvoice = async (params: IGenerateInvoiceParams) => {
   const { userGroup, transferId } = params;
 
-  const periodEnd = new Date();
-  periodEnd.setDate(userGroup!.periodEnd.getDate() + 30);
+  // sum 30 days from userGroup.periodEnd
+  const periodEnd = new Date(userGroup!.periodEnd);
+  periodEnd.setDate(periodEnd.getDate() + 30);
 
   const invoice = await prisma.invoice.create({
     data: {

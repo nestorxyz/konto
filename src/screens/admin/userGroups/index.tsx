@@ -1,4 +1,5 @@
 // Libraries
+import { useState } from 'react';
 import useSWR from 'swr';
 import toast from 'react-hot-toast';
 import {
@@ -41,6 +42,7 @@ const Pending: React.FC = () => {
     '/admin/getAllUserGroups',
     AxiosGetAllUserGroups
   );
+  const [renewing, setRenewing] = useState<boolean>(false);
 
   const handleValidateUserJoinGroup = async (userGroup: AdminUserGroup) => {
     toast.promise(AxiosValidateUserJoinGroup(userGroup.id), {
@@ -51,13 +53,15 @@ const Pending: React.FC = () => {
   };
 
   const handleRenewSubscription = async (userGroup: AdminUserGroup) => {
+    setRenewing(true);
     const response = await AxiosRenewSubscription(userGroup.id);
 
     if (response instanceof Error) {
-      return toast.error(response.message);
+      toast.error(response.message);
+    } else {
+      toast.success('Subscripción renovada');
     }
-
-    toast.success('Subscripción renovada');
+    setRenewing(false);
   };
 
   if (error === undefined && response === undefined)
@@ -149,8 +153,9 @@ const Pending: React.FC = () => {
                   <Button
                     auto
                     onPress={() => handleRenewSubscription(userGroup)}
+                    disabled={renewing}
                   >
-                    Renovar
+                    {renewing ? 'Renovando...' : 'Renovar'}
                   </Button>
                 </div>
               </Table.Cell>
