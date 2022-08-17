@@ -8,7 +8,7 @@ export const formatDate = (date: Date): string => {
     day: 'numeric',
   };
 
-  return newDate.toLocaleDateString('en-ES', options);
+  return newDate.toLocaleDateString('es-ES', options);
 };
 
 export const dateDiffInDays = (start: Date, end: Date) => {

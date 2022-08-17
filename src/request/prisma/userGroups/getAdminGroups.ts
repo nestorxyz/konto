@@ -26,6 +26,9 @@ const getAdminGroup = async (userId: string) => {
         },
       },
       userGroups: {
+        where: {
+          state: 'ACTIVE',
+        },
         select: {
           id: true,
           user: {

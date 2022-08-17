@@ -15,15 +15,15 @@ const WalletScreen: React.FC = () => {
   const { user } = useUser();
   const { adminGroups, loading } = useAdminGroups();
 
+  console.log(adminGroups);
+
   return (
-    <main className="mx-6 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
+    <main className="mx-4 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
       <div className="md:w-96">
         <Card variant="bordered">
           <Card.Header>
             <div className="flex justify-between w-full items-center">
-              <p className="text-gray-700 text-xl font-semibold">
-                Saldo disponible
-              </p>
+              <p className="text-gray-700 font-semibold text-lg">Balance</p>
               <img src="/logo.svg" className="h-10 w-10" />
             </div>
           </Card.Header>
@@ -31,19 +31,15 @@ const WalletScreen: React.FC = () => {
             <p className="text-center text-4xl text-primary font-smibold">
               S/ {user.balance}
             </p>
-            <Collapse.Group>
-              <Collapse
-                title={
-                  <p className="text-gray-500 font-semibold">Agregar Saldo</p>
-                }
-              ></Collapse>
-            </Collapse.Group>
           </Card.Body>
+          <Card.Footer>
+            <p className="text-right w-full">@{user.username}</p>
+          </Card.Footer>
         </Card>
       </div>
 
       <div className="lg:w-[400px]">
-        <p className="text-gray-800 font-semibold text-xl mb-4">
+        <p className="text-gray-700 font-semibold text-lg mb-4">
           Próximos Pagos
         </p>
         {loading && <Loading className="mx-auto" />}
@@ -51,7 +47,6 @@ const WalletScreen: React.FC = () => {
           <div className="flex flex-col gap-5">
             {adminGroups.map((adminGroup: AdminGroup) => {
               return adminGroup.userGroups.map((userGroup) => {
-                if (userGroup.state !== 'ACTIVE') return null;
                 return (
                   <div
                     id={userGroup.id}
@@ -72,9 +67,8 @@ const WalletScreen: React.FC = () => {
                             adminGroup.plan.service.name}
                         </p>
                       }
-                      description={
-                        'Recibirás el pago: ' + formatDate(userGroup.periodEnd)
-                      }
+                      description={formatDate(userGroup.periodEnd)}
+                      style={{ padding: '0' }}
                     />
                     <Text color="success" className="font-medium text-xl">
                       S/ {adminGroup.plan.adminGet} +
@@ -88,6 +82,9 @@ const WalletScreen: React.FC = () => {
         {adminGroups && adminGroups.length === 0 && (
           <p>No hay próximos pagos</p>
         )}
+      </div>
+      <div className="lg:w-[400px]">
+        <p className="text-gray-700 font-semibold text-lg mb-4">Movimientos</p>
       </div>
     </main>
   );
