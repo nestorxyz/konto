@@ -2,7 +2,7 @@
 import prisma from 'lib/prisma';
 
 const getJoinedGroups = async (userId: string) => {
-  const response = await prisma.userGroup.findMany({
+  const response = await prisma.subscription.findMany({
     where: {
       userId,
     },
@@ -33,7 +33,7 @@ const getJoinedGroups = async (userId: string) => {
               },
             },
           },
-          userGroups: {
+          subscriptions: {
             select: {
               id: true,
             },

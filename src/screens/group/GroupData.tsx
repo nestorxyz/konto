@@ -102,7 +102,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({
           </div>
           <div className="flex gap-4 items-center mb-4">
             <h4 className="text-gray-600 mb-0">
-              {group!.plan.maxUsers - (group!.userGroups.length + 1)}/
+              {group!.plan.maxUsers - (group!.subscriptions.length + 1)}/
               {group!.plan.maxUsers} Sitios disponibles
             </h4>
             <Button

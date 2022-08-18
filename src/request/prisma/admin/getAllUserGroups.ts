@@ -9,7 +9,7 @@ interface IGetAllUserGroupsParams {
 const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
   const { skip = 0, take = 10 } = params;
 
-  const userGroups = await prisma.userGroup.findMany({
+  const userGroups = await prisma.subscription.findMany({
     skip: skip,
     take: take,
     select: {
@@ -39,7 +39,7 @@ const getAllUserGroups = async (params: IGetAllUserGroupsParams) => {
               maxUsers: true,
             },
           },
-          userGroups: {
+          subscriptions: {
             select: {
               user: {
                 select: {

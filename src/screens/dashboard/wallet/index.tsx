@@ -1,21 +1,17 @@
 // Libraries
-import { Card, Collapse, Loading, Text, User } from '@nextui-org/react';
+import { Card, Loading, Text, User } from '@nextui-org/react';
 
 // Hooks
-import useUser from 'hooks/useUser';
-import useAdminGroups from 'hooks/useAdminGroups';
+import useApp from 'hooks/useApp';
 
 // Helpers
 import { formatDate } from 'lib/formatData';
 
 // Types
-import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+import { AdminGroup } from 'request/prisma/subscriptions/getAdminGroups';
 
 const WalletScreen: React.FC = () => {
-  const { user } = useUser();
-  const { adminGroups, loading } = useAdminGroups();
-
-  console.log(adminGroups);
+  const { user } = useApp();
 
   return (
     <main className="mx-4 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
@@ -42,44 +38,42 @@ const WalletScreen: React.FC = () => {
         <p className="text-gray-700 font-semibold text-lg mb-4">
           Próximos Pagos
         </p>
-        {loading && <Loading className="mx-auto" />}
-        {adminGroups && adminGroups.length > 0 && (
+        {user.groups.length > 0 ? (
           <div className="flex flex-col gap-5">
-            {adminGroups.map((adminGroup: AdminGroup) => {
-              return adminGroup.userGroups.map((userGroup) => {
+            {user.groups.map((groups) => {
+              return groups.subscriptions.map((subscription) => {
                 return (
                   <div
-                    id={userGroup.id}
+                    id={subscription.id}
                     className="flex justify-between items-center"
                   >
                     <User
-                      {...(userGroup.user.image !== null
+                      {...(subscription.user.image !== null
                         ? {
-                            src: userGroup.user.image,
+                            src: subscription.user.image,
                           }
-                        : { text: userGroup.user.name! })}
+                        : { text: subscription.user.name! })}
                       name={
                         <p className="text-primary-800 font-semibold">
-                          {userGroup.user.name?.split(' ')[0] +
+                          {subscription.user.name?.split(' ')[0] +
                             ' ' +
-                            userGroup.user.name?.split(' ')[1] +
+                            subscription.user.name?.split(' ')[1] +
                             ' - ' +
-                            adminGroup.plan.service.name}
+                            subscription.group.plan.service.name}
                         </p>
                       }
-                      description={formatDate(userGroup.periodEnd)}
+                      description={formatDate(subscription.periodEnd)}
                       style={{ padding: '0' }}
                     />
                     <Text color="success" className="font-medium text-xl">
-                      S/ {adminGroup.plan.adminGet} +
+                      S/ {subscription.group.plan.adminGet} +
                     </Text>
                   </div>
                 );
               });
             })}
           </div>
-        )}
-        {adminGroups && adminGroups.length === 0 && (
+        ) : (
           <p>No hay próximos pagos</p>
         )}
       </div>

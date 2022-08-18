@@ -9,7 +9,7 @@ import { DashboardPages } from 'screens/dashboard';
 
 // Hooks
 import { useSession } from 'next-auth/react';
-import useUser from 'hooks/useUser';
+import useApp from 'hooks/useApp';
 import { Key } from 'react';
 
 interface IUserDropdownProps {
@@ -18,7 +18,7 @@ interface IUserDropdownProps {
 
 const UserDropdown: React.FC<IUserDropdownProps> = ({ setScreen }) => {
   const { data: session } = useSession();
-  const { user } = useUser();
+  const { user } = useApp();
 
   const handleDropdownAction = (key: Key) => {
     if (key === 'sayhi') {

@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Request
-import getAdminGroupsRequest from 'request/prisma/userGroups/getAdminGroups';
+import getAdminGroupsRequest from 'request/prisma/subscriptions/getAdminGroups';
 
 const getAdminGroups = async (req: NextApiRequest, res: NextApiResponse) => {
   const { userId } = req.body;

@@ -28,7 +28,7 @@ const getAllGroups = async () => {
           maxUsers: true,
         },
       },
-      userGroups: {
+      subscriptions: {
         select: {
           user: {
             select: {

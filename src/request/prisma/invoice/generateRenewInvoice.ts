@@ -2,7 +2,7 @@
 import prisma from 'lib/prisma';
 
 // Types
-import { UserGroup } from 'request/prisma/userGroups/getUserGroup';
+import { UserGroup } from 'request/prisma/subscriptions/getUserGroup';
 
 interface IGenerateInvoiceParams {
   userGroup: UserGroup;
@@ -18,7 +18,7 @@ const generateRenewInvoice = async (params: IGenerateInvoiceParams) => {
 
   const invoice = await prisma.invoice.create({
     data: {
-      userGroupId: userGroup!.id,
+      subscriptionId: userGroup!.id,
       transferId,
       invoicePeriodStart: userGroup!.periodEnd,
       invoicePeriodEnd: periodEnd,

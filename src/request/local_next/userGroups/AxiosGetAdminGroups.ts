@@ -1,7 +1,7 @@
 import { AxiosApi } from 'request/AxiosBase';
 
 // Request
-import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+import { AdminGroup } from 'request/prisma/subscriptions/getAdminGroups';
 
 interface IAxiosGetAdminGroups {
   url: string;

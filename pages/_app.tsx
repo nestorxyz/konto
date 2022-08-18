@@ -2,7 +2,6 @@
 import { SessionProvider } from 'next-auth/react';
 import { NextUIProvider, createTheme } from '@nextui-org/react';
 import { Toaster } from 'react-hot-toast';
-import { Provider } from 'react-redux';
 import NextNProgress from 'nextjs-progressbar';
 
 // Types
@@ -11,8 +10,6 @@ import type { AppProps } from 'next/app';
 // Styles
 import '../styles/globals.css';
 import 'react-phone-number-input/style.css';
-
-import store from 'redux/store';
 
 // Constants
 const theme = createTheme({
@@ -48,11 +45,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <NextUIProvider theme={theme}>
-        <Provider store={store}>
-          <NextNProgress color="#185ADB" options={{ showSpinner: false }} />
-          <Toaster position="top-center" reverseOrder={false} />
-          <Component {...pageProps} />
-        </Provider>
+        <NextNProgress color="#185ADB" options={{ showSpinner: false }} />
+        <Toaster position="top-center" reverseOrder={false} />
+        <Component {...pageProps} />
       </NextUIProvider>
     </SessionProvider>
   );

@@ -6,7 +6,7 @@ import { Button } from '@nextui-org/react';
 // Request
 import getUserGroup, {
   UserGroup,
-} from 'request/prisma/userGroups/getUserGroup';
+} from 'request/prisma/subscriptions/getUserGroup';
 import sendValidatePaymentEmail from 'request/prisma/emails/sendValidatePaymentEmail';
 
 // Components

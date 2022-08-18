@@ -5,7 +5,7 @@ import sgMail from '@sendgrid/mail';
 // Request
 import getUserInfo from 'request/prisma/users/getUserInfo';
 import getGroup from 'request/prisma/groups/getGroup';
-import userJoinValidating from 'request/prisma/userGroups/userJoinValidating';
+import userJoinValidating from 'request/prisma/subscriptions/userJoinValidating';
 
 const validateYapePayment = async (
   req: NextApiRequest,
@@ -29,12 +29,16 @@ const validateYapePayment = async (
       return;
     }
 
-    if (group?.userGroups.some((userGroup) => userGroup.user.id === userId)) {
+    if (
+      group?.subscriptions.some(
+        (subscription) => subscription.user.id === userId
+      )
+    ) {
       res.status(200).json({ error: 'Ya estás en este grupo' });
       return;
     }
 
-    if (group!.userGroups.length >= group!.plan.maxUsers) {
+    if (group!.subscriptions.length >= group!.plan.maxUsers) {
       res.status(200).json({ error: 'El grupo está lleno' });
       return;
     }

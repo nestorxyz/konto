@@ -2,7 +2,7 @@
 import sgMail from '@sendgrid/mail';
 
 // Types
-import { UserGroup } from 'request/prisma/userGroups/getUserGroup';
+import { UserGroup } from 'request/prisma/subscriptions/getUserGroup';
 
 const sendValidatePaymentEmail = async (userGroup: UserGroup) => {
   const msg = {

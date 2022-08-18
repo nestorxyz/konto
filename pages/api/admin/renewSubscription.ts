@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Request
-import getUserGroup from 'request/prisma/userGroups/getUserGroup';
+import getUserGroup from 'request/prisma/subscriptions/getUserGroup';
 import makeTransfer from 'request/prisma/transfer/makeTransfer';
 import generateRenewInvoice from 'request/prisma/invoice/generateRenewInvoice';
 import renewSubscription from 'request/prisma/admin/renewSubscription';

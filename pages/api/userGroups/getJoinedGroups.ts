@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Request
-import getJoinedGroupsRequest from 'request/prisma/userGroups/getJoinedGroups';
+import getJoinedGroupsRequest from 'request/prisma/subscriptions/getJoinedGroups';
 
 const getJoinedGroups = async (req: NextApiRequest, res: NextApiResponse) => {
   const { userId } = req.body;
