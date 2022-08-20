@@ -12,7 +12,7 @@ const userJoinValidating = async (params: IUserJoinValidatingParams) => {
   const periodEnd = new Date();
   periodEnd.setDate(periodEnd.getDate() + 30);
 
-  const response = await prisma.userGroup.create({
+  const response = await prisma.subscription.create({
     data: {
       userId,
       groupId,

@@ -53,7 +53,7 @@ const CreateDepositModal: React.FC<ICreateDepositModalProps> = (props) => {
         keyInfo,
       });
 
-      if (response) {
+      if (response === true) {
         setShowDepositModal(false);
         toast.success('Depósito creado');
       } else {

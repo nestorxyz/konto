@@ -7,8 +7,6 @@ import makeTransfer from 'request/prisma/transfer/makeTransfer';
 import generateRenewInvoice from 'request/prisma/invoice/generateRenewInvoice';
 import renewSubscription from 'request/prisma/admin/renewSubscription';
 
-const KONTO_COIN_ADMIN_ID = 'cl6jg0c430011qjwc5g19fwp0';
-
 const handleRenewSubscription = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -25,7 +23,7 @@ const handleRenewSubscription = async (
     const transfer = await makeTransfer({
       amount: userGroup.group.plan.joinerPay,
       senderId: userGroup.user.id,
-      receiverId: KONTO_COIN_ADMIN_ID,
+      receiverId: process.env.KONTO_COIN_ADMIN_ID as string,
     });
 
     // Generate invoice for userGroup

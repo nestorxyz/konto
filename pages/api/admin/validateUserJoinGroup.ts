@@ -25,7 +25,7 @@ const validateUserJoinGroup = async (
     const transfer = await makeTransfer({
       amount: userGroup.group.plan.joinerPay,
       senderId: userGroup.user.id,
-      receiverId: KONTO_COIN_ADMIN_ID,
+      receiverId: process.env.KONTO_COIN_ADMIN_ID as string,
     });
     if (!transfer) return res.status(500).json({ error: 'Transfer error' });
     if (transfer.status !== 'VALID')

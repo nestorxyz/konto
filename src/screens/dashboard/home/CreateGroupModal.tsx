@@ -39,8 +39,6 @@ const CreateGroupModal: React.FC<ICreateGroupModalProps> = ({
 
   const [loading, setLoading] = useState(false);
 
-  console.log(data);
-
   const formik = useFormik({
     initialValues: {
       plan: data ? data[0].id : '',
