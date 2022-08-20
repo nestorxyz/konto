@@ -44,8 +44,10 @@ const Pending: React.FC = () => {
   );
   const [renewing, setRenewing] = useState<boolean>(false);
 
-  const handleValidateUserJoinGroup = async (userGroup: AdminUserGroup) => {
-    toast.promise(AxiosValidateUserJoinGroup(userGroup.id), {
+  const handleValidateUserJoinGroup = async (
+    subscriptionId: AdminUserGroup
+  ) => {
+    toast.promise(AxiosValidateUserJoinGroup(subscriptionId.id), {
       loading: 'Validando pago...',
       success: 'Pago validado',
       error: 'Error validando pago',

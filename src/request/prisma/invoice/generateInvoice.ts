@@ -2,19 +2,19 @@
 import prisma from 'lib/prisma';
 
 interface IGenerateInvoiceParams {
-  userGroupId: string;
+  subscriptionId: string;
   transferId: string;
 }
 
 const generateInvoice = async (params: IGenerateInvoiceParams) => {
-  const { userGroupId, transferId } = params;
+  const { subscriptionId, transferId } = params;
 
   const periodEnd = new Date();
   periodEnd.setDate(periodEnd.getDate() + 30);
 
   const invoice = await prisma.invoice.create({
     data: {
-      userGroupId,
+      subscriptionId,
       transferId,
       invoicePeriodStart: new Date(),
       invoicePeriodEnd: periodEnd,

@@ -14,9 +14,9 @@ const validateUserJoinGroup = async (
   res: NextApiResponse
 ) => {
   try {
-    const { userGroupId } = req.body;
+    const { subscriptionId } = req.body;
 
-    const userGroup = await getUserGroup(userGroupId);
+    const userGroup = await getUserGroup(subscriptionId);
 
     if (!userGroup)
       return res.status(404).json({ error: 'User group not found' });
@@ -33,14 +33,14 @@ const validateUserJoinGroup = async (
 
     // Generate invoice for userGroup
     const invoice = await generateInvoice({
-      userGroupId,
+      subscriptionId,
       transferId: transfer.id,
     });
     if (!invoice) return res.status(500).json({ error: 'Invoice error' });
 
     // Validate userGroup
     const userGroupValidated = await activateUserJoinGroup({
-      userGroupId,
+      subscriptionId,
       periodStart: invoice.invoicePeriodStart,
       periodEnd: invoice.invoicePeriodEnd,
     });

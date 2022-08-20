@@ -63,7 +63,9 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
         <Button.Group size="xl">
           {pages.map((page) => {
             return (
-              <Button onPress={() => setScreen(page.page)}>{page.name}</Button>
+              <Button key={page.name} onPress={() => setScreen(page.page)}>
+                {page.name}
+              </Button>
             );
           })}
         </Button.Group>

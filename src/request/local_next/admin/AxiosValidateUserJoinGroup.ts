@@ -1,9 +1,9 @@
 import { AxiosApi } from 'request/AxiosBase';
 
-const AxiosValidateUserJoinGroup = async (userGroupId: string) => {
+const AxiosValidateUserJoinGroup = async (subscriptionId: string) => {
   try {
     const result = await AxiosApi.post('/admin/validateUserJoinGroup', {
-      userGroupId,
+      subscriptionId,
     });
 
     return result.data;

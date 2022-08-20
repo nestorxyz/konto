@@ -2,16 +2,16 @@
 import prisma from 'lib/prisma';
 
 interface IActivateUserJoinGroupParams {
-  userGroupId: string;
+  subscriptionId: string;
   periodStart: Date;
   periodEnd: Date;
 }
 
 const activateUserJoinGroup = async (params: IActivateUserJoinGroupParams) => {
-  const { userGroupId, periodStart, periodEnd } = params;
+  const { subscriptionId, periodStart, periodEnd } = params;
 
-  const userGroup = await prisma.userGroup.update({
-    where: { id: userGroupId },
+  const userGroup = await prisma.subscription.update({
+    where: { id: subscriptionId },
     data: { state: 'ACTIVE', periodStart, periodEnd },
   });
 

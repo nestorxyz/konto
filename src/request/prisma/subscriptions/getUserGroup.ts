@@ -1,10 +1,10 @@
 // Libs
 import prisma from 'lib/prisma';
 
-const getUserGroup = async (userGroupId: string) => {
-  const response = await prisma.userGroup.findUnique({
+const getUserGroup = async (subscriptionId: string) => {
+  const response = await prisma.subscription.findUnique({
     where: {
-      id: userGroupId,
+      id: subscriptionId,
     },
     select: {
       id: true,
@@ -32,7 +32,7 @@ const getUserGroup = async (userGroupId: string) => {
               },
             },
           },
-          userGroups: {
+          subscriptions: {
             select: {
               id: true,
             },
