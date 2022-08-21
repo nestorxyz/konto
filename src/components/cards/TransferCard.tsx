@@ -41,7 +41,7 @@ const TransferCard: React.FC<ITransferCardProps> = (props) => {
       <Status className="ml-auto" status={status}>
         {statusText}
       </Status>
-      <p className="ml-4 text-lg font-medium text-gray-800">
+      <p className="ml-4 text-lg whitespace-nowrap font-medium text-gray-800">
         {formatTransferInfo(type, amount)}
       </p>
     </div>

@@ -14,8 +14,8 @@ const WalletScreen: React.FC = () => {
   if (!user) return <Loading />;
 
   return (
-    <main className="mx-4 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
-      <div className="md:w-96">
+    <main className="mx-auto max-w-sm w-full sm:max-w-none px-6 mb-28 grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-10 lg:max-w-4xl">
+      <div className="max-w-sm w-full">
         <Card variant="bordered">
           <Card.Header>
             <div className="flex justify-between w-full items-center">
@@ -34,13 +34,14 @@ const WalletScreen: React.FC = () => {
         </Card>
       </div>
 
-      <div className="lg:w-[400px]">
+      <div className="max-w-sm w-full sm:row-start-2">
         <p className="text-gray-700 font-semibold text-lg mb-4">
           Próximos Pagos
         </p>
         <NextPayments />
       </div>
-      <div className="lg:w-[400px]">
+
+      <div className="max-w-sm w-full">
         <p className="text-gray-700 font-semibold text-lg mb-4">Movimientos</p>
         <Movements />
       </div>

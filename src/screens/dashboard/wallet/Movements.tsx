@@ -53,6 +53,7 @@ const Movements: React.FC = () => {
           if (isDeposit(movement)) {
             return (
               <TransferCard
+                key={movement.id}
                 type="moneyIn"
                 title="Depósito"
                 subtitle={formatDate(movement.updatedAt)}
@@ -64,6 +65,7 @@ const Movements: React.FC = () => {
           } else if (isWithdrawal(movement)) {
             return (
               <TransferCard
+                key={movement.id}
                 type="moneyOut"
                 title="Retiro"
                 subtitle={formatDate(movement.updatedAt)}
@@ -75,6 +77,7 @@ const Movements: React.FC = () => {
           } else if (isInvoice(movement)) {
             return (
               <TransferCard
+                key={movement.id}
                 type="moneyOut"
                 title={`Compra en grupo de ${
                   movement.subscription.group.plan.service.name
@@ -92,6 +95,7 @@ const Movements: React.FC = () => {
           } else if (isPaymentOrder(movement)) {
             return (
               <TransferCard
+                key={movement.id}
                 type="moneyOut"
                 title={`Pago de ${
                   movement.subscription.user.name
