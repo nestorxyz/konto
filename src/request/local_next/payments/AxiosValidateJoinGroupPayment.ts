@@ -10,10 +10,7 @@ const AxiosValidateJoinGroupPayment = async (
   params: IAxiosValidateJoinGroupPaymentProps
 ) => {
   try {
-    const result = await AxiosApi.post(
-      '/payments/validateJoinGroupPayment',
-      params
-    );
+    const result = await AxiosApi.post('/payments/userJoinGroup', params);
 
     return result.data;
   } catch (error) {

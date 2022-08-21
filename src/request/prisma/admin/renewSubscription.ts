@@ -12,7 +12,7 @@ interface IRenewSubscriptionParams {
 const renewSubscription = async (params: IRenewSubscriptionParams) => {
   const { userGroupId, invoice } = params;
 
-  const userGroup = await prisma.userGroup.update({
+  const userGroup = await prisma.subscription.update({
     where: {
       id: userGroupId,
     },

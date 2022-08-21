@@ -53,6 +53,8 @@ const validateJoinGroupPayment = async (
       amount: group.plan.joinerPay,
       userId,
       paymentMethodId,
+      depositType: 'SUBSCRIPTION',
+      typeInfo: group.id,
     });
 
     const userGroup = await userJoinValidating({

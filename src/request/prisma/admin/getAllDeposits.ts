@@ -18,6 +18,8 @@ const getAllDeposits = async (params: IGetAllDepositsParams) => {
       keyInfo: true,
       paymentMethod: true,
       status: true,
+      depositType: true,
+      typeInfo: true,
       createdAt: true,
       updatedAt: true,
       user: {

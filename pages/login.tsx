@@ -1,5 +1,6 @@
 // Libraries
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { getProviders } from 'next-auth/react';
 
 // Types
@@ -24,9 +25,11 @@ const Login: React.FC<ILoginProps> = ({ providers }) => {
   const { status } = useSession();
   const router = useRouter();
 
-  if (status === 'authenticated') {
-    router.push('/');
-  }
+  useEffect(() => {
+    if (status !== 'unauthenticated') {
+      router.push('/');
+    }
+  }, [status]);
 
   return (
     <div>

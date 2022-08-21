@@ -48,6 +48,7 @@ const DepositList: React.FC<IDepositListProps> = (props) => {
         <Table.Column>Método</Table.Column>
         <Table.Column>Solicitado</Table.Column>
         <Table.Column>Modificado</Table.Column>
+        <Table.Column>Objetivo</Table.Column>
         <Table.Column>Estado</Table.Column>
         <Table.Column>Actions</Table.Column>
       </Table.Header>
@@ -71,6 +72,9 @@ const DepositList: React.FC<IDepositListProps> = (props) => {
             <Table.Cell>{deposit.paymentMethod.type}</Table.Cell>
             <Table.Cell>{formatDate(deposit.createdAt)}</Table.Cell>
             <Table.Cell>{formatDate(deposit.updatedAt)}</Table.Cell>
+            <Table.Cell>
+              {deposit.depositType + ':' + deposit.typeInfo}
+            </Table.Cell>
             <Table.Cell>
               <Status status={mapDepositStatusToBadge(deposit)}>
                 {deposit.status}

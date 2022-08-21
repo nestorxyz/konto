@@ -5,22 +5,24 @@ import prisma from 'lib/prisma';
 import { UserGroup } from 'request/prisma/subscriptions/getUserGroup';
 
 interface IGenerateInvoiceParams {
-  userGroup: UserGroup;
+  userId: string;
+  subscription: UserGroup;
   transferId: string;
 }
 
 const generateRenewInvoice = async (params: IGenerateInvoiceParams) => {
-  const { userGroup, transferId } = params;
+  const { userId, subscription, transferId } = params;
 
   // sum 30 days from userGroup.periodEnd
-  const periodEnd = new Date(userGroup!.periodEnd);
+  const periodEnd = new Date(subscription!.periodEnd);
   periodEnd.setDate(periodEnd.getDate() + 30);
 
   const invoice = await prisma.invoice.create({
     data: {
-      subscriptionId: userGroup!.id,
+      userId,
+      subscriptionId: subscription!.id,
       transferId,
-      invoicePeriodStart: userGroup!.periodEnd,
+      invoicePeriodStart: subscription!.periodEnd,
       invoicePeriodEnd: periodEnd,
     },
   });

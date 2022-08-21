@@ -1,7 +1,7 @@
 // Libraries
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
-import { Avatar, Dropdown, Text } from '@nextui-org/react';
+import { Avatar, Dropdown, Text, Loading } from '@nextui-org/react';
 
 // Types
 import { Dispatch, SetStateAction } from 'react';
@@ -33,6 +33,8 @@ const UserDropdown: React.FC<IUserDropdownProps> = ({ setScreen }) => {
       setScreen('profile');
     }
   };
+
+  if (!user) return <Loading />;
 
   return (
     <Dropdown>

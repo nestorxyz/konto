@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 
-// Types
-import { UserApp } from 'request/prisma/app/getUserApp';
-
 // Request
 import AxiosGetUserApp from 'request/local_next/app/AxiosGetUserApp';
 
@@ -14,7 +11,7 @@ const useApp = () => {
   const [userLoaded, setUserLoaded] = useState(false);
 
   const {
-    data: user,
+    data: app,
     error,
     mutate,
   } = useSWR(
@@ -25,16 +22,16 @@ const useApp = () => {
   );
 
   useEffect(() => {
-    if (status === 'authenticated' && user) setUserLoaded(true);
-  }, [session, user]);
-
-  useEffect(() => {
-    if (status === 'unauthenticated' || status === 'loading')
+    if (status === 'authenticated' && app) {
+      setUserLoaded(true);
+    } else {
       setUserLoaded(false);
-  }, [status]);
+    }
+  }, [status, app]);
 
   return {
-    user: user as UserApp,
+    user: app?.user,
+    movements: app?.movements,
     userLoaded,
     error,
     refreshUser: () => mutate(),

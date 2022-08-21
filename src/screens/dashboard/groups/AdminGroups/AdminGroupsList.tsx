@@ -3,7 +3,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ShareIcon } from '@heroicons/react/outline';
 import { PencilAltIcon } from '@heroicons/react/solid';
-import { Button, User } from '@nextui-org/react';
+import { Button, User, Loading } from '@nextui-org/react';
 
 // Helpers
 import { formatDate } from 'lib/formatData';
@@ -35,6 +35,8 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = () => {
     setSelectedGroup(group);
     setOpenModal(true);
   };
+
+  if (!user) return <Loading />;
 
   return (
     <div className="flex flex-col gap-4">

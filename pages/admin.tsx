@@ -30,7 +30,7 @@ const AdminPage: NextPage<IAdminProps> = ({ providers }) => {
   if (status !== 'unauthenticated') {
     if (!userLoaded) {
       return <PageLoading />;
-    } else if (user.isAdmin) {
+    } else if (user?.isAdmin) {
       return <AdminScreen />;
     } else {
       return (

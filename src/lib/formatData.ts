@@ -20,3 +20,19 @@ export const dateDiffInDays = (start: Date, end: Date) => {
 
   return diffDays;
 };
+
+export const getFirstName = (name: string): string => {
+  const names = name.split(' ');
+  return names[0];
+};
+
+export const formatTransferInfo = (
+  type: 'moneyIn' | 'moneyOut',
+  amount: number
+) => {
+  if (type === 'moneyIn') {
+    return `+ S/ ${amount}`;
+  } else {
+    return `- S/ ${amount}`;
+  }
+};

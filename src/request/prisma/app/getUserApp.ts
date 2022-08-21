@@ -35,13 +35,75 @@ const getUserApp = async (id: string) => {
             },
           },
           subscriptions: {
-            where: {
-              state: 'ACTIVE',
-            },
             select: {
               id: true,
               periodStart: true,
               periodEnd: true,
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      subscriptions: {
+        select: {
+          id: true,
+          joinedAt: true,
+          periodStart: true,
+          periodEnd: true,
+          state: true,
+          group: {
+            select: {
+              id: true,
+              verified: true,
+              credentialEmail: true,
+              credentialPassword: true,
+              admin: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
+              plan: {
+                select: {
+                  id: true,
+                  joinerPay: true,
+                  service: {
+                    select: {
+                      id: true,
+                      name: true,
+                      value: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      paymentOrders: {
+        where: {
+          status: 'PENDING',
+        },
+        select: {
+          id: true,
+          paymentDate: true,
+          subscription: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                },
+              },
               group: {
                 select: {
                   id: true,
@@ -55,46 +117,6 @@ const getUserApp = async (id: string) => {
                           name: true,
                         },
                       },
-                    },
-                  },
-                },
-              },
-              user: {
-                select: {
-                  id: true,
-                  name: true,
-                  image: true,
-                },
-              },
-            },
-          },
-        },
-      },
-      subscriptions: {
-        where: {
-          state: 'ACTIVE',
-        },
-        select: {
-          id: true,
-          joinedAt: true,
-          periodStart: true,
-          periodEnd: true,
-          state: true,
-          group: {
-            select: {
-              id: true,
-              verified: true,
-              credentialEmail: true,
-              credentialPassword: true,
-              plan: {
-                select: {
-                  id: true,
-                  joinerPay: true,
-                  service: {
-                    select: {
-                      id: true,
-                      name: true,
-                      value: true,
                     },
                   },
                 },

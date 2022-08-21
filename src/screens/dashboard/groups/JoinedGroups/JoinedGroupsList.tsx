@@ -1,7 +1,7 @@
 // Libraries
 import toast from 'react-hot-toast';
 import Image from 'next/image';
-import { Button, Text, Collapse, Card } from '@nextui-org/react';
+import { Button, Text, Collapse, Card, Loading } from '@nextui-org/react';
 
 // Hooks
 import useApp from 'hooks/useApp';
@@ -25,6 +25,8 @@ const JoinedGroupsList: React.FC<IJoinedGroupsListProps> = ({}) => {
     navigator.clipboard.writeText(password);
     toast.success('Contraseña copiada al portapapeles');
   };
+
+  if (!user) return <Loading />;
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,5 +1,5 @@
 // Hooks
-import useUser from 'hooks/useUser';
+import useApp from 'hooks/useApp';
 
 // Components
 import OnboardingContainer from 'screens/dashboard/onboarding/OnboardingContainer';
@@ -7,7 +7,7 @@ import AddPhone from './AddPhone';
 import VerifyPhone from './VerifyCode';
 
 const AddPhoneOnboarding: React.FC<{}> = () => {
-  const { user } = useUser();
+  const { user } = useApp();
 
   return (
     <OnboardingContainer className="min-w-[320px] md:w-96 mt-8 mx-auto">

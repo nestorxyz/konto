@@ -1,17 +1,17 @@
 // Libraries
-import { Card, Loading, Text, User } from '@nextui-org/react';
+import { Card, Loading } from '@nextui-org/react';
 
 // Hooks
 import useApp from 'hooks/useApp';
 
-// Helpers
-import { formatDate } from 'lib/formatData';
-
-// Types
-import { AdminGroup } from 'request/prisma/subscriptions/getAdminGroups';
+// Components
+import Movements from './Movements';
+import NextPayments from './NextPayments';
 
 const WalletScreen: React.FC = () => {
   const { user } = useApp();
+
+  if (!user) return <Loading />;
 
   return (
     <main className="mx-4 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
@@ -38,47 +38,11 @@ const WalletScreen: React.FC = () => {
         <p className="text-gray-700 font-semibold text-lg mb-4">
           Próximos Pagos
         </p>
-        {user.groups.length > 0 ? (
-          <div className="flex flex-col gap-5">
-            {user.groups.map((groups) => {
-              return groups.subscriptions.map((subscription) => {
-                return (
-                  <div
-                    id={subscription.id}
-                    className="flex justify-between items-center"
-                  >
-                    <User
-                      {...(subscription.user.image !== null
-                        ? {
-                            src: subscription.user.image,
-                          }
-                        : { text: subscription.user.name! })}
-                      name={
-                        <p className="text-primary-800 font-semibold">
-                          {subscription.user.name?.split(' ')[0] +
-                            ' ' +
-                            subscription.user.name?.split(' ')[1] +
-                            ' - ' +
-                            subscription.group.plan.service.name}
-                        </p>
-                      }
-                      description={formatDate(subscription.periodEnd)}
-                      style={{ padding: '0' }}
-                    />
-                    <Text color="success" className="font-medium text-xl">
-                      S/ {subscription.group.plan.adminGet} +
-                    </Text>
-                  </div>
-                );
-              });
-            })}
-          </div>
-        ) : (
-          <p>No hay próximos pagos</p>
-        )}
+        <NextPayments />
       </div>
       <div className="lg:w-[400px]">
         <p className="text-gray-700 font-semibold text-lg mb-4">Movimientos</p>
+        <Movements />
       </div>
     </main>
   );

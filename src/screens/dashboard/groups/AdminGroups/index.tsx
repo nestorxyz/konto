@@ -1,3 +1,6 @@
+// Libraries
+import { Loading } from '@nextui-org/react';
+
 // Helpers
 import { classNames } from 'lib/logicFunctions';
 
@@ -14,6 +17,8 @@ interface IAdminGroups {
 
 const AdminGroups: React.FC<IAdminGroups> = ({ className }) => {
   const { user } = useApp();
+
+  if (!user) return <Loading />;
 
   return (
     <div className={classNames(className, 'flex flex-col')}>

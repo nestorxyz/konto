@@ -1,3 +1,6 @@
+// Libraries
+import { Loading } from '@nextui-org/react';
+
 // Hooks
 import useApp from 'hooks/useApp';
 
@@ -22,6 +25,8 @@ const JoinedGroups: React.FC<IJoinedGroupsProps> = ({
   className,
 }) => {
   const { user } = useApp();
+
+  if (!user) return <Loading />;
 
   return (
     <div className={classNames(className, 'flex flex-col')}>

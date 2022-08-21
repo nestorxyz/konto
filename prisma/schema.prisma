@@ -49,8 +49,8 @@ model VerificationToken {
 
 model User {
   id               String         @id @default(cuid())
-  name             String?
-  email            String?        @unique
+  name             String
+  email            String         @unique
   phone            String?        @unique
   username         String?        @unique
   balance          Float          @default(0)
@@ -69,6 +69,8 @@ model User {
   receivers        Transfer[]     @relation("receiver")
   deposits         Deposit[]
   withdrawals      Withdrawal[]
+  paymentOrders    PaymentOrder[]
+  invoices         Invoice[]
 
   @@map("users")
 }
@@ -130,32 +132,37 @@ model Subscription {
   group             Group             @relation(fields: [groupId], references: [id])
   user              User              @relation(fields: [userId], references: [id])
   invoices          Invoice[]
+  paymentOrders     PaymentOrder[]
 
   @@map("subscriptions")
 }
 
 model Transfer {
-  id         String            @id @default(cuid())
-  amount     Float
-  senderId   String
-  receiverId String
-  status     TransactionStatus
-  createdAt  DateTime          @default(now()) @map("created_at")
-  updatedAt  DateTime          @updatedAt @map("updated_at")
-  sender     User              @relation("sender", fields: [senderId], references: [id])
-  receiver   User              @relation("receiver", fields: [receiverId], references: [id])
-  invoice    Invoice?
+  id           String            @id @default(cuid())
+  amount       Float
+  senderId     String
+  receiverId   String
+  status       TransactionStatus
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+  sender       User              @relation("sender", fields: [senderId], references: [id])
+  receiver     User              @relation("receiver", fields: [receiverId], references: [id])
+  invoice      Invoice?
+  paymentOrder PaymentOrder?
 
   @@map("transfers")
 }
 
 model Deposit {
   id              String            @id @default(cuid())
+  movementType    MovementType      @default(DEPOSIT)
   amount          Float
   userId          String
   status          TransactionStatus
   paymentMethodId String
   keyInfo         String
+  depositType     DepositType       @default(WALLET)
+  typeInfo        String?
   createdAt       DateTime          @default(now()) @map("created_at")
   updatedAt       DateTime          @updatedAt @map("updated_at")
   user            User              @relation(fields: [userId], references: [id])
@@ -166,6 +173,7 @@ model Deposit {
 
 model Withdrawal {
   id              String            @id @default(cuid())
+  movementType    MovementType      @default(WITHDRAWAL)
   amount          Float
   userId          String
   status          TransactionStatus
@@ -181,16 +189,36 @@ model Withdrawal {
 
 model Invoice {
   id                 String       @id @default(cuid())
+  movementType       MovementType @default(INVOICE)
+  userId             String
   subscriptionId     String
   transferId         String       @unique
   invoicePeriodStart DateTime
   invoicePeriodEnd   DateTime
   createdAt          DateTime     @default(now()) @map("created_at")
   updatedAt          DateTime     @updatedAt @map("updated_at")
+  user               User         @relation(fields: [userId], references: [id])
   subscription       Subscription @relation(fields: [subscriptionId], references: [id])
   transfer           Transfer     @relation(fields: [transferId], references: [id])
 
   @@map("invoices")
+}
+
+model PaymentOrder {
+  id             String             @id @default(cuid())
+  movementType   MovementType       @default(PAYMENT_ORDER)
+  userId         String
+  subscriptionId String
+  transferId     String?            @unique
+  status         PaymentOrderStatus @default(PENDING)
+  paymentDate    DateTime
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
+  user           User               @relation(fields: [userId], references: [id])
+  subscription   Subscription       @relation(fields: [subscriptionId], references: [id])
+  transfer       Transfer?          @relation(fields: [transferId], references: [id])
+
+  @@map("paymentorders")
 }
 
 model PaymentMethod {
@@ -221,4 +249,23 @@ enum PaymentMethodType {
   BCP
   INTERBANK
   YAPE
+}
+
+enum DepositType {
+  SUBSCRIPTION
+  WALLET
+  TRANSFER
+}
+
+enum PaymentOrderStatus {
+  REJECTED
+  PENDING
+  DONE
+}
+
+enum MovementType {
+  INVOICE
+  PAYMENT_ORDER
+  DEPOSIT
+  WITHDRAWAL
 }
