@@ -1,6 +1,6 @@
 // Libraries
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import useSWR from 'swr';
 
 // Request
@@ -20,6 +20,12 @@ const useApp = () => {
       : null,
     AxiosGetUserApp
   );
+
+  useEffect(() => {
+    if (error) {
+      signOut();
+    }
+  }, [error]);
 
   useEffect(() => {
     if (status === 'authenticated' && app) {
