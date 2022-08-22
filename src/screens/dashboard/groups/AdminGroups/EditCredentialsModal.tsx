@@ -6,10 +6,10 @@ import * as Yup from 'yup';
 import { Modal, Text, Button, Input, Spacer, Loading } from '@nextui-org/react';
 
 // Types
-import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+import { UserGroup } from 'request/prisma/app/getUserApp';
 
 // Hooks
-import useAdminGroups from 'hooks/useAdminGroups';
+import useApp from 'hooks/useApp';
 
 // Request
 import AxiosEditGroupCredentials from 'request/local_next/groups/AxiosEditGroupCredentials';
@@ -18,7 +18,7 @@ import AxiosEditGroupCredentials from 'request/local_next/groups/AxiosEditGroupC
 import ButtonLoadingContent from 'components/loaders/ButtonLoadingContent';
 
 interface IEditCredentialsModalProps {
-  adminGroup: AdminGroup | null;
+  adminGroup: UserGroup | null;
   initialValues: {
     credentialEmail: string;
     credentialPassword: string;
@@ -34,7 +34,7 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
   setOpen,
 }) => {
   const [loading, setLoading] = useState(false);
-  const { refreshAdminGroups } = useAdminGroups();
+  const { refreshUser } = useApp();
 
   const editCredentialFormik = useFormik({
     initialValues: {
@@ -58,7 +58,7 @@ const EditCredentialsModal: React.FC<IEditCredentialsModalProps> = ({
 
       if (response.success) {
         toast.success('Credenciales editadas correctamente');
-        refreshAdminGroups();
+        refreshUser();
         setLoading(false);
         handleClose();
       } else {

@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { Input, Button, Loading } from '@nextui-org/react';
 
 // Hooks
-import useUser from 'hooks/useUser';
+import useApp from 'hooks/useApp';
 
 // Request
 import AxiosSendVerificationCode from 'request/local_next/verification/AxiosSendVerificationCode';
@@ -15,7 +15,7 @@ import AxiosValidatePhoneCode from 'request/local_next/verification/AxiosValidat
 const VerifyPhone: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
-  const { user, refreshUser } = useUser();
+  const { user, refreshUser } = useApp();
 
   const formik = useFormik({
     initialValues: {

@@ -28,7 +28,7 @@ const getAllGroups = async () => {
           maxUsers: true,
         },
       },
-      userGroups: {
+      subscriptions: {
         select: {
           user: {
             select: {
@@ -43,28 +43,6 @@ const getAllGroups = async () => {
   return groups;
 };
 
-export type GroupCardInfo = {
-  id: string;
-  verified: boolean;
-  admin: {
-    id: string;
-    name: string | null;
-  };
-  plan: {
-    maxUsers: number;
-    joinerPay: number;
-    service: {
-      id: string;
-      name: string;
-      value: string;
-      price: number;
-    };
-  };
-  userGroups: {
-    user: {
-      id: string;
-    };
-  }[];
-};
+export type GroupCardInfo = Awaited<ReturnType<typeof getAllGroups>>[0];
 
 export default getAllGroups;

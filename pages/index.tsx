@@ -5,6 +5,7 @@ import { Plan } from 'request/prisma/plans/getAllPlans';
 
 // Hooks
 import { useSession } from 'next-auth/react';
+import useApp from 'hooks/useApp';
 
 // Request
 import getAllGroups from 'request/prisma/groups/getAllGroups';
@@ -23,26 +24,27 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ groups, plans }) => {
   const { status } = useSession();
+  const { userLoaded } = useApp();
 
-  if (status === 'authenticated') {
-    return (
-      <>
-        <MetaDefault />
-        <Dashboard />
-      </>
-    );
+  if (status !== 'unauthenticated') {
+    if (!userLoaded) {
+      return <PageLoading />;
+    } else {
+      return (
+        <>
+          <MetaDefault />
+          <Dashboard />
+        </>
+      );
+    }
   }
 
-  if (status === 'unauthenticated') {
-    return (
-      <>
-        <MetaDefault />
-        <Landing groups={groups} plans={plans} />
-      </>
-    );
-  }
-
-  return <PageLoading />;
+  return (
+    <>
+      <MetaDefault />
+      <Landing groups={groups} plans={plans} />
+    </>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {

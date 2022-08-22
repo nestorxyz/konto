@@ -17,8 +17,12 @@ type TPage = {
 
 const pages: TPage[] = [
   {
-    name: 'Home',
-    page: 'home',
+    name: 'Integrantes',
+    page: 'joiner',
+  },
+  {
+    name: 'Depósitos',
+    page: 'deposits',
   },
 ];
 
@@ -26,14 +30,23 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
   return (
     <>
       <header className="flex py-6 mx-6 items-center lg:mx-20 xl:mx-28">
-        <button onClick={() => setScreen('home')} className="flex items-center">
+        <button
+          onClick={() => setScreen('joiner')}
+          className="flex items-center"
+        >
           <img src="/logo.svg" width="58" height="61.5" />
           <p className="font-bold text-4xl text-primary ml-4">Konto</p>
         </button>
         <div className="hidden md:inline-flex md:gap-10 lg:gap-15 ml-auto mr-5">
           {pages.map((page) => {
             return (
-              <Button size="xl" auto light onClick={() => setScreen(page.page)}>
+              <Button
+                key={page.name}
+                size="xl"
+                auto
+                light
+                onClick={() => setScreen(page.page)}
+              >
                 {page.name}
               </Button>
             );
@@ -50,7 +63,9 @@ const Header: React.FC<IHeaderProps> = ({ setScreen }) => {
         <Button.Group size="xl">
           {pages.map((page) => {
             return (
-              <Button onPress={() => setScreen(page.page)}>{page.name}</Button>
+              <Button key={page.name} onPress={() => setScreen(page.page)}>
+                {page.name}
+              </Button>
             );
           })}
         </Button.Group>

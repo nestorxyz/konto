@@ -5,7 +5,7 @@ import { Loading } from '@nextui-org/react';
 import { classNames } from 'lib/logicFunctions';
 
 // Hooks
-import useAdminGroups from 'hooks/useAdminGroups';
+import useApp from 'hooks/useApp';
 
 // Components
 import AdminGroupsList from './AdminGroupsList';
@@ -16,18 +16,16 @@ interface IAdminGroups {
 }
 
 const AdminGroups: React.FC<IAdminGroups> = ({ className }) => {
-  const { loading, adminGroups } = useAdminGroups();
+  const { user } = useApp();
+
+  if (!user) return <Loading />;
 
   return (
     <div className={classNames(className, 'flex flex-col')}>
       <p className="text-2xl text-center font-semibold mb-4">
         Grupos que compartes
       </p>
-      {loading && <Loading className="mx-auto" />}
-      {adminGroups && adminGroups.length > 0 && (
-        <AdminGroupsList adminGroups={adminGroups} />
-      )}
-      {adminGroups && adminGroups.length === 0 && <EmptyAdminGroups />}
+      {user.groups.length > 0 ? <AdminGroupsList /> : <EmptyAdminGroups />}
     </div>
   );
 };

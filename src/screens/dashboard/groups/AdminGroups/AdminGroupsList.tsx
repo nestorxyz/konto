@@ -3,57 +3,61 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ShareIcon } from '@heroicons/react/outline';
 import { PencilAltIcon } from '@heroicons/react/solid';
-import { Button, User } from '@nextui-org/react';
+import { Button, User, Loading } from '@nextui-org/react';
 
 // Helpers
 import { formatDate } from 'lib/formatData';
 
+// Hooks
+import useApp from 'hooks/useApp';
+
 // Types
-import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+import { UserGroup } from 'request/prisma/app/getUserApp';
 
 // Components
 import EditCredentialsModal from './EditCredentialsModal';
 
-interface IJoinedGroupsListProps {
-  adminGroups: AdminGroup[];
-}
+interface IJoinedGroupsListProps {}
 
-const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
+const AdminGroupsList: React.FC<IJoinedGroupsListProps> = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedAdminGroup, setSelectedAdminGroup] =
-    useState<AdminGroup | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<UserGroup | null>(null);
 
-  const handleShare = async (group: AdminGroup) => {
+  const { user } = useApp();
+
+  const handleShare = async (group: UserGroup) => {
     toast('Link Copiado', { icon: '🥳' });
 
     navigator.clipboard.writeText(`https://www.kontope.com/grupo/${group.id}`);
   };
 
-  const handleEditGroupCredentials = (group: AdminGroup) => {
-    setSelectedAdminGroup(group);
+  const handleEditGroupCredentials = (group: UserGroup) => {
+    setSelectedGroup(group);
     setOpenModal(true);
   };
 
+  if (!user) return <Loading />;
+
   return (
     <div className="flex flex-col gap-4">
-      {adminGroups.map((adminGroup) => {
+      {user.groups.map((group) => {
         return (
           <div
-            key={adminGroup.id}
+            key={group.id}
             className="flex flex-col px-4 py-6 border rounded-md shadow-sm"
           >
             <div className="flex mb-4 items-center">
               <p className="text-center text-2xl text-primary font-semibold">
-                {adminGroup.plan.service.name}
+                {group.plan.service.name}
               </p>
               <Button
                 light
                 size="sm"
                 auto
-                color={adminGroup.verified === false ? 'warning' : 'success'}
+                color={group.verified === false ? 'warning' : 'success'}
                 className="ml-auto"
               >
-                {adminGroup.verified === false
+                {group.verified === false
                   ? 'Validando cuenta'
                   : 'Cuenta activa'}
               </Button>
@@ -69,32 +73,30 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
                   color="primary"
                   css={{ width: '25px', height: '35px', padding: '$4' }}
                   className="ml-auto"
-                  onClick={() => handleEditGroupCredentials(adminGroup)}
+                  onClick={() => handleEditGroupCredentials(group)}
                 >
                   <PencilAltIcon className="h-5 w-5 text-gray-500 mr-1" />
                   <span className="text-gray-500">Editar</span>
                 </Button>
               </div>
               <p className="mb-3 text-gray-500">
-                Recibirás S/ {adminGroup.plan.adminGet} por cada integrante
+                Recibirás S/ {group.plan.adminGet} por cada integrante
               </p>
               <div className="flex flex-col gap-2">
-                {adminGroup.userGroups.map((userGroup) => {
-                  if (userGroup.state !== 'ACTIVE') return null;
-
+                {group.subscriptions.map((subscription) => {
                   return (
                     <User
-                      {...(userGroup.user.image !== null
+                      {...(subscription.user.image !== null
                         ? {
-                            src: userGroup.user.image,
+                            src: subscription.user.image,
                           }
-                        : { text: userGroup.user.name! })}
-                      name={userGroup.user.name?.split(' ')[0]}
+                        : { text: subscription.user.name! })}
+                      name={subscription.user.name?.split(' ')[0]}
                       description={
                         'Inicio: ' +
-                        formatDate(userGroup.periodStart) +
+                        formatDate(subscription.periodStart) +
                         ' | Fin: ' +
-                        formatDate(userGroup.periodEnd)
+                        formatDate(subscription.periodEnd)
                       }
                     />
                   );
@@ -102,14 +104,13 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
               </div>
             </div>
 
-            {adminGroup.plan.maxUsers - (adminGroup.userGroups.length + 1) >
-              0 && (
+            {group.plan.maxUsers - (group.subscriptions.length + 1) > 0 && (
               <div className="mt-4">
                 <Button
                   auto
                   ghost
                   className="mx-auto"
-                  onClick={() => handleShare(adminGroup)}
+                  onClick={() => handleShare(group)}
                 >
                   <ShareIcon className="h-5 w-5 mr-2" /> Invitar más integrantes
                 </Button>
@@ -119,10 +120,10 @@ const AdminGroupsList: React.FC<IJoinedGroupsListProps> = ({ adminGroups }) => {
         );
       })}
       <EditCredentialsModal
-        adminGroup={selectedAdminGroup}
+        adminGroup={selectedGroup}
         initialValues={{
-          credentialEmail: selectedAdminGroup?.credentialEmail as string,
-          credentialPassword: selectedAdminGroup?.credentialPassword as string,
+          credentialEmail: selectedGroup?.credentialEmail as string,
+          credentialPassword: selectedGroup?.credentialPassword as string,
         }}
         open={openModal}
         setOpen={setOpenModal}

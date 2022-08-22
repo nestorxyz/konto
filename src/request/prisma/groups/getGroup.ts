@@ -29,7 +29,7 @@ const getGroup = async (groupId: string) => {
           maxUsers: true,
         },
       },
-      userGroups: {
+      subscriptions: {
         select: {
           user: {
             select: {

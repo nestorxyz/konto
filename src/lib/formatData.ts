@@ -8,7 +8,7 @@ export const formatDate = (date: Date): string => {
     day: 'numeric',
   };
 
-  return newDate.toLocaleDateString('en-ES', options);
+  return newDate.toLocaleDateString('es-ES', options);
 };
 
 export const dateDiffInDays = (start: Date, end: Date) => {
@@ -19,4 +19,20 @@ export const dateDiffInDays = (start: Date, end: Date) => {
   const diffDays = Math.ceil(diffTime / _MS_PER_DAY);
 
   return diffDays;
+};
+
+export const getFirstName = (name: string): string => {
+  const names = name.split(' ');
+  return names[0];
+};
+
+export const formatTransferInfo = (
+  type: 'moneyIn' | 'moneyOut',
+  amount: number
+) => {
+  if (type === 'moneyIn') {
+    return `+ S/ ${amount}`;
+  } else {
+    return `- S/ ${amount}`;
+  }
 };

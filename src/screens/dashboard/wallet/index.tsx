@@ -1,93 +1,49 @@
 // Libraries
-import { Card, Collapse, Loading, Text, User } from '@nextui-org/react';
+import { Card, Loading } from '@nextui-org/react';
 
 // Hooks
-import useUser from 'hooks/useUser';
-import useAdminGroups from 'hooks/useAdminGroups';
+import useApp from 'hooks/useApp';
 
-// Helpers
-import { formatDate } from 'lib/formatData';
-
-// Types
-import { AdminGroup } from 'request/prisma/userGroups/getAdminGroups';
+// Components
+import Movements from './Movements';
+import NextPayments from './NextPayments';
 
 const WalletScreen: React.FC = () => {
-  const { user } = useUser();
-  const { adminGroups, loading } = useAdminGroups();
+  const { user } = useApp();
+
+  if (!user) return <Loading />;
 
   return (
-    <main className="mx-6 mb-28 lg:mx-12 xl:mx-56 flex flex-col md:flex-row gap-6 lg:gap-20 justify-center">
-      <div className="md:w-96">
+    <main className="mx-auto max-w-sm w-full sm:max-w-none px-6 mb-28 grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-10 lg:max-w-4xl">
+      <div className="max-w-sm w-full">
         <Card variant="bordered">
           <Card.Header>
             <div className="flex justify-between w-full items-center">
-              <p className="text-gray-700 text-xl font-semibold">
-                Saldo disponible
-              </p>
+              <p className="text-gray-700 font-semibold text-lg">Balance</p>
               <img src="/logo.svg" className="h-10 w-10" />
             </div>
           </Card.Header>
           <Card.Body>
             <p className="text-center text-4xl text-primary font-smibold">
-              S/ {user.walletAvailable}
+              S/ {user.balance}
             </p>
-            <Collapse.Group>
-              <Collapse
-                title={
-                  <p className="text-gray-500 font-semibold">Agregar Saldo</p>
-                }
-              ></Collapse>
-            </Collapse.Group>
           </Card.Body>
+          <Card.Footer>
+            <p className="text-right w-full">@{user.username}</p>
+          </Card.Footer>
         </Card>
       </div>
 
-      <div className="lg:w-[400px]">
-        <p className="text-gray-800 font-semibold text-xl mb-4">
+      <div className="max-w-sm w-full sm:row-start-2">
+        <p className="text-gray-700 font-semibold text-lg mb-4">
           Próximos Pagos
         </p>
-        {loading && <Loading className="mx-auto" />}
-        {adminGroups && adminGroups.length > 0 && (
-          <div className="flex flex-col gap-5">
-            {adminGroups.map((adminGroup: AdminGroup) => {
-              return adminGroup.userGroups.map((userGroup) => {
-                if (userGroup.state !== 'ACTIVE') return null;
-                return (
-                  <div
-                    id={userGroup.id}
-                    className="flex justify-between items-center"
-                  >
-                    <User
-                      {...(userGroup.user.image !== null
-                        ? {
-                            src: userGroup.user.image,
-                          }
-                        : { text: userGroup.user.name! })}
-                      name={
-                        <p className="text-primary-800 font-semibold">
-                          {userGroup.user.name?.split(' ')[0] +
-                            ' ' +
-                            userGroup.user.name?.split(' ')[1] +
-                            ' - ' +
-                            adminGroup.plan.service.name}
-                        </p>
-                      }
-                      description={
-                        'Recibirás el pago: ' + formatDate(userGroup.periodEnd)
-                      }
-                    />
-                    <Text color="success" className="font-medium text-xl">
-                      S/ {adminGroup.plan.adminGet} +
-                    </Text>
-                  </div>
-                );
-              });
-            })}
-          </div>
-        )}
-        {adminGroups && adminGroups.length === 0 && (
-          <p>No hay próximos pagos</p>
-        )}
+        <NextPayments />
+      </div>
+
+      <div className="max-w-sm w-full">
+        <p className="text-gray-700 font-semibold text-lg mb-4">Movimientos</p>
+        <Movements />
       </div>
     </main>
   );

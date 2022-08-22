@@ -53,7 +53,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
             Número de Integrantes
           </h3>
           <h4 className="text-sm text-primary font-bold lg:text-2xl">
-            {group.userGroups.length + 1}/{group.plan.maxUsers}
+            {group.subscriptions.length + 1}/{group.plan.maxUsers}
           </h4>
         </li>
         <Button

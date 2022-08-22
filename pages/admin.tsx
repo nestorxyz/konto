@@ -9,7 +9,7 @@ import { BuiltInProviderType } from 'next-auth/providers';
 
 // Hooks
 import { useSession } from 'next-auth/react';
-import useUser from 'hooks/useUser';
+import useApp from 'hooks/useApp';
 
 // Components
 import PageLoading from 'components/loaders/PageLoading';
@@ -25,23 +25,21 @@ interface IAdminProps {
 
 const AdminPage: NextPage<IAdminProps> = ({ providers }) => {
   const { status } = useSession();
-  const { user, loading } = useUser();
+  const { user, userLoaded } = useApp();
 
-  if (loading) {
-    return <PageLoading />;
-  }
-
-  if (status === 'authenticated' && !user.isAdmin) {
-    return (
-      <div>
-        <p>Acceso restringido</p>
-        <Button onClick={() => signOut()}>Cerrar sesión</Button>
-      </div>
-    );
-  }
-
-  if (status === 'authenticated' && user.isAdmin) {
-    return <AdminScreen />;
+  if (status !== 'unauthenticated') {
+    if (!userLoaded) {
+      return <PageLoading />;
+    } else if (user?.isAdmin) {
+      return <AdminScreen />;
+    } else {
+      return (
+        <div>
+          <p>Acceso restringido</p>
+          <Button onClick={() => signOut()}>Cerrar sesión</Button>
+        </div>
+      );
+    }
   }
 
   return (

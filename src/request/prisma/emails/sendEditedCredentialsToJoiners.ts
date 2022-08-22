@@ -16,9 +16,9 @@ const sendEditedCredentialsToJoiner = async (groupId: string) => {
 
   sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
   await Promise.all(
-    group.userGroups.map((userGroup) => {
+    group.subscriptions.map((subscription) => {
       const msg = {
-        to: userGroup.user.email as string, // Change to your recipient
+        to: subscription.user.email as string, // Change to your recipient
         from: 'nmamanipantoja@gmail.com', // Change to your verified sender
         subject: `Se han cambiado las credenciales de tu grupo de ${group.plan.service.name}!`,
         html: emailFormat({

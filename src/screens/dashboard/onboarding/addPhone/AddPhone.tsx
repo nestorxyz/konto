@@ -4,18 +4,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Input, Button, Loading } from '@nextui-org/react';
 
-// Types
-import { User } from '@prisma/client';
-
 // Hooks
-import useUser from 'hooks/useUser';
+import useApp from 'hooks/useApp';
 
 // Request
 import AxiosAddPhone from 'request/local_next/users/AxiosAddPhone';
 
 const AddPhone: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const { user, refreshUser } = useUser();
+  const { user, refreshUser } = useApp();
 
   const formik = useFormik({
     initialValues: {

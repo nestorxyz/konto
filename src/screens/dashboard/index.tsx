@@ -1,12 +1,12 @@
 // Libraries
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/router';
-
-// Hooks
-import useUser from 'hooks/useUser';
 
 // Helpers
 import mixpanel from 'lib/mixpanel';
+
+// Hooks
+import useApp from 'hooks/useApp';
 
 // Components
 import Header from './Header';
@@ -24,8 +24,8 @@ export enum DashboardPages {
 
 const Dashboard: React.FC = () => {
   const [screen, setScreen] = useState<keyof typeof DashboardPages>('home');
-  const { loading } = useUser();
   const router = useRouter();
+  const { user, movements } = useApp();
 
   useEffect(() => {
     mixpanel.track('Dashboard Hit');
@@ -36,8 +36,6 @@ const Dashboard: React.FC = () => {
       setScreen(router.query.redirect as keyof typeof DashboardPages);
     }
   }, [router.query.redirect]);
-
-  if (loading) return <PageLoading />;
 
   return (
     <div>

@@ -48,22 +48,29 @@ model VerificationToken {
 }
 
 model User {
-  id               String      @id @default(cuid())
-  name             String?
-  email            String?     @unique
-  phone            String?     @unique
-  walletAvailable  Float?      @default(0)
-  createdAt        DateTime    @default(now()) @map("created_at")
-  updatedAt        DateTime    @updatedAt @map("updated_at")
-  emailVerified    DateTime?   @map("email_verified")
+  id               String         @id @default(cuid())
+  name             String
+  email            String         @unique
+  phone            String?        @unique
+  username         String?        @unique
+  balance          Float          @default(0)
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+  emailVerified    DateTime?      @map("email_verified")
   image            String?
   phoneVerified    Boolean?
   verificationCode String?
-  isAdmin          Boolean     @default(false)
+  isAdmin          Boolean        @default(false)
   accounts         Account[]
   groups           Group[]
   sessions         Session[]
-  usersGroups      UserGroup[]
+  subscriptions    Subscription[]
+  senders          Transfer[]     @relation("sender")
+  receivers        Transfer[]     @relation("receiver")
+  deposits         Deposit[]
+  withdrawals      Withdrawal[]
+  paymentOrders    PaymentOrder[]
+  invoices         Invoice[]
 
   @@map("users")
 }
@@ -95,41 +102,170 @@ model Plan {
 }
 
 model Group {
-  id                 String      @id @default(cuid())
-  verified           Boolean     @default(false)
+  id                 String         @id @default(cuid())
+  verified           Boolean        @default(false)
   credentialEmail    String
   credentialPassword String
-  createdAt          DateTime    @default(now()) @map("created_at")
-  updatedAt          DateTime    @updatedAt @map("updated_at")
+  createdAt          DateTime       @default(now()) @map("created_at")
+  updatedAt          DateTime       @updatedAt @map("updated_at")
   adminId            String
   planId             String
-  admin              User        @relation(fields: [adminId], references: [id])
-  plan               Plan        @relation(fields: [planId], references: [id])
-  userGroups         UserGroup[]
+  admin              User           @relation(fields: [adminId], references: [id])
+  plan               Plan           @relation(fields: [planId], references: [id])
+  subscriptions      Subscription[]
 
   @@map("groups")
 }
 
-model UserGroup {
-  id                String         @id @default(cuid())
-  joinedAt          DateTime       @default(now())
+model Subscription {
+  id                String            @id @default(cuid())
+  joinedAt          DateTime          @default(now())
   periodStart       DateTime
   periodEnd         DateTime
   userId            String
   groupId           String
-  state             UserGroupState
+  state             SubscriptionState
   cancelAt          DateTime?
-  cancelAtPeriodEnd Boolean        @default(false)
+  cancelAtPeriodEnd Boolean           @default(false)
   canceledAt        DateTime?
   endedAt           DateTime?
-  group             Group          @relation(fields: [groupId], references: [id])
-  user              User           @relation(fields: [userId], references: [id])
+  group             Group             @relation(fields: [groupId], references: [id])
+  user              User              @relation(fields: [userId], references: [id])
+  invoices          Invoice[]
+  paymentOrders     PaymentOrder[]
 
-  @@map("userGroups")
+  @@map("subscriptions")
 }
 
-enum UserGroupState {
+model Transfer {
+  id           String            @id @default(cuid())
+  amount       Float
+  senderId     String
+  receiverId   String
+  status       TransactionStatus
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+  sender       User              @relation("sender", fields: [senderId], references: [id])
+  receiver     User              @relation("receiver", fields: [receiverId], references: [id])
+  invoice      Invoice?
+  paymentOrder PaymentOrder?
+
+  @@map("transfers")
+}
+
+model Deposit {
+  id              String            @id @default(cuid())
+  movementType    MovementType      @default(DEPOSIT)
+  amount          Float
+  userId          String
+  status          TransactionStatus
+  paymentMethodId String
+  keyInfo         String
+  depositType     DepositType       @default(WALLET)
+  typeInfo        String?
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  user            User              @relation(fields: [userId], references: [id])
+  paymentMethod   PaymentMethod     @relation(fields: [paymentMethodId], references: [id])
+
+  @@map("deposits")
+}
+
+model Withdrawal {
+  id              String            @id @default(cuid())
+  movementType    MovementType      @default(WITHDRAWAL)
+  amount          Float
+  userId          String
+  status          TransactionStatus
+  paymentMethodId String
+  keyInfo         String
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  user            User              @relation(fields: [userId], references: [id])
+  paymentMethod   PaymentMethod     @relation(fields: [paymentMethodId], references: [id])
+
+  @@map("withdrawals")
+}
+
+model Invoice {
+  id                 String       @id @default(cuid())
+  movementType       MovementType @default(INVOICE)
+  userId             String
+  subscriptionId     String
+  transferId         String       @unique
+  invoicePeriodStart DateTime
+  invoicePeriodEnd   DateTime
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt @map("updated_at")
+  user               User         @relation(fields: [userId], references: [id])
+  subscription       Subscription @relation(fields: [subscriptionId], references: [id])
+  transfer           Transfer     @relation(fields: [transferId], references: [id])
+
+  @@map("invoices")
+}
+
+model PaymentOrder {
+  id             String             @id @default(cuid())
+  movementType   MovementType       @default(PAYMENT_ORDER)
+  userId         String
+  subscriptionId String
+  transferId     String?            @unique
+  status         PaymentOrderStatus @default(PENDING)
+  paymentDate    DateTime
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
+  user           User               @relation(fields: [userId], references: [id])
+  subscription   Subscription       @relation(fields: [subscriptionId], references: [id])
+  transfer       Transfer?          @relation(fields: [transferId], references: [id])
+
+  @@map("paymentorders")
+}
+
+model PaymentMethod {
+  id          String            @id @default(cuid())
+  name        String
+  type        PaymentMethodType
+  keyInfo     String
+  withdrawals Withdrawal[]
+  deposits    Deposit[]
+
+  @@map("paymentMethods")
+}
+
+enum SubscriptionState {
   PENDING
   ACTIVE
   INACTIVE
+}
+
+enum TransactionStatus {
+  VALIDATING
+  VALID
+  INVALID
+}
+
+enum PaymentMethodType {
+  BBVA
+  BCP
+  INTERBANK
+  YAPE
+}
+
+enum DepositType {
+  SUBSCRIPTION
+  WALLET
+  TRANSFER
+}
+
+enum PaymentOrderStatus {
+  REJECTED
+  PENDING
+  DONE
+}
+
+enum MovementType {
+  INVOICE
+  PAYMENT_ORDER
+  DEPOSIT
+  WITHDRAWAL
 }
