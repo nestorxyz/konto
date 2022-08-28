@@ -16,7 +16,7 @@ const MobileNavbar: React.FC<IMobileNavbarProps> = (props) => {
     <div
       className={classNames(
         className,
-        'py-4 justify-between flex px-5 text-black'
+        'py-3 justify-between flex px-5 text-black'
       )}
     >
       <div className="flex items-center">

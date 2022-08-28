@@ -1,7 +1,8 @@
 // Libraries
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { useSession } from 'next-auth/react';
 import { ShareIcon } from '@heroicons/react/outline';
 import { Button, Text } from '@nextui-org/react';
@@ -25,6 +26,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({
   setScreen,
   setShowPayModal,
 }) => {
+  const [slideIndex, setSlideIndex] = useState(0);
   const { status } = useSession();
 
   const handleJoinGroup = () => {
@@ -62,12 +64,38 @@ const GroupData: React.FC<IGroupInfoProps> = ({
       <div className="lg:flex lg:mx-20 lg:items-center lg:gap-10 lg:justify-center lg:flex-row-reverse lg:mt-10">
         <div>
           <div className="w-full h-60 lg:w-96 lg:gap-4 overflow-hidden lg:rounded-lg relative">
-            <Image
-              src={mapServiceToImage(group!.plan.service.value)}
-              className="object-cover"
-              placeholder="blur"
-              layout="fill"
-            />
+            <Swiper
+              className="h-full"
+              onSlideChange={(slide) => setSlideIndex(slide.activeIndex)}
+            >
+              <SwiperSlide>
+                <Image
+                  src={mapServiceToImage(group!.plan.service.value)}
+                  className="object-cover"
+                  placeholder="blur"
+                  layout="fill"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Image
+                  src={mapServiceToImage(group!.plan.service.value)}
+                  className="object-cover"
+                  placeholder="blur"
+                  layout="fill"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Image
+                  src={mapServiceToImage(group!.plan.service.value)}
+                  className="object-cover"
+                  placeholder="blur"
+                  layout="fill"
+                />
+              </SwiperSlide>
+            </Swiper>
+            <span className="absolute text-white bg-black z-50 bg-opacity-40 text-sm rounded px-3 py-1 bottom-4 right-4">
+              {slideIndex + 1}/3
+            </span>
           </div>
           <div className="hidden lg:inline-flex lg:flex-col lg:items-center mt-6 lg:w-full">
             <p className="text-gray-600 mb-4 text-2xl font-bold">

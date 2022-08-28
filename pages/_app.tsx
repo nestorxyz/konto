@@ -10,6 +10,7 @@ import type { AppProps } from 'next/app';
 // Styles
 import '../styles/globals.css';
 import 'react-phone-number-input/style.css';
+import 'swiper/css';
 
 // Constants
 const theme = createTheme({

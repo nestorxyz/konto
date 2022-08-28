@@ -1,3 +1,4 @@
+// Static files
 import disneyImage from '@public/img/services/disney.png';
 import hboImage from '@public/img/services/hbo.jpg';
 import netflixImage from '@public/img/services/netflix.png';
@@ -8,6 +9,9 @@ import bbvaImage from '@public/img/payment/bbva.png';
 import bcpImage from '@public/img/payment/bcp.jpg';
 import interbankImage from '@public/img/payment/interbank.png';
 import yapeImage from '@public/img/payment/yape.png';
+
+// Types
+import { Services } from 'types/services';
 
 export const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(' ');
@@ -62,4 +66,15 @@ export const randomString_v2 = (quantity: number) => {
   }
 
   return characters.join('');
+};
+
+const getServiceInformation = (service: keyof typeof Services) => {
+  switch (service) {
+    default:
+      return {
+        name: 'Disney +',
+        image: disneyImage,
+        images: {},
+      };
+  }
 };
