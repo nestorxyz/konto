@@ -14,7 +14,7 @@ import getAllPaymentMethods, {
 } from 'request/prisma/paymentMethod/getAllPaymentMethods';
 
 // Components
-import Header from 'screens/group/Header';
+import Header from 'screens/group/header/Header';
 import GroupData from 'screens/group/GroupData';
 import LoginReusable from 'screens/login/LoginReusable';
 import MetaCustom from 'components/seo/MetaCustom';
@@ -43,7 +43,7 @@ const GroupPage: NextPage<IGroupPageProps> = ({
   const [showPayModal, setShowPayModal] = useState(false);
 
   return (
-    <div className="w-full min-h-screen relative flex flex-col">
+    <>
       <MetaCustom
         title={`Comparte ${group!.plan.service.name} en Konto`}
         description={`Ahorra hasta un 70% en ${
@@ -53,29 +53,32 @@ const GroupPage: NextPage<IGroupPageProps> = ({
         imageAlt={`Konto`}
         url={`/grupo/${group!.id}`}
       />
-      <Header className="hidden lg:inline-flex" setScreen={setScreen} />
 
-      {screen === GroupScreens.group && (
-        <GroupData
+      <div className="w-full min-h-screen relative flex flex-col">
+        <Header className="hidden lg:inline-flex" setScreen={setScreen} />
+
+        {screen === GroupScreens.group && (
+          <GroupData
+            group={group}
+            setScreen={setScreen}
+            setShowPayModal={setShowPayModal}
+          />
+        )}
+        {screen === GroupScreens.login && (
+          <LoginReusable
+            providers={providers}
+            callbackUrl={`/grupo/${group!.id}`}
+          />
+        )}
+
+        <PayModal
           group={group}
-          setScreen={setScreen}
+          paymentMethods={paymentMethods}
+          showPayModal={showPayModal}
           setShowPayModal={setShowPayModal}
         />
-      )}
-      {screen === GroupScreens.login && (
-        <LoginReusable
-          providers={providers}
-          callbackUrl={`/grupo/${group!.id}`}
-        />
-      )}
-
-      <PayModal
-        group={group}
-        paymentMethods={paymentMethods}
-        showPayModal={showPayModal}
-        setShowPayModal={setShowPayModal}
-      />
-    </div>
+      </div>
+    </>
   );
 };
 

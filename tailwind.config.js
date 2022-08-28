@@ -9,9 +9,9 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: '#185ADB',
-          50: '#B4CAF7',
-          100: '#A1BEF5',
-          200: '#7DA4F1',
+          50: '#e8effb',
+          100: '#a3bdf1',
+          200: '#749ce9',
           300: '#588AED',
           400: '#3371E9',
           500: '#185ADB',
@@ -33,6 +33,7 @@ module.exports = {
           800: '#9E6F00',
           900: '#664800',
         },
+        black: '#222222',
       },
     },
   },
