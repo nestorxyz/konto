@@ -20,6 +20,7 @@ const getGroup = async (groupId: string) => {
           service: {
             select: {
               id: true,
+              service: true,
               name: true,
               value: true,
               price: true,

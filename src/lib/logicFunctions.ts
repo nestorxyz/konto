@@ -10,8 +10,30 @@ import bcpImage from '@public/img/payment/bcp.jpg';
 import interbankImage from '@public/img/payment/interbank.png';
 import yapeImage from '@public/img/payment/yape.png';
 
+// Disney + Files
+import disney from '@public/img/shows/disney/disney/disney.png';
+import frozen from '@public/img/shows/disney/disney/frozen.jpg';
+import jungleCruise from '@public/img/shows/disney/disney/jungle-cruise.jpg';
+import moana from '@public/img/shows/disney/disney/moana.jpg';
+import raya from '@public/img/shows/disney/disney/raya.jpg';
+import marvel from '@public/img/shows/disney/marvel/marvel.png';
+import civilWar from '@public/img/shows/disney/marvel/civil-war.jpg';
+import doctor from '@public/img/shows/disney/marvel/doctor.jpg';
+import endgame from '@public/img/shows/disney/marvel/endgame.jpg';
+import loki from '@public/img/shows/disney/marvel/loki.jpg';
+import pixar from '@public/img/shows/disney/pixar/pixar.png';
+import coco from '@public/img/shows/disney/pixar/coco.jpg';
+import lightyear from '@public/img/shows/disney/pixar/lightyear.jpg';
+import monsterInc from '@public/img/shows/disney/pixar/monsters-inc.jpg';
+import toyStory from '@public/img/shows/disney/pixar/toy-story.jpg';
+import startWars from '@public/img/shows/disney/star-wars/star-wars.png';
+import ascenso from '@public/img/shows/disney/star-wars/ascenso.jpg';
+import mandalorian from '@public/img/shows/disney/star-wars/mandalorian.jpg';
+import obiWan from '@public/img/shows/disney/star-wars/obi-wan.jpg';
+import rogue from '@public/img/shows/disney/star-wars/rogue.jpg';
+
 // Types
-import { Services } from 'types/services';
+import { ServiceSupply } from '@prisma/client';
 
 export const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(' ');
@@ -68,13 +90,34 @@ export const randomString_v2 = (quantity: number) => {
   return characters.join('');
 };
 
-const getServiceInformation = (service: keyof typeof Services) => {
+export const getServiceInformation = (service: keyof typeof ServiceSupply) => {
   switch (service) {
     default:
       return {
         name: 'Disney +',
         image: disneyImage,
-        images: {},
+        images: [
+          {
+            companyImage: disney,
+            animationUrl: '/img/shows/disney/disney/disney.mp4',
+            shows: [frozen, jungleCruise, moana, raya],
+          },
+          {
+            companyImage: marvel,
+            animationUrl: '/img/shows/disney/marvel/marvel.mp4',
+            shows: [civilWar, doctor, endgame, loki],
+          },
+          {
+            companyImage: pixar,
+            animationUrl: '/img/shows/disney/pixar/pixar.mp4',
+            shows: [coco, lightyear, monsterInc, toyStory],
+          },
+          {
+            companyImage: startWars,
+            animationUrl: '/img/shows/disney/star-wars/star-wars.mp4',
+            shows: [ascenso, mandalorian, obiWan, rogue],
+          },
+        ],
       };
   }
 };

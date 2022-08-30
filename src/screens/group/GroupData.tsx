@@ -13,7 +13,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { GroupScreens } from '../../../pages/grupo/[groupId]';
 
 // Helpers
-import { mapServiceToImage } from 'lib/logicFunctions';
+import { mapServiceToImage, getServiceInformation } from 'lib/logicFunctions';
 
 interface IGroupInfoProps {
   group: GroupInfo;
@@ -28,6 +28,7 @@ const GroupData: React.FC<IGroupInfoProps> = ({
 }) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const { status } = useSession();
+  const serviceData = getServiceInformation(group!.plan.service.service);
 
   const handleJoinGroup = () => {
     if (status === 'unauthenticated') {
@@ -66,35 +67,53 @@ const GroupData: React.FC<IGroupInfoProps> = ({
           <div className="w-full h-60 lg:w-96 lg:gap-4 overflow-hidden lg:rounded-lg relative">
             <Swiper
               className="h-full"
+              loop={true}
               onSlideChange={(slide) => setSlideIndex(slide.activeIndex)}
             >
-              <SwiperSlide>
-                <Image
-                  src={mapServiceToImage(group!.plan.service.value)}
-                  className="object-cover"
-                  placeholder="blur"
-                  layout="fill"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Image
-                  src={mapServiceToImage(group!.plan.service.value)}
-                  className="object-cover"
-                  placeholder="blur"
-                  layout="fill"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Image
-                  src={mapServiceToImage(group!.plan.service.value)}
-                  className="object-cover"
-                  placeholder="blur"
-                  layout="fill"
-                />
-              </SwiperSlide>
+              {serviceData.images.map((image, index) => {
+                return (
+                  <>
+                    <SwiperSlide
+                      key={image.companyImage.blurDataURL + '-' + index}
+                    >
+                      <video
+                        className="object-cover w-full h-full"
+                        loop={true}
+                        autoPlay
+                        muted
+                        src={image.animationUrl}
+                      ></video>
+                      <Image
+                        src={image.companyImage}
+                        className="object-cover"
+                        placeholder="blur"
+                        layout="fill"
+                      />
+                    </SwiperSlide>
+                    <SwiperSlide className="grid grid-cols-2 gap-1 p-1 relative">
+                      <div className="absolute bg-primary-800 h-full w-full"></div>
+                      {image.shows.map((show, index) => {
+                        return (
+                          <div
+                            key={show.src + '-' + index}
+                            className="h-full w-full relative rounded-md overflow-hidden"
+                          >
+                            <Image
+                              src={show}
+                              className="object-cover"
+                              placeholder="blur"
+                              layout="fill"
+                            />
+                          </div>
+                        );
+                      })}
+                    </SwiperSlide>
+                  </>
+                );
+              })}
             </Swiper>
             <span className="absolute text-white bg-black z-50 bg-opacity-40 text-sm rounded px-3 py-1 bottom-4 right-4">
-              {slideIndex + 1}/3
+              {slideIndex}/{serviceData.images.length * 2}
             </span>
           </div>
           <div className="hidden lg:inline-flex lg:flex-col lg:items-center mt-6 lg:w-full">

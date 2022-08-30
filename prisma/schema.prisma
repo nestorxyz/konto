@@ -76,12 +76,13 @@ model User {
 }
 
 model Service {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
+  service   ServiceSupply @default(DISNEY)
   name      String
   price     Float
   value     String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
   plan      Plan[]
 
   @@map("services")
@@ -92,6 +93,7 @@ model Plan {
   adminGet  Float
   joinerPay Float
   maxUsers  Int
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   serviceId String
@@ -106,6 +108,7 @@ model Group {
   verified           Boolean        @default(false)
   credentialEmail    String
   credentialPassword String
+  isActive           Boolean        @default(true)
   createdAt          DateTime       @default(now()) @map("created_at")
   updatedAt          DateTime       @updatedAt @map("updated_at")
   adminId            String
@@ -230,6 +233,13 @@ model PaymentMethod {
   deposits    Deposit[]
 
   @@map("paymentMethods")
+}
+
+enum ServiceSupply {
+  DISNEY
+  HBO
+  NETFLIX
+  CRUNCHYROLL
 }
 
 enum SubscriptionState {
