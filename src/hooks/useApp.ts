@@ -35,6 +35,8 @@ const useApp = () => {
     }
   }, [status, app]);
 
+  console.log('userLoaded', userLoaded);
+
   return {
     user: app?.user,
     movements: app?.movements,

@@ -1,19 +1,15 @@
 // Libraries
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 // Helpers
 import mixpanel from 'lib/mixpanel';
-
-// Hooks
-import useApp from 'hooks/useApp';
 
 // Components
 import Header from './Header';
 import Home from './home';
 import Groups from './groups';
 import Wallet from './wallet';
-import PageLoading from 'components/loaders/PageLoading';
 
 export enum DashboardPages {
   home = 'home',
@@ -25,7 +21,6 @@ export enum DashboardPages {
 const Dashboard: React.FC = () => {
   const [screen, setScreen] = useState<keyof typeof DashboardPages>('home');
   const router = useRouter();
-  const { user, movements } = useApp();
 
   useEffect(() => {
     mixpanel.track('Dashboard Hit');

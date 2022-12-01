@@ -14,6 +14,8 @@ const getUserAppHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       getUserMovements(id as string),
     ]);
 
+    console.log('user', user);
+
     res.status(200).json({
       user,
       movements,
