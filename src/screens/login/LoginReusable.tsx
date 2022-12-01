@@ -11,17 +11,12 @@ import { BuiltInProviderType } from 'next-auth/providers';
 import { classNames, mapServiceToImage } from 'lib/logicFunctions';
 
 interface ILoginProps {
-  providers: Record<
-    LiteralUnion<BuiltInProviderType, string>,
-    ClientSafeProvider
-  > | null;
   callbackUrl?: string;
   showLogo?: boolean;
   className?: string;
 }
 
 const Login: React.FC<ILoginProps> = ({
-  providers,
   callbackUrl,
   showLogo = true,
   className,
@@ -42,27 +37,23 @@ const Login: React.FC<ILoginProps> = ({
         favoritas
       </p>
       <div className="flex flex-col gap-4">
-        {providers &&
-          Object.values(providers).map((provider) => (
-            <Button
-              key={provider.name}
-              auto
-              ghost
-              size="xl"
-              onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
-            >
-              <span className="flex gap-2 items-center">
-                <div className="w-5 h-5 relative">
-                  <Image
-                    src={mapServiceToImage(provider.name)}
-                    className="object-cover"
-                    layout="fill"
-                  />
-                </div>
-                Ingresar con {provider.name}
-              </span>
-            </Button>
-          ))}
+        <Button
+          auto
+          ghost
+          size="xl"
+          onClick={() => signIn('google', { callbackUrl: callbackUrl })}
+        >
+          <span className="flex gap-2 items-center">
+            <div className="w-5 h-5 relative">
+              <Image
+                src={mapServiceToImage('Google')}
+                className="object-cover"
+                layout="fill"
+              />
+            </div>
+            Ingresar con Google
+          </span>
+        </Button>
       </div>
     </div>
   );

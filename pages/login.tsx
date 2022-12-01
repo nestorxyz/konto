@@ -1,11 +1,6 @@
 // Libraries
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { getProviders } from 'next-auth/react';
-
-// Types
-import { LiteralUnion, ClientSafeProvider } from 'next-auth/react';
-import { BuiltInProviderType } from 'next-auth/providers';
 
 // Hooks
 import { useSession } from 'next-auth/react';
@@ -14,14 +9,7 @@ import { useRouter } from 'next/router';
 // Components
 import LoginReusable from 'screens/login/LoginReusable';
 
-interface ILoginProps {
-  providers: Record<
-    LiteralUnion<BuiltInProviderType, string>,
-    ClientSafeProvider
-  > | null;
-}
-
-const Login: React.FC<ILoginProps> = ({ providers }) => {
+const Login: React.FC = () => {
   const { status } = useSession();
   const router = useRouter();
 
@@ -59,11 +47,7 @@ const Login: React.FC<ILoginProps> = ({ providers }) => {
             </a>
           </Link>
 
-          <LoginReusable
-            providers={providers}
-            showLogo={false}
-            className="md:mt-8 lg:mt-12"
-          />
+          <LoginReusable showLogo={false} className="md:mt-8 lg:mt-12" />
         </main>
       </section>
     </div>
@@ -71,13 +55,3 @@ const Login: React.FC<ILoginProps> = ({ providers }) => {
 };
 
 export default Login;
-
-export async function getServerSideProps() {
-  const providers = await getProviders();
-
-  return {
-    props: {
-      providers,
-    },
-  };
-}

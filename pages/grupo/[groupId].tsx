@@ -22,10 +22,6 @@ import PayModal from 'screens/group/PayModal';
 
 interface IGroupPageProps {
   group: GroupInfo;
-  providers: Record<
-    LiteralUnion<BuiltInProviderType, string>,
-    ClientSafeProvider
-  >;
   paymentMethods: PaymentMethod[];
 }
 
@@ -34,11 +30,7 @@ export enum GroupScreens {
   login = 'login',
 }
 
-const GroupPage: NextPage<IGroupPageProps> = ({
-  group,
-  providers,
-  paymentMethods,
-}) => {
+const GroupPage: NextPage<IGroupPageProps> = ({ group, paymentMethods }) => {
   const [screen, setScreen] = useState<keyof typeof GroupScreens>('group');
   const [showPayModal, setShowPayModal] = useState(false);
 
@@ -63,10 +55,7 @@ const GroupPage: NextPage<IGroupPageProps> = ({
         />
       )}
       {screen === GroupScreens.login && (
-        <LoginReusable
-          providers={providers}
-          callbackUrl={`/grupo/${group!.id}`}
-        />
+        <LoginReusable callbackUrl={`/grupo/${group!.id}`} />
       )}
 
       <PayModal
@@ -84,8 +73,7 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const { groupId } = query;
 
-  const [providers, group, paymentMethods] = await Promise.all([
-    getProviders(),
+  const [group, paymentMethods] = await Promise.all([
     getGroup(groupId as string),
     getAllPaymentMethods(),
   ]);
@@ -93,7 +81,6 @@ export const getServerSideProps = async ({
   return {
     props: {
       group,
-      providers,
       paymentMethods,
     },
   };
