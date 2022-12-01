@@ -41,7 +41,16 @@ const theme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+interface MyAppProps extends AppProps {
+  pageProps: {
+    session: any;
+  };
+}
+
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: MyAppProps) {
   return (
     <SessionProvider session={session}>
       <NextUIProvider theme={theme}>
