@@ -9,14 +9,10 @@ const getUserAppHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
   try {
-    console.log('getUserAppHandler', id);
-
     const [user, movements] = await Promise.all([
       getUserApp(id as string),
       getUserMovements(id as string),
     ]);
-
-    console.log('user', user);
 
     res.status(200).json({
       user,
