@@ -16,7 +16,7 @@ const useApp = () => {
     mutate,
   } = useSWR(
     status === 'authenticated'
-      ? [`/api/users/${session.user!.id}`, session.user!.id]
+      ? [`/app/getUserApp/${session.user!.id}`, session.user!.id]
       : null,
     AxiosGetUserApp
   );
