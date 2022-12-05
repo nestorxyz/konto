@@ -41,17 +41,11 @@ Si ya tienes una cuenta de streaming y estás buscando con quién compartirla. C
 
 ![create](https://user-images.githubusercontent.com/72099481/205710674-34eed36e-97b2-4a15-bfc2-a230be7aafd1.png)
 
-### QR Code Generator
+### Múltiples métodos de pago
 
-You can easily generate and customize QR codes for your links, which can be used for flyers, posters, powerpoint presentations, etc.
+Elige el método de pago que más te convenga.
 
-![QR Code](https://user-images.githubusercontent.com/28986134/200727932-2259628b-8f89-4017-896d-a355940222db.png)
-
-### OG Image Proxy
-
-Add a custom OG image in front of your target URL. Bots like Twitter/Facebook will be served this image, while users will be redirected to your target URL.
-
-![OG Image Proxy](https://user-images.githubusercontent.com/28986134/200727958-e8a5ac24-644b-45c6-8018-41c4dea25cd1.gif)
+![pagos](https://user-images.githubusercontent.com/72099481/205767422-b8425b38-385d-420c-b8a3-f99dd7b0bf43.png)
 
 ## Tech Stack
 
@@ -59,6 +53,7 @@ Add a custom OG image in front of your target URL. Bots like Twitter/Facebook wi
 - [Typescript](https://www.typescriptlang.org/) – language
 - [Tailwind](https://tailwindcss.com/) – CSS
 - [Supabase](https://supabase.com/) – database
+- [Prisma](https://www.prisma.io/) - ORM
 - [NextAuth.js](https://next-auth.js.org/) – auth
 - [Vercel](https://vercel.com/) – hosting
 - [NestorBot](https://twitter.com/nestoredduardo) – manual payments validation 🫠
