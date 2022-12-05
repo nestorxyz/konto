@@ -1,19 +1,19 @@
-<a href="https://dub.sh">
-  <img alt="Dub – an open-source link management tool for modern marketing teams to create, share, and track short links." src="https://user-images.githubusercontent.com/28986134/200727801-6355c62e-60b5-45d7-a83d-44b11545e471.png">
-  <h1 align="center">Dub</h1>
+<a href="https://konto.vercel.app/">
+  <img alt="Konto – Hacemos fácil la compra en grupo de cuentas de streaming." src="https://user-images.githubusercontent.com/72099481/205699983-43ee32b4-cfb8-444d-b5ab-854e4d7832c7.png">
+  <h1 align="center">Konto</h1>
 </a>
 
 <p align="center">
-  An open-source link management tool for modern marketing teams to create, share, and track short links.
+  Aplicación web que facilita la compra en grupo de suscripciones de streaming conectando usuarios y automatizando los pagos.
 </p>
 
 <p align="center">
-  <a href="https://twitter.com/dubdotsh">
-    <img src="https://img.shields.io/twitter/follow/dubdotsh?style=flat&label=%40dubdotsh&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
+  <a href="https://twitter.com/nestoredduardo">
+    <img src="https://img.shields.io/twitter/follow/nestoredduardo?style=flat&label=%40nestoredduardo&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a>
-  <a href="https://news.ycombinator.com/item?id=32939407"><img src="https://img.shields.io/badge/Hacker%20News-255-%23FF6600" alt="Hacker News"></a>
-  <a href="https://github.com/steven-tey/dub/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/steven-tey/dub?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
+  <a href="https://www.facebook.com/1551in/posts/pfbid0PMPHo1um8fZKYcYho1vAwPrfjFwDNZMqqez48xXqCbN9bRRLcvtJn3wAVAhzBmnHl"><img src="https://img.shields.io/badge/Incubadora-1551-348eca" alt="Incubadora 1551"></a>
+  <a href="https://github.com/nestoredduardo/konto/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/nestoredduardo/konto?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
 
@@ -25,23 +25,21 @@
 
 ## Introduction
 
-Dub is an open-source link management tool for modern marketing teams to create, share, and track short links. Built with [Vercel Edge Functions](http://vercel.com/edge), [Upstash Redis](https://docs.upstash.com/redis), and [Planetscale MySQL](https://planetscale.com/).
+Konto es una aplicación web que facilita la compra en grupo de suscripciones de streaming conectando usuarios y automatizando los pagos.
 
-https://www.canva.com/design/DAFD6QOIgDk/RpC0NWzumu4d6fhoJCoiLg/view?utm_content=DAFD6QOIgDk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+Estas son algunas características que tiene Konto:
 
-Here are some of the features that Dub provides out-of-the-box:
+### Ingresa a un grupo de tu suscripción favorita
 
-### Built-in Analytics
+En Konto encuentras grupos de suscripciones como Netflix, Disney+, HBO Max y Crunchyroll.
 
-Dub provides a powerful analytics dashboard for your links, including geolocation, device, and browser information.
+![join](https://user-images.githubusercontent.com/72099481/205709257-f56b8888-0217-4411-8895-0bfff2d34dad.png)
 
-![Analytics Dashboard](https://user-images.githubusercontent.com/28986134/200727883-40fe9e62-93a2-48b6-8316-4ce3e6f490f0.png)
+### Crea tus propios grupos
 
-### Custom domains
+Si ya tienes una cuenta de streaming y estás buscando con quién compartirla. Crea tu grupo en Konto y recibes las cuotas.
 
-You can easily configure custom domains on Dub – just add an A/CNAME record to your DNS provider and you're good to go. This is built on the [Vercel Domains API](https://domains-api.vercel.app/).
-
-![Custom Domains](https://user-images.githubusercontent.com/28986134/200727913-432734b4-4fc7-46ef-b09f-cc8262dc8a0d.png)
+![create](https://user-images.githubusercontent.com/72099481/205710674-34eed36e-97b2-4a15-bfc2-a230be7aafd1.png)
 
 ### QR Code Generator
 
