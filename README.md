@@ -8,11 +8,11 @@
 </p>
 
 <p align="center">
-  <a href="https://twitter.com/nestoredduardo">
+  <a href="https://twitter.com/nestoredduardo" target="_blank">
     <img src="https://img.shields.io/twitter/follow/nestoredduardo?style=flat&label=%40nestoredduardo&logo=twitter&color=0bf&logoColor=fff" alt="Twitter" />
   </a>
-  <a href="https://www.facebook.com/1551in/posts/pfbid0PMPHo1um8fZKYcYho1vAwPrfjFwDNZMqqez48xXqCbN9bRRLcvtJn3wAVAhzBmnHl"><img src="https://img.shields.io/badge/Incubadora-1551-348eca" alt="Incubadora 1551"></a>
-  <a href="https://github.com/nestoredduardo/konto/blob/main/LICENSE">
+  <a href="https://www.facebook.com/1551in/posts/pfbid0PMPHo1um8fZKYcYho1vAwPrfjFwDNZMqqez48xXqCbN9bRRLcvtJn3wAVAhzBmnHl"><img src="https://img.shields.io/badge/Incubadora-1551-348eca" alt="Incubadora 1551" target="_blank"></a>
+  <a href="https://github.com/nestoredduardo/konto/blob/main/LICENSE" target="_blank">
     <img src="https://img.shields.io/github/license/nestoredduardo/konto?label=license&logo=github&color=f80&logoColor=fff" alt="License" />
   </a>
 </p>
