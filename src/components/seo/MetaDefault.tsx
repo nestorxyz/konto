@@ -11,7 +11,7 @@ const MetaDefault = ({ title, description, img }: IMetaDefaultProps) => {
   const meta = {
     title: 'Konto',
     description: 'Hacemos fácil la compra en grupo de cuentas de streaming',
-    img: 'https://konto.vercel.app//landing.jpg',
+    img: 'https://konto.vercel.app/landing.jpg',
   };
 
   return (
