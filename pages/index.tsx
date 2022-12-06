@@ -1,5 +1,5 @@
 // Types
-import type { NextPage, GetServerSideProps } from 'next';
+import type { NextPage, GetServerSideProps, GetStaticProps } from 'next';
 import { GroupCardInfo } from 'request/prisma/groups/getAllGroups';
 import { Plan } from 'request/prisma/plans/getAllPlans';
 
@@ -47,7 +47,7 @@ const Home: NextPage<HomeProps> = ({ groups, plans }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const groups: GroupCardInfo[] = await getAllGroups();
   const plans = await getAllPlans();
 
@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       groups: groups,
       plans: plans,
     },
+    revalidate: 60 * 60 * 24, // Revalidate every 24 hours
   };
 };
 
